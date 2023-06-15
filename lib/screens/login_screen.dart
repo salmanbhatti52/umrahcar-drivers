@@ -33,7 +33,7 @@ class _LogInPageState extends State<LogInPage> {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 2,
-        backgroundColor: const Color(0xFF000000).withOpacity(0.5),
+        backgroundColor: const Color(0xFF222124),
         textColor: Colors.white,
         fontSize: 16,
       );

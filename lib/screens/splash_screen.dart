@@ -34,10 +34,15 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   initScreen(BuildContext context) {
-    return Scaffold(
-        backgroundColor: mainColor,
-        body: Center(
-          child: SvgPicture.asset("assets/images/splash-icon.svg"),
-        ));
+    return WillPopScope(
+      onWillPop: () {
+        return Future.value(false);
+      },
+      child: Scaffold(
+          backgroundColor: mainColor,
+          body: Center(
+            child: SvgPicture.asset("assets/images/splash-icon.svg"),
+          )),
+    );
   }
 }
