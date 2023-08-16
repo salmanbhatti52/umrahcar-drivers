@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:umrahcar_driver/models/get_driver_profile.dart';
+import 'package:umrahcar_driver/screens/tracking_process/tarcking/pickup_screen.dart';
 import 'package:umrahcar_driver/service/rest_api_service.dart';
 import 'package:umrahcar_driver/utils/colors.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -9,6 +10,9 @@ import 'package:umrahcar_driver/utils/const.dart';
 import 'package:umrahcar_driver/widgets/top_boxes.dart';
 import 'package:umrahcar_driver/widgets/home_list.dart';
 import 'package:umrahcar_driver/screens/tracking_process/tarcking/dropoff_screen.dart';
+
+import '../models/get_booking_list_model.dart';
+import '../widgets/upcoming_list.dart';
 
 var userId;
 var profileName;
@@ -31,7 +35,8 @@ GetDriverProfile getDriverProfile=GetDriverProfile();
     print("uiduid: ${uid}");
     print("uiduid: ${userId}");
     getProfile();
-
+    getBookingListOngoing();
+    getBookingListUpcoming();
   }
 
      getProfile()async{
@@ -43,6 +48,35 @@ GetDriverProfile getDriverProfile=GetDriverProfile();
          });
        }
      }
+GetBookingListModel getBookingOngoingResponse=GetBookingListModel();
+
+getBookingListOngoing()async{
+  print("userId $userId");
+  var mapData={
+    "users_drivers_id": userId.toString()
+  };
+  getBookingOngoingResponse= await DioClient().getBookingOngoing(mapData, context);
+  print("response id: ${getBookingOngoingResponse.data}");
+  setState(() {
+
+  });
+
+}
+
+GetBookingListModel getBookingUpcomingResponse=GetBookingListModel();
+getBookingListUpcoming()async{
+  print("userId $userId");
+  var mapData={
+    "users_drivers_id": userId.toString()
+  };
+  getBookingUpcomingResponse= await DioClient().getBookingupcoming(mapData, context);
+  print("response id: ${getBookingUpcomingResponse.data}");
+  setState(() {
+
+  });
+
+}
+
 
   @override
   void initState() {
@@ -230,7 +264,7 @@ GetDriverProfile getDriverProfile=GetDriverProfile();
                         height: size.height * 0.279,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: homeList(context),
+                          child:upComingList(context,getBookingUpcomingResponse),
                         ),
                       ),
                     ],
@@ -239,15 +273,21 @@ GetDriverProfile getDriverProfile=GetDriverProfile();
               ],
             ),
           ),
+          getBookingOngoingResponse.data!=null ?
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20, top: 150),
             child: GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const DropOffPage(),
-                    ));
+                if( getBookingOngoingResponse.data!=null) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>  PickUpPage(getBookingData: getBookingOngoingResponse.data![0]),
+                      ));
+                  setState(() {
+
+                  });
+                }
               },
               child: Container(
                 width: size.width,
@@ -262,7 +302,7 @@ GetDriverProfile getDriverProfile=GetDriverProfile();
                 ),
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -302,9 +342,9 @@ GetDriverProfile getDriverProfile=GetDriverProfile();
                                 ),
                               ),
                               SizedBox(width: size.width * 0.02),
-                              const Text(
-                                'Camiron Williosm',
-                                style: TextStyle(
+                              Text(
+                                '${getBookingOngoingResponse.data![0].vehicles![0].vehiclesDrivers!.name}',
+                                style: const TextStyle(
                                   color: Colors.black,
                                   fontFamily: 'Montserrat-Regular',
                                   fontWeight: FontWeight.w500,
@@ -321,9 +361,9 @@ GetDriverProfile getDriverProfile=GetDriverProfile();
                               Container(
                                 color: Colors.transparent,
                                 width: size.width * 0.25,
-                                child: const AutoSizeText(
-                                  '6391 Elgin St. Celina,',
-                                  style: TextStyle(
+                                child:  AutoSizeText(
+                                  '${getBookingOngoingResponse.data![0].name}',
+                                  style: const TextStyle(
                                     color: Color(0xFF565656),
                                     fontFamily: 'Montserrat-Regular',
                                     fontWeight: FontWeight.w500,
@@ -344,7 +384,25 @@ GetDriverProfile getDriverProfile=GetDriverProfile();
                 ),
               ),
             ),
-          ),
+          ):
+          const Padding(
+            padding: EdgeInsets.only(left: 120, right: 20, top: 180),
+            child: Column(
+              children: [
+                SizedBox(height: 130,),
+                Text(
+                  'No Current Booking',
+                  style: TextStyle(
+                    color: Colors.black,
+
+                    fontFamily: 'Montserrat-Regular',
+                    fontWeight: FontWeight.w900,
+                    fontSize: 15,
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       ):
       Column(

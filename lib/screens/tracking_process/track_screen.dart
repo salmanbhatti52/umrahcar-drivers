@@ -156,7 +156,7 @@ class _TrackPageState extends State<TrackPage> {
                                 ),
                                 SizedBox(width: size.width * 0.032),
                                 Text(
-                                  '${widget.getBookingData!.flightDate}',
+                                  '${widget.getBookingData!.pickupDate}',
                                   style: const TextStyle(
                                     color: Color(0xFF565656),
                                     fontSize: 12,

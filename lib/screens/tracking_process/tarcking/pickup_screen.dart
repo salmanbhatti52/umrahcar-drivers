@@ -64,7 +64,9 @@ class _PickUpPageState extends State<PickUpPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height: size.height * 0.03),
-                          Row(
+                          if(widget.getBookingData!.driverTripStatus !=null)
+
+                            Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
@@ -218,7 +220,7 @@ class _PickUpPageState extends State<PickUpPage> {
                               ),
                               SizedBox(width: size.width * 0.032),
                               Text(
-                                '${widget.getBookingData!.flightTime}',
+                                '${widget.getBookingData!.pickupTime}',
                                 style: const TextStyle(
                                   color: Color(0xFF565656),
                                   fontSize: 12,

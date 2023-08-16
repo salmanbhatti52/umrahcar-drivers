@@ -22,6 +22,11 @@
      </array>
 	<key>CFBundleName</key>
 	<string>umrahcar_driver</string>
+	<key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>sms</string>
+      <string>tel</string>
+    </array>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

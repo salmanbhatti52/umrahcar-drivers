@@ -127,7 +127,7 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
                       SizedBox(width: size.width * 0.01),
                       Text(
                         '${getData.bookingTime} ${getData.bookingDate}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Color(0xFF565656),
                           fontSize: 8,
                           fontFamily: 'Montserrat-Regular',
@@ -167,6 +167,7 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
   ):Container(
     height: 300,
     width: 300,
+    margin: EdgeInsets.only(left: 25),
     child: Center(child: const Text("No upcoming Booking")),
   );
 }
