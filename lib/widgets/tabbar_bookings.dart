@@ -45,7 +45,7 @@ class _TabbarBookingsState extends State<TabbarBookings>
                   indicatorColor: const Color(0xFF79BF42),
                   isScrollable: true,
                   labelColor: Colors.white,
-                  labelPadding: const EdgeInsets.symmetric(horizontal: 20),
+                  labelPadding: const EdgeInsets.symmetric(horizontal: 25),
                   labelStyle: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,

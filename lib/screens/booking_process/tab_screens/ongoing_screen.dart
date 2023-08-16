@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:searchfield/searchfield.dart';
+import 'package:umrahcar_driver/screens/homepage_screen.dart';
 import 'package:umrahcar_driver/utils/colors.dart';
 import 'package:umrahcar_driver/widgets/ongoing_list.dart';
+
+import '../../../models/get_booking_list_model.dart';
+import '../../../service/rest_api_service.dart';
 
 class OnGoingPage extends StatefulWidget {
   const OnGoingPage({super.key});
@@ -25,6 +29,28 @@ class _OnGoingPageState extends State<OnGoingPage> {
   ];
 
   bool isFocused = false;
+  GetBookingListModel getBookingOngoingResponse=GetBookingListModel();
+
+  getBookingListOngoing()async{
+    print("phoneNmbr $userId");
+    var mapData={
+      "users_drivers_id": userId.toString()
+    };
+    getBookingOngoingResponse= await DioClient().getBookingOngoing(mapData, context);
+    print("response id: ${getBookingOngoingResponse.data}");
+    setState(() {
+
+    });
+
+  }
+
+
+  @override
+  void initState() {
+    getBookingListOngoing();
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +181,7 @@ class _OnGoingPageState extends State<OnGoingPage> {
               height: size.height * 0.6,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: onGoingList(context),
+                child: onGoingList(context,getBookingOngoingResponse),
               ),
             ),
           ],

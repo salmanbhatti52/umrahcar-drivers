@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:umrahcar_driver/utils/colors.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+
+import 'login_screen.dart';
 
 class SetttingsPage extends StatefulWidget {
   const SetttingsPage({super.key});
@@ -237,6 +240,25 @@ class _SetttingsPageState extends State<SetttingsPage> {
                       ),
                     ),
                   ],
+                ),
+                SizedBox(height: size.height * 0.12),
+                InkWell(
+                  onTap: ()async {
+                    SharedPreferences preferences = await SharedPreferences.getInstance();
+                    await preferences.clear();
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LogInPage()));
+                  },
+                  child: Center(
+                    child: const Text(
+                      'Logout',
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 20,
+                        fontFamily: 'Montserrat-Regular',
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
                 ),
                 SizedBox(height: size.height * 0.03),
               ],

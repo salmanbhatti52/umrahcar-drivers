@@ -2,14 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:umrahcar_driver/screens/tracking_process/track_upcoming_screen.dart';
 
-Widget upComingList(BuildContext context) {
+import '../models/get_booking_list_model.dart';
+import '../screens/tracking_process/track_screen.dart';
+import '../utils/const.dart';
+
+Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingResponse) {
   var size = MediaQuery.of(context).size;
-  return ListView.builder(
+  return getBookingUpcomingResponse.data!=null ?
+  ListView.builder(
     physics: const BouncingScrollPhysics(),
     shrinkWrap: true,
     scrollDirection: Axis.vertical,
-    itemCount: myList.length,
+    itemCount: getBookingUpcomingResponse.data!.length,
     itemBuilder: (BuildContext context, int index) {
+      var getData=getBookingUpcomingResponse.data![index];
+
       return Column(
         children: [
           Row(
@@ -22,7 +29,7 @@ Widget upComingList(BuildContext context) {
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                 ),
-                child: Image.asset(myList[index].image),
+                child: Image.network("$imageUrl${getData.routes!.vehicles!.featureImage}"),
               ),
               SizedBox(width: size.width * 0.005),
               Column(
@@ -30,7 +37,7 @@ Widget upComingList(BuildContext context) {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    myList[index].title,
+                    getData.name!,
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16,
@@ -46,9 +53,9 @@ Widget upComingList(BuildContext context) {
                       SvgPicture.asset(
                           'assets/images/small-black-location-icon.svg'),
                       SizedBox(width: size.width * 0.01),
-                      const Text(
-                        'Makkah Hottle Aziziz',
-                        style: TextStyle(
+                      Text(
+                        "${getData.routes!.pickup!.name}",
+                        style: const TextStyle(
                           color: Color(0xFF565656),
                           fontSize: 8,
                           fontFamily: 'Montserrat-Regular',
@@ -58,22 +65,57 @@ Widget upComingList(BuildContext context) {
                     ],
                   ),
                   SizedBox(height: size.height * 0.005),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset('assets/images/small-black-car-icon.svg'),
-                      SizedBox(width: size.width * 0.01),
-                      const Text(
-                        'Sedan',
-                        style: TextStyle(
-                          color: Color(0xFF565656),
-                          fontSize: 8,
-                          fontFamily: 'Montserrat-Regular',
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
+                  Container(
+                    width: 180,
+
+                    child: Row(
+                      children: [
+                        for(int i=0; i<getData.vehicles!.length; i++)
+
+                          Padding(
+                            padding: const EdgeInsets.only(right: 2),
+                            child: getData.vehicles!.length <4?
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset('assets/images/small-black-car-icon.svg'),
+                                SizedBox(width: size.width * 0.01),
+                                Text(
+                                  '${getData.vehicles![i].vehiclesName!.name}',
+                                  style: const TextStyle(
+                                    color: Color(0xFF565656),
+                                    fontSize: 7,
+                                    fontFamily: 'Montserrat-Regular',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ):
+                            Padding(
+                              padding: const EdgeInsets.only(right: 5),
+                              child: Column(
+
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 4),
+                                    child: SvgPicture.asset('assets/images/small-black-car-icon.svg'),
+                                  ),
+                                  Text(
+                                    '${getData.vehicles![i].vehiclesName!.name}',
+                                    style: const TextStyle(
+                                      color: Color(0xFF565656),
+                                      fontSize: 7,
+                                      fontFamily: 'Montserrat-Regular',
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
                   SizedBox(height: size.height * 0.005),
                   Row(
@@ -83,8 +125,8 @@ Widget upComingList(BuildContext context) {
                       SvgPicture.asset(
                           'assets/images/small-black-bookings-icon.svg'),
                       SizedBox(width: size.width * 0.01),
-                      const Text(
-                        '12:00 am on 2-12-2022',
+                      Text(
+                        '${getData.bookingTime} ${getData.bookingDate}',
                         style: TextStyle(
                           color: Color(0xFF565656),
                           fontSize: 8,
@@ -96,22 +138,36 @@ Widget upComingList(BuildContext context) {
                   ),
                 ],
               ),
-              SizedBox(width: size.width * 0.15),
+              // SizedBox(width: size.width * 0.1),
               GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const TrackUpcomingPage(),
-                        ));
-                  },
-                  child: SvgPicture.asset('assets/images/edit-bookings-icon.svg'))
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>  TrackPage(getBookingData: getData),
+                      ));
+                },
+                child: const Text(
+                  'Upcoming',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xFF0066FF),
+                    fontSize: 12,
+                    fontFamily: 'Montserrat-Regular',
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
             ],
           ),
           SizedBox(height: size.height * 0.02),
         ],
       );
     },
+  ):Container(
+    height: 300,
+    width: 300,
+    child: Center(child: const Text("No upcoming Booking")),
   );
 }
 

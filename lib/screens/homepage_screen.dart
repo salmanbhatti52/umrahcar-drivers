@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:umrahcar_driver/models/get_driver_profile.dart';
+import 'package:umrahcar_driver/service/rest_api_service.dart';
 import 'package:umrahcar_driver/utils/colors.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:umrahcar_driver/utils/const.dart';
 import 'package:umrahcar_driver/widgets/top_boxes.dart';
 import 'package:umrahcar_driver/widgets/home_list.dart';
 import 'package:umrahcar_driver/screens/tracking_process/tarcking/dropoff_screen.dart';
+
+var userId;
+var profileName;
+
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,14 +23,43 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+GetDriverProfile getDriverProfile=GetDriverProfile();
+  getLocalData() async {
+    final _sharedPref = await SharedPreferences.getInstance();
+    var uid = _sharedPref.getString('userId');
+    userId = uid;
+    print("uiduid: ${uid}");
+    print("uiduid: ${userId}");
+    getProfile();
+
+  }
+
+     getProfile()async{
+       getDriverProfile= await DioClient().getProfile(userId, context);
+       if(getDriverProfile !=null){
+         print("name: ${getDriverProfile.data!.userData!.name}");
+         setState(() {
+
+         });
+       }
+     }
+
+  @override
+  void initState() {
+    getLocalData();
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: mainColor,
-      body: Stack(
+      body: getDriverProfile.data !=null ?
+      Stack(
         children: [
-          Container(
+            Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/background.png'),
@@ -30,61 +68,87 @@ class _HomePageState extends State<HomePage> {
             ),
             child: Column(
               children: [
-                Container(
-                  color: Colors.transparent,
-                  width: size.width,
-                  height: size.height * 0.25,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: CircleAvatar(
-                          radius: 35,
-                          child: Image.asset(
-                            'assets/images/profile.png',
-                            fit: BoxFit.cover,
+                Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: Container(
+                    color: Colors.transparent,
+                    width: size.width,
+                    height: size.height * 0.259,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        getDriverProfile.data!.userData!.image !=null ?
+
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Container(
+                            height: 65,
+                            width: 65,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: NetworkImage("$imageUrl${getDriverProfile.data!.userData!.image}",
+                                ),
+                                fit: BoxFit.cover
+                              )
+                            ),
+
                           ),
-                        ),
-                      ),
-                      SizedBox(width: size.width * 0.02),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Mohammad Irfan',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: 'Montserrat-Regular',
-                              fontWeight: FontWeight.w600,
+                        ):Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: CircleAvatar(
+                            radius: 35,
+                            child: Image.asset(
+                              'assets/images/profile.png',
+                              fit: BoxFit.cover,
                             ),
                           ),
-                          SizedBox(height: size.height * 0.002),
-                          Row(
-                            children: [
-                              SvgPicture.asset(
-                                  'assets/images/white-location-icon.svg'),
-                              SizedBox(width: size.width * 0.01),
-                              const Text(
-                                '6391 Elgin St. Celina, ',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
+                        ),
+                        SizedBox(width: size.width * 0.02),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                             SizedBox(
+                               width: 180,
+                               child: Text(
+                                '${getDriverProfile.data!.userData!.name}',
+                                style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 12,
+                                  fontSize: 16,
                                   fontFamily: 'Montserrat-Regular',
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 6, left: 50),
-                        child: Container(
+                                 overflow: TextOverflow.ellipsis,
+                            ),
+                             ),
+                            SizedBox(height: size.height * 0.002),
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                    'assets/images/white-location-icon.svg'),
+                                SizedBox(width: size.width * 0.01),
+                                 SizedBox(
+                                   width: 180,
+                                   child: Text(
+                                    '${getDriverProfile.data!.userData!.city}',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontFamily: 'Montserrat-Regular',
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                     overflow: TextOverflow.ellipsis,
+
+                                   ),
+                                 ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Spacer(),
+                        Container(
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
@@ -95,8 +159,8 @@ class _HomePageState extends State<HomePage> {
                           child: SvgPicture.asset(
                               'assets/images/green-notification-icon.svg'),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(height: size.height * 0.04),
@@ -282,7 +346,19 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ],
-      ),
+      ):
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 370,),
+          Center(
+            child: Container(
+              child: const CircularProgressIndicator(),
+            ),
+          ),
+        ],
+      )
+      ,
     );
   }
 }

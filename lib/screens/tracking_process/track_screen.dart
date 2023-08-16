@@ -3,15 +3,31 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:umrahcar_driver/utils/colors.dart';
 import 'package:umrahcar_driver/widgets/button.dart';
 import 'package:umrahcar_driver/screens/tracking_process/tarcking/pickup_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../models/get_booking_list_model.dart';
 class TrackPage extends StatefulWidget {
-  const TrackPage({super.key});
+  GetBookingData? getBookingData;
+  TrackPage({super.key,this.getBookingData});
 
   @override
   State<TrackPage> createState() => _TrackPageState();
 }
 
 class _TrackPageState extends State<TrackPage> {
+
+
+  void _launchURL(_url) async => await canLaunch(_url)
+      ? await launch(_url)
+      : throw 'Could not launch $_url';
+
+  showSnackbar({error, context}) {
+    final snackBar = SnackBar(
+      content: Text(error),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -24,7 +40,7 @@ class _TrackPageState extends State<TrackPage> {
         child: Stack(
           children: [
             Image.asset(
-              'assets/images/details-map.png',
+              'assets/images/track-map.png',
               fit: BoxFit.cover,
             ),
             Positioned(
@@ -71,8 +87,8 @@ class _TrackPageState extends State<TrackPage> {
                           ),
                         ),
                         SizedBox(height: size.height * 0.02),
-                        const Text(
-                          '2972 Westheimer Rd. Santa Ana, Illinois 85486 ',
+                        Text(
+                          '${widget.getBookingData!.routes!.pickup!.name} (${widget.getBookingData!.routes!.pickup!.type})',
                           style: TextStyle(
                             color: Color(0xFF565656),
                             fontSize: 12,
@@ -91,9 +107,9 @@ class _TrackPageState extends State<TrackPage> {
                           ),
                         ),
                         SizedBox(height: size.height * 0.02),
-                        const Text(
-                          '2972 Westheimer Rd. Santa Ana, Illinois 85486 ',
-                          style: TextStyle(
+                        Text(
+                          '${widget.getBookingData!.routes!.dropoff!.name} (${widget.getBookingData!.routes!.dropoff!.type})',
+                          style: const TextStyle(
                             color: Color(0xFF565656),
                             fontSize: 12,
                             fontFamily: 'Montserrat-Regular',
@@ -103,21 +119,29 @@ class _TrackPageState extends State<TrackPage> {
                         SizedBox(height: size.height * 0.025),
                         Row(
                           children: [
-                            SvgPicture.asset(
-                              'assets/images/fast-car-icon.svg',
-                              width: 12,
-                              height: 12,
-                            ),
-                            SizedBox(width: size.width * 0.02),
-                            const Text(
-                              'BMW 3 Series, 2005 Model',
-                              style: TextStyle(
-                                color: Color(0xFF565656),
-                                fontSize: 12,
-                                fontFamily: 'Montserrat-Regular',
-                                fontWeight: FontWeight.w500,
+                            for(int i=0; i<widget.getBookingData!.vehicles!.length; i++)
+                              Padding(
+                                padding: const EdgeInsets.only(right: 7),
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/images/fast-car-icon.svg',
+                                      width: 10,
+                                      height: 10,
+                                    ),
+                                    SizedBox(width: size.width * 0.01),
+                                    Text(
+                                      '${widget.getBookingData!.vehicles![i]!.vehiclesName!.name}',
+                                      style: const TextStyle(
+                                        color: Color(0xFF565656),
+                                        fontSize: 10,
+                                        fontFamily: 'Montserrat-Regular',
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
                           ],
                         ),
                         SizedBox(height: size.height * 0.02),
@@ -131,9 +155,9 @@ class _TrackPageState extends State<TrackPage> {
                                   height: 20,
                                 ),
                                 SizedBox(width: size.width * 0.032),
-                                const Text(
-                                  '2 Jun 2022',
-                                  style: TextStyle(
+                                Text(
+                                  '${widget.getBookingData!.flightDate}',
+                                  style: const TextStyle(
                                     color: Color(0xFF565656),
                                     fontSize: 12,
                                     fontFamily: 'Montserrat-Regular',
@@ -151,8 +175,8 @@ class _TrackPageState extends State<TrackPage> {
                                   height: 20,
                                 ),
                                 SizedBox(width: size.width * 0.032),
-                                const Text(
-                                  '12:00 AM',
+                                Text(
+                                  '${widget.getBookingData!.pickupTime}',
                                   style: TextStyle(
                                     color: Color(0xFF565656),
                                     fontSize: 12,
@@ -184,8 +208,8 @@ class _TrackPageState extends State<TrackPage> {
                                 SizedBox(width: size.width * 0.032),
                                 SizedBox(
                                   width: size.width * 0.275,
-                                  child: const Text(
-                                    'Cameron',
+                                  child:  Text(
+                                    '${widget.getBookingData!.name}',
                                     style: TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
@@ -207,9 +231,9 @@ class _TrackPageState extends State<TrackPage> {
                                 SizedBox(width: size.width * 0.045),
                                 SizedBox(
                                   width: size.width * 0.275,
-                                  child: const Text(
-                                    '(4 passengers)',
-                                    style: TextStyle(
+                                  child:  Text(
+                                    '(${widget.getBookingData!.noOfPassengers} Passengers)',
+                                    style: const TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
                                       fontFamily: 'Montserrat-Regular',
@@ -231,9 +255,9 @@ class _TrackPageState extends State<TrackPage> {
                                 SizedBox(width: size.width * 0.032),
                                 SizedBox(
                                   width: size.width * 0.275,
-                                  child: const Text(
-                                    '+9660359875631',
-                                    style: TextStyle(
+                                  child:  Text(
+                                    '${widget.getBookingData!.contact}',
+                                    style: const TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
                                       fontFamily: 'Montserrat-Regular',
@@ -244,38 +268,136 @@ class _TrackPageState extends State<TrackPage> {
                               ],
                             ),
                             SizedBox(width: size.width * 0.14),
-                            Row(
-                              children: [
-                                SvgPicture.asset(
-                                    'assets/images/whatsapp-icon.svg'),
-                                SizedBox(width: size.width * 0.032),
-                                SizedBox(
-                                  width: size.width * 0.275,
-                                  child: const Text(
-                                    '+9660359875631',
-                                    style: TextStyle(
-                                      color: Color(0xFF565656),
-                                      fontSize: 12,
-                                      fontFamily: 'Montserrat-Regular',
-                                      fontWeight: FontWeight.w500,
+                            InkWell(
+                              onTap: (){
+                                _launchURL(
+                                    'https://wa.me/${widget.getBookingData!.whatsapp}/?text=hello');
+                                setState(() {
+
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                      'assets/images/whatsapp-icon.svg'),
+                                  SizedBox(width: size.width * 0.032),
+                                  SizedBox(
+                                    width: size.width * 0.275,
+                                    child:  Text(
+                                      '${widget.getBookingData!.whatsapp}',
+                                      style: const TextStyle(
+                                        color: Color(0xFF565656),
+                                        fontSize: 12,
+                                        fontFamily: 'Montserrat-Regular',
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: size.height * 0.02),
+                        Divider(
+                          color: const Color(0xFF929292).withOpacity(0.3),
+                          thickness: 1,
+                        ),
+                        if(widget.getBookingData!.bookedFare !="0")
+                          SizedBox(height: size.height * 0.01),
+                        if(widget.getBookingData!.bookedFare !="0")
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Booked Fare',
+                                style: TextStyle(
+                                  color: Color(0xFF929292),
+                                  fontSize: 12,
+                                  fontFamily: 'Montserrat-Regular',
+                                  fontWeight: FontWeight.w400,
                                 ),
-                              ],
+                              ),
+                              SizedBox(height: size.height * 0.03),
+                              Text(
+                                'credit (${widget.getBookingData!.bookedFare})',
+                                style: TextStyle(
+                                  color: Color(0xFF565656),
+                                  fontSize: 12,
+                                  fontFamily: 'Montserrat-Regular',
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        if(widget.getBookingData!.cashReceiveFromCustomer != "0")
+
+                          SizedBox(height: size.height * 0.02),
+                        if(widget.getBookingData!.cashReceiveFromCustomer != "0")
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Cash Receive From Customer',
+                                style: TextStyle(
+                                  color: Color(0xFF929292),
+                                  fontSize: 12,
+                                  fontFamily: 'Montserrat-Regular',
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              SizedBox(height: size.height * 0.02),
+                              Text(
+                                'credit (${widget.getBookingData!.cashReceiveFromCustomer})',
+                                style: TextStyle(
+                                  color: Color(0xFF565656),
+                                  fontSize: 12,
+                                  fontFamily: 'Montserrat-Regular',
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        SizedBox(height: size.height * 0.02),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Agent Fare',
+                              style: TextStyle(
+                                color: Color(0xFF929292),
+                                fontSize: 12,
+                                fontFamily: 'Montserrat-Regular',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            SizedBox(height: size.height * 0.02),
+                            Text(
+                              '${widget.getBookingData!.agentFare}',
+                              style: TextStyle(
+                                color: Color(0xFF565656),
+                                fontSize: 12,
+                                fontFamily: 'Montserrat-Regular',
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ],
                         ),
                         SizedBox(height: size.height * 0.03),
+
+
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const PickUpPage(),
+                                  builder: (context) =>  PickUpPage(getBookingData: widget.getBookingData),
                                 ));
                           },
-                          child: button('Start', context),
+                          child: button('Track', context),
                         ),
+                        SizedBox(height: size.height * 0.02),
+
                       ],
                     ),
                   ),
