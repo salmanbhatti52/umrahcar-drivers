@@ -37,6 +37,7 @@ GetDriverProfile getDriverProfile=GetDriverProfile();
     getProfile();
     getBookingListOngoing();
     getBookingListUpcoming();
+    getBookingListCompleted();
   }
 
      getProfile()async{
@@ -77,6 +78,19 @@ getBookingListUpcoming()async{
 
 }
 
+GetBookingListModel getBookingCompletedResponse=GetBookingListModel();
+getBookingListCompleted()async{
+  print("uid $userId");
+  var mapData={
+    "users_drivers_id":userId.toString()
+  };
+  getBookingCompletedResponse= await DioClient().getBookingCompleted(mapData, context);
+  print("response id: ${getBookingCompletedResponse.data}");
+  setState(() {
+
+  });
+
+}
 
   @override
   void initState() {
@@ -213,11 +227,11 @@ getBookingListUpcoming()async{
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          box('assets/images/white-fast-car-icon.svg', '30',
+                          box('assets/images/white-fast-car-icon.svg', '${getBookingOngoingResponse.data!.length}',
                               'On Going Bookings', context),
-                          box('assets/images/white-fast-car-icon.svg', '10',
+                          box('assets/images/white-fast-car-icon.svg', '${getBookingUpcomingResponse.data!.length}',
                               'Upcoming Bookings', context),
-                          box('assets/images/white-fast-car-icon.svg', '15',
+                          box('assets/images/white-fast-car-icon.svg', '${getBookingCompletedResponse.data!.length}',
                               'Completed Bookings', context),
                         ],
                       ),
