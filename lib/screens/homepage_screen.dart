@@ -368,25 +368,7 @@ updateDriverLocation()async{
                                 fontSize: 16,
                               ),
                             ),
-                            // GestureDetector(
-                            //   onTap: () {
-                            //     Navigator.push(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //           builder: (context) => const BookingsPage(),
-                            //         ));
-                            //   },
-                            //   child: const Text(
-                            //     'See all',
-                            //     textAlign: TextAlign.right,
-                            //     style: TextStyle(
-                            //       color: Color(0xFF79BF42),
-                            //       fontFamily: 'Montserrat-Regular',
-                            //       fontWeight: FontWeight.w500,
-                            //       fontSize: 12,
-                            //     ),
-                            //   ),
-                            // ),
+
                           ],
                         ),
                       ),
