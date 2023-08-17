@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:umrahcar_driver/models/update_driver_location_model.dart';
 
 import '../models/forgot_password_otp_model.dart';
 import '../models/forgot_verify_otp_model.dart';
@@ -120,6 +121,23 @@ class DioClient {
       if (response.statusCode == 200) {
         print("hiiii ${response.data}");
         var res= UpdateProfileModel.fromJson(response.data);
+        return res;
+      }
+      else  {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("All Fields are needed")));
+        throw 'SomeThing Missing';
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }Future<UpdateDriverLocationModel> updateDriverLocation(Map<String,dynamic> model,BuildContext context) async {
+
+    try {
+      final response =
+      await _dio.post('$baseUrl/update_locations_drivers', data: model);
+      if (response.statusCode == 200) {
+        print("hiiii ${response.data}");
+        var res= UpdateDriverLocationModel.fromJson(response.data);
         return res;
       }
       else  {

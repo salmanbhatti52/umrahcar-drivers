@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:umrahcar_driver/screens/edit_profile_screen.dart';
 import 'package:umrahcar_driver/utils/colors.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 import '../models/get_driver_profile.dart';
+import '../models/update_driver_location_model.dart';
 import '../service/rest_api_service.dart';
 import '../utils/const.dart';
 import '../widgets/button.dart';
@@ -36,11 +40,114 @@ class _ProfilePageState extends State<ProfilePage> {
       });
     }
   }
+  bool servicestatus = false;
+  bool haspermission = false;
+  late LocationPermission permission;
+  late Position position;
+  String long = "", lat = "";
+  Timer? timer;
+
+  late StreamSubscription<Position> positionStream;
+  checkGps() async {
+    servicestatus = await Geolocator.isLocationServiceEnabled();
+    if(servicestatus){
+      permission = await Geolocator.checkPermission();
+
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          print('Location permissions are denied');
+        }else if(permission == LocationPermission.deniedForever){
+          print("'Location permissions are permanently denied");
+        }else{
+          haspermission = true;
+        }
+      }else{
+        haspermission = true;
+      }
+
+      if(haspermission){
+        setState(() {
+          //refresh the UI
+        });
+
+        getLocation();
+      }
+    }else{
+      print("GPS Service is not enabled, turn on GPS location");
+    }
+
+    setState(() {
+      //refresh the UI
+    });
+  }
+
+  getLocation() async {
+    position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    print(position.longitude); //Output: 80.24599079
+    print(position.latitude);
+    print("hiiiiiiiiiii");//Output: 29.6593457
+
+    long = position.longitude.toString();
+    lat = position.latitude.toString();
+
+
+    if(long.isNotEmpty && lat.isNotEmpty){
+      updateDriverLocation();
+
+    }
+
+    setState(() {
+      //refresh UI
+    });
+
+    LocationSettings locationSettings = const LocationSettings(
+      accuracy: LocationAccuracy.high,
+      distanceFilter: 100,
+    );
+
+    StreamSubscription<Position> positionStream = Geolocator.getPositionStream(
+        locationSettings: locationSettings).listen((Position position) {
+      print(position.longitude); //Output: 80.24599079
+      print(position.latitude); //Output: 29.6593457
+      print("bye");//Output: 29.6593457
+
+      long = position.longitude.toString();
+      lat = position.latitude.toString();
+
+      if(long.isNotEmpty && lat.isNotEmpty){
+        updateDriverLocation();
+
+      }
+      setState(() {
+
+      });
+    });
+  }
+  UpdateDriverLocationModel updateDriverLocationModel=UpdateDriverLocationModel();
+  updateDriverLocation()async{
+    print(lat);
+    print(long);
+    print(userId);
+    print("done");
+    var jsonData={
+      "users_drivers_id":"${userId.toString()}",
+      "longitude":long,
+      "lattitude":lat
+    };
+
+    updateDriverLocationModel = await DioClient().updateDriverLocation(jsonData, context);
+    if(updateDriverLocationModel !=null){
+      print("message of location: ${updateDriverLocationModel.message}");
+    }
+  }
+
 
 
   @override
   void initState() {
     getProfile();
+    timer=Timer.periodic(const Duration(seconds: 5), (timer)=>checkGps()) ;
     // TODO: implement initState
     super.initState();
   }
