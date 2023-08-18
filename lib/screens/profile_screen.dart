@@ -7,6 +7,7 @@ import 'package:umrahcar_driver/screens/edit_profile_screen.dart';
 import 'package:umrahcar_driver/utils/colors.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
+import '../models/get_all_system_data_model.dart';
 import '../models/get_driver_profile.dart';
 import '../models/update_driver_location_model.dart';
 import '../service/rest_api_service.dart';
@@ -142,12 +143,47 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  GetAllSystemData getAllSystemData = GetAllSystemData();
+
+  getSystemAllData() async {
+    getAllSystemData = await DioClient().getSystemAllData(context);
+    if (getAllSystemData != null) {
+      print("GETSystemAllData: ${getAllSystemData.data}");
+      setState(() {
+        getSettingsData();
+      });
+    }
+  }
+
+  late List<Setting> pickSettingsData = [];
+  int timerCount=3;
+  getSettingsData() {
+    if (getAllSystemData!.data! != null) {
+      for (int i = 0; i < getAllSystemData!.data!.settings!.length; i++) {
+        pickSettingsData.add(getAllSystemData!.data!.settings![i]);
+        print("Setting time= $pickSettingsData");
+      }
+
+      for (int i = 0; i < pickSettingsData.length; i++) {
+        if (pickSettingsData[i].type == "map_refresh_time") {
+          timerCount = int.parse(pickSettingsData[i].description!);
+          print("timer refresh: ${timerCount}");
+          checkGps();
+          timer =
+              Timer.periodic( Duration(minutes: timerCount), (timer) => checkGps());
+          setState(() {});
+
+
+        }
+      }
+    }
+  }
+
 
 
   @override
   void initState() {
-    getProfile();
-    timer=Timer.periodic(const Duration(seconds: 5), (timer)=>checkGps()) ;
+    getSystemAllData();
     // TODO: implement initState
     super.initState();
   }
