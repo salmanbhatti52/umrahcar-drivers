@@ -107,7 +107,6 @@ class _SignUpPageState extends State<SignUpPage> {
             child: Column(
               children: [
                 SizedBox(height: size.height * 0.04),
-                SvgPicture.asset('assets/images/umrah-car-logo-small.svg'),
                 SizedBox(height: size.height * 0.04),
                 const Text(
                   'Sign Up to Your Account',

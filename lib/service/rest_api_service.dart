@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:umrahcar_driver/models/update_driver_location_model.dart';
 
+import '../models/add_card_model.dart';
 import '../models/forgot_password_otp_model.dart';
 import '../models/forgot_verify_otp_model.dart';
 import '../models/get_all_system_data_model.dart';
@@ -12,8 +13,10 @@ import '../models/get_booking_list_model.dart';
 import '../models/get_chat_model.dart';
 import '../models/get_driver_profile.dart';
 import '../models/login_model.dart';
+import '../models/pending_transaction_model.dart';
 import '../models/send_message_model.dart';
 import '../models/sign_up_model.dart';
+import '../models/summary_agent_model.dart';
 import '../models/update_profile_model.dart';
 import '../utils/const.dart';
 
@@ -326,6 +329,68 @@ print("model: ${model}");
       rethrow;
     }
   }
+
+  Future<SummaryDriversModel> summaryAgent(Map<String?,dynamic?> model,BuildContext context) async {
+    print("data: ${model}");
+    try {
+      final response =
+      await _dio.post('$baseUrl/summary_drivers',data: model);
+      if (response.statusCode == 200) {
+        print("hiiii ${response.data}");
+        var res= SummaryDriversModel.fromJson(response.data);
+        return res;
+      }
+      else  {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No data received.")));
+        throw 'SomeThing Missing';
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No data received.")));
+
+      rethrow;
+    }
+  }
+  Future<PendingTransactiontModel> pendingTransactions(Map<String?,dynamic?> model,BuildContext context) async {
+    print("data: ${model}");
+    try {
+      final response =
+      await _dio.post('$baseUrl/transactions_drivers',data: model);
+      if (response.statusCode == 200) {
+        print("hiiii ${response.data}");
+        var res= PendingTransactiontModel.fromJson(response.data);
+        return res;
+      }
+      else  {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No data received.")));
+        throw 'SomeThing Missing';
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No data received.")));
+
+      rethrow;
+    }
+  }
+  Future<AddCardModel> addCard(Map<String?,dynamic?> model,BuildContext context) async {
+    print("data: ${model}");
+    try {
+      final response =
+      await _dio.post('$baseUrl/transactions_drivers_add',data: model);
+      if (response.statusCode == 200) {
+        print("hiiii ${response.data}");
+        var res= AddCardModel.fromJson(response.data);
+        return res;
+      }
+      else  {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No data received.")));
+        throw 'SomeThing Missing';
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No data received.")));
+
+      rethrow;
+    }
+  }
+
 
 
 

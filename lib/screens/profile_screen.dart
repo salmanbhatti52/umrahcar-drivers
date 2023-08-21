@@ -183,6 +183,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
+    getProfile();
     getSystemAllData();
     // TODO: implement initState
     super.initState();

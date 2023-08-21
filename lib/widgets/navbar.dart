@@ -6,10 +6,13 @@ import 'package:umrahcar_driver/screens/homepage_screen.dart';
 import 'package:umrahcar_driver/screens/settings_screen.dart';
 import 'package:umrahcar_driver/screens/booking_process/bookings_screen.dart';
 
+import '../screens/wallet_screen.dart';
+
 class NavBar extends StatefulWidget {
   int? indexNmbr;
+  int? walletPage;
 
-   NavBar({super.key,this.indexNmbr});
+   NavBar({super.key,this.indexNmbr,this.walletPage});
 
   @override
   State<NavBar> createState() => _NavBarState();
@@ -35,6 +38,7 @@ class _NavBarState extends State<NavBar> {
       HomePage(),
       BookingsPage(),
       ProfilePage(),
+      WalletPage(indexNmbr: widget.walletPage,),
       SetttingsPage(),
     ];
 
@@ -94,6 +98,12 @@ class _NavBarState extends State<NavBar> {
                   selectedIcon:
                       SvgPicture.asset('assets/images/active-profile-icon.svg'),
                   label: 'Profile',
+                ),
+                NavigationDestination(
+                  icon: SvgPicture.asset('assets/images/wallet-icon.svg'),
+                  selectedIcon:
+                  SvgPicture.asset('assets/images/active-wallet-icon.svg'),
+                  label: 'Wallet',
                 ),
                 NavigationDestination(
                   icon: SvgPicture.asset('assets/images/settings-icon.svg'),

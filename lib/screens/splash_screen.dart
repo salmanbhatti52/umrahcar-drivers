@@ -48,9 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
       },
       child: Scaffold(
           backgroundColor: mainColor,
-          body: Center(
-            child: SvgPicture.asset("assets/images/splash-icon.svg"),
-          )),
+          body: SvgPicture.asset("assets/images/splash-icon.svg",height: double.infinity,width: double.infinity,fit: BoxFit.fill,)),
     );
   }
 }

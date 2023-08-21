@@ -85,7 +85,10 @@ class _LogInPageState extends State<LogInPage> {
                 child: Column(
                   children: [
                     SizedBox(height: size.height * 0.04),
-                    SvgPicture.asset('assets/images/umrah-car-logo-big.svg'),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: SvgPicture.asset('assets/images/umrah-car-logo-big.svg'),
+                    ),
                     SizedBox(height: size.height * 0.04),
                     const Text(
                       'Login to Your Account',
