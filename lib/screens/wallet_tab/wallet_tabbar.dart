@@ -52,13 +52,13 @@ int index=0;
                     color: const Color(0xFF79BF42),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  onTap: (index) {
-                    if (tabController.indexIsChanging) {
-                      tabController.index = tabController.previousIndex;
-                    } else {
-                      return;
-                    }
-                  },
+                  // onTap: (index) {
+                  //   if (tabController.indexIsChanging) {
+                  //     tabController.index = tabController.previousIndex;
+                  //   } else {
+                  //     return;
+                  //   }
+                  // },
                   indicatorColor: const Color(0xFF79BF42),
                   isScrollable: true,
                   labelColor: Colors.white,
