@@ -39,6 +39,8 @@ class _ChatPageState extends State<ChatPage> {
     });
 
   }
+  GlobalKey<RefreshIndicatorState>? refreshKey;
+
   @override
   void initState() {
     getChatData();
@@ -144,52 +146,63 @@ class _ChatPageState extends State<ChatPage> {
                   Container(
                     height:MediaQuery.of(context).size.height/1.3,
 
-                    child: ListView.builder(
-                        itemCount: getChatModel.data!.message!.length,
-                        itemBuilder: (BuildContext context,i){
-                          return Column(
-                            children: [
-                              Align(
-                                alignment:getChatModel.data!.message![i].receiver=="Drivers" ?  Alignment.centerRight: Alignment.centerLeft,
-                                child: Container(
-                                  decoration:  BoxDecoration(
-                                    color: getChatModel.data!.message![i].receiver=="Drivers" ? Color(0xFF79BF42): Color(0xFF79BF42),
-                                    borderRadius: const BorderRadius.only(
-                                      topRight: Radius.circular(5),
-                                      topLeft: Radius.circular(5),
-                                      bottomLeft: Radius.circular(5),
+                    child: RefreshIndicator(
+                      key: refreshKey,
+                      onRefresh: ()async{
+                        await Future.delayed(const Duration(milliseconds: 1500));
+                        getChatData();
+
+                        setState(() {
+
+                        });
+                      },
+                      child: ListView.builder(
+                          itemCount: getChatModel.data!.message!.length,
+                          itemBuilder: (BuildContext context,i){
+                            return Column(
+                              children: [
+                                Align(
+                                  alignment:getChatModel.data!.message![i].receiver=="Drivers" ?  Alignment.centerLeft: Alignment.centerRight,
+                                  child: Container(
+                                    decoration:  BoxDecoration(
+                                      color: getChatModel.data!.message![i].receiver=="Drivers" ? Color(0xFF79BF42): Color(0xFF79BF42),
+                                      borderRadius: const BorderRadius.only(
+                                        topRight: Radius.circular(5),
+                                        topLeft: Radius.circular(5),
+                                        bottomLeft: Radius.circular(5),
+                                      ),
                                     ),
-                                  ),
-                                  child:  Padding(
-                                    padding: const EdgeInsets.all(15),
-                                    child: Text(
-                                      '${getChatModel.data!.message![i].message}',
-                                      style:  TextStyle(
-                                        color: getChatModel.data!.message![i].receiver=="Drivers" ? Colors.black: Colors.black,
-                                        fontSize: 10,
-                                        fontFamily: 'Montserrat-Regular',
-                                        fontWeight: FontWeight.w600,
+                                    child:  Padding(
+                                      padding: const EdgeInsets.all(15),
+                                      child: Text(
+                                        '${getChatModel.data!.message![i].message}',
+                                        style:  TextStyle(
+                                          color: getChatModel.data!.message![i].receiver=="Drivers" ? Colors.black: Colors.black,
+                                          fontSize: 10,
+                                          fontFamily: 'Montserrat-Regular',
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(height: size.height * 0.005),
-                              Align(
-                                alignment:getChatModel.data!.message![i].receiver=="Drivers" ?  Alignment.centerRight: Alignment.centerLeft,
-                                child: const Text(
-                                  '02:09',
-                                  style: TextStyle(
-                                    color: Color(0xFF79BF42),
-                                    fontSize: 10,
-                                    fontFamily: 'Montserrat-Regular',
-                                    fontWeight: FontWeight.w500,
+                                SizedBox(height: size.height * 0.005),
+                                Align(
+                                  alignment:getChatModel.data!.message![i].receiver=="Drivers" ?  Alignment.centerLeft: Alignment.centerRight,
+                                  child: const Text(
+                                    '02:09',
+                                    style: TextStyle(
+                                      color: Color(0xFF79BF42),
+                                      fontSize: 10,
+                                      fontFamily: 'Montserrat-Regular',
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          );
-                        }),
+                              ],
+                            );
+                          }),
+                    ),
                   )
                       : Container(
                       height:MediaQuery.of(context).size.height/1.3,

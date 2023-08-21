@@ -248,24 +248,36 @@ class _TrackPageState extends State<TrackPage> {
                         SizedBox(height: size.height * 0.02),
                         Row(
                           children: [
-                            Row(
-                              children: [
-                                SvgPicture.asset(
-                                    'assets/images/contact-icon.svg'),
-                                SizedBox(width: size.width * 0.032),
-                                SizedBox(
-                                  width: size.width * 0.275,
-                                  child:  Text(
-                                    '${widget.getBookingData!.contact}',
-                                    style: const TextStyle(
-                                      color: Color(0xFF565656),
-                                      fontSize: 12,
-                                      fontFamily: 'Montserrat-Regular',
-                                      fontWeight: FontWeight.w500,
+                            InkWell(
+                              onTap: ()async {
+                                Uri phoneno = Uri.parse('tel: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}');
+                                if (await launchUrl(phoneno)) {
+                                  //dialer opened
+                                }else{
+                                  //dailer is not opened
+                                }
+                                print(
+                                    "iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
+                              },
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                      'assets/images/contact-icon.svg'),
+                                  SizedBox(width: size.width * 0.032),
+                                  SizedBox(
+                                    width: size.width * 0.275,
+                                    child:  Text(
+                                      '${widget.getBookingData!.contact}',
+                                      style: const TextStyle(
+                                        color: Color(0xFF565656),
+                                        fontSize: 12,
+                                        fontFamily: 'Montserrat-Regular',
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             SizedBox(width: size.width * 0.14),
                             InkWell(
@@ -319,15 +331,25 @@ class _TrackPageState extends State<TrackPage> {
                                 ),
                               ),
                               SizedBox(height: size.height * 0.03),
-                              Text(
-                                'credit (${widget.getBookingData!.bookedFare})',
+                              widget.getBookingData!.paymentType=="credit"?
+                              const Text(
+                                'credit',
                                 style: TextStyle(
                                   color: Color(0xFF565656),
                                   fontSize: 12,
                                   fontFamily: 'Montserrat-Regular',
                                   fontWeight: FontWeight.w500,
                                 ),
-                              ),
+                              ):
+                              Text(
+                                '${widget.getBookingData!.bookedFare}',
+                                style: const TextStyle(
+                                  color: Color(0xFF565656),
+                                  fontSize: 12,
+                                  fontFamily: 'Montserrat-Regular',
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )
                             ],
                           ),
                         if(widget.getBookingData!.cashReceiveFromCustomer != "0")
@@ -349,7 +371,7 @@ class _TrackPageState extends State<TrackPage> {
                               SizedBox(height: size.height * 0.02),
                               Text(
                                 'credit (${widget.getBookingData!.cashReceiveFromCustomer})',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Color(0xFF565656),
                                   fontSize: 12,
                                   fontFamily: 'Montserrat-Regular',
@@ -359,30 +381,7 @@ class _TrackPageState extends State<TrackPage> {
                             ],
                           ),
                         SizedBox(height: size.height * 0.02),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'Agent Fare',
-                              style: TextStyle(
-                                color: Color(0xFF929292),
-                                fontSize: 12,
-                                fontFamily: 'Montserrat-Regular',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            SizedBox(height: size.height * 0.02),
-                            Text(
-                              '${widget.getBookingData!.agentFare}',
-                              style: TextStyle(
-                                color: Color(0xFF565656),
-                                fontSize: 12,
-                                fontFamily: 'Montserrat-Regular',
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
+
                         SizedBox(height: size.height * 0.03),
 
 

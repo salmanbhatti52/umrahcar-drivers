@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 import '../../../models/get_booking_list_model.dart';
@@ -36,11 +37,11 @@ class _PickUpPageState extends State<PickUpPage> {
               bottom: 0,
               child: GestureDetector(
                 onTap: () {
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (context) => driverReached(),
-                  );
+                  // showDialog(
+                  //   context: context,
+                  //   barrierDismissible: false,
+                  //   builder: (context) => driverReached(),
+                  // );
                 },
                 child: Container(
                   width: size.width,
@@ -70,7 +71,7 @@ class _PickUpPageState extends State<PickUpPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                '${widget.getBookingData!.driverTripStatus!.name}',
+                                '${widget.getBookingData!.status}',
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
@@ -78,7 +79,7 @@ class _PickUpPageState extends State<PickUpPage> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 '12 Km Away',
                                 style: TextStyle(
                                   color: Color(0xFF79BF42),
@@ -113,7 +114,7 @@ class _PickUpPageState extends State<PickUpPage> {
                                       CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.name}',
+                                          '${widget.getBookingData!.name}',
                                           style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 16,
@@ -123,7 +124,7 @@ class _PickUpPageState extends State<PickUpPage> {
                                         ),
                                         SizedBox(height: size.height * 0.003),
                                         Text(
-                                          '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}',
+                                          '${widget.getBookingData!.contact}',
                                           style: const TextStyle(
                                             color: Color(0xFF929292),
                                             fontSize: 12,
@@ -158,8 +159,21 @@ class _PickUpPageState extends State<PickUpPage> {
                                       ),
                                     ),
                                     SizedBox(width: size.width * 0.06),
-                                    SvgPicture.asset(
-                                      'assets/images/contact-icon.svg',
+                                    InkWell(
+                                      onTap: () async {
+                                        print("iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
+                                        Uri phoneno = Uri.parse('tel: ${widget.getBookingData!.contact}');
+                                        if (await launchUrl(phoneno)) {
+                                          //dialer opened
+                                        }else{
+                                          //dailer is not opened
+                                        }
+                                        print(
+                                            "iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
+                                      },
+                                      child: SvgPicture.asset(
+                                        'assets/images/contact-icon.svg',
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -301,8 +315,8 @@ class _PickUpPageState extends State<PickUpPage> {
                 children: [
                   SvgPicture.asset('assets/images/green-fast-car-icon.svg'),
                   SizedBox(width: size.width * 0.02),
-                  const Text(
-                    'Tesla S45 , Model 2022',
+                   Text(
+                    '${widget.getBookingData!.routes!.pickup!.name}',
                     style: TextStyle(
                       color: Color(0xFF79BF42),
                       fontSize: 12,
@@ -325,27 +339,29 @@ class _PickUpPageState extends State<PickUpPage> {
               ),
               SizedBox(height: size.height * 0.08),
               GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     print("iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              ChatPage(bookingId: widget.getBookingData!.bookingsId,usersDriverId: widget.getBookingData!.vehicles![0].usersDriversId,guestName: widget.getBookingData!.name,driverName: widget.getBookingData!.vehicles![0].vehiclesDrivers!.name),
-                        ));
+                    Uri phoneno = Uri.parse('tel: ${widget.getBookingData!.contact}');
+                    if (await launchUrl(phoneno)) {
+                    //dialer opened
+                    }else{
+                    //dailer is not opened
+                    }
+                    print(
+                    "iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
                   },
                   child: dialogButtonTransparent('Contact', context)),
               SizedBox(height: size.height * 0.02),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DropOffPage(),
-                      ));
-                },
-                child: dialogButton('Go a head', context),
-              ),
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //           builder: (context) => const DropOffPage(),
+              //         ));
+              //   },
+              //   child: dialogButton('Go a head', context),
+              // ),
             ],
           ),
         ),

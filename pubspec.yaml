@@ -51,6 +51,9 @@ dependencies:
   intl: ^0.18.1
   url_launcher: ^6.1.12
   geolocator: ^10.0.0
+  google_maps_flutter:
+  location:
+  rename: ^2.1.1
 
 dev_dependencies:
   flutter_test:
