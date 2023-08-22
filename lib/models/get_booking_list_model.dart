@@ -30,6 +30,8 @@ class GetBookingData {
   String? name;
   String? contact;
   String? whatsapp;
+  String? guestLattitude;
+  String? guestLongitude;
   String? bookedBy;
   String? bookingDate;
   String? bookingTime;
@@ -82,6 +84,8 @@ class GetBookingData {
     this.name,
     this.contact,
     this.whatsapp,
+    this.guestLattitude,
+    this.guestLongitude,
     this.bookedBy,
     this.bookingDate,
     this.bookingTime,
@@ -135,6 +139,8 @@ class GetBookingData {
     name: json["name"],
     contact: json["contact"],
     whatsapp: json["whatsapp"],
+    guestLattitude: json["guest_lattitude"],
+    guestLongitude: json["guest_longitude"],
     bookedBy: json["booked_by"],
     bookingDate: json["booking_date"],
     bookingTime: json["booking_time"],
@@ -193,6 +199,8 @@ class GetBookingData {
     "name": name,
     "contact": contact,
     "whatsapp": whatsapp,
+    "guest_lattitude": guestLattitude,
+    "guest_longitude": guestLongitude,
     "booked_by": bookedBy,
     "booking_date": bookingDate,
     "booking_time": bookingTime,
