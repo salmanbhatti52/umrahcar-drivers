@@ -239,16 +239,18 @@ class _TrackPageState extends State<TrackPage> {
                               ),
                             ),
                             const SizedBox(width: 20,),
-                            Text(
-                              '(Booking Id ${widget.getBookingData!.bookingsId})',
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontFamily: 'Montserrat-Regular',
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
+
                           ],
+                        ),
+                        SizedBox(height: size.height * 0.02),
+                        Text(
+                          '(Booking Id ${widget.getBookingData!.bookingsId})',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 13,
+                            fontFamily: 'Montserrat-Regular',
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                         SizedBox(height: size.height * 0.02),
                         const Text(

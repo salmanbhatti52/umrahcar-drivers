@@ -25,6 +25,9 @@ class Data {
   List<String>? serviceType;
   List<RoutesPickup>? routesPickup;
   List<Setting>? settings;
+  List<AccountsHeads>? accountsHeadsAgents;
+  List<AccountsHeads>? accountsHeadsDrivers;
+  List<BookingsDriversStatus>? bookingsDriversStatus;
 
   Data({
     this.flightCompanies,
@@ -33,6 +36,9 @@ class Data {
     this.serviceType,
     this.routesPickup,
     this.settings,
+    this.accountsHeadsAgents,
+    this.accountsHeadsDrivers,
+    this.bookingsDriversStatus,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -42,6 +48,9 @@ class Data {
     serviceType: List<String>.from(json["service_type"].map((x) => x)),
     routesPickup: List<RoutesPickup>.from(json["routes_pickup"].map((x) => RoutesPickup.fromJson(x))),
     settings: List<Setting>.from(json["settings"].map((x) => Setting.fromJson(x))),
+    accountsHeadsAgents: List<AccountsHeads>.from(json["accounts_heads_agents"].map((x) => AccountsHeads.fromJson(x))),
+    accountsHeadsDrivers: List<AccountsHeads>.from(json["accounts_heads_drivers"].map((x) => AccountsHeads.fromJson(x))),
+    bookingsDriversStatus: List<BookingsDriversStatus>.from(json["bookings_drivers_status"].map((x) => BookingsDriversStatus.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -51,6 +60,60 @@ class Data {
     "service_type": List<dynamic>.from(serviceType!.map((x) => x)),
     "routes_pickup": List<dynamic>.from(routesPickup!.map((x) => x.toJson())),
     "settings": List<dynamic>.from(settings!.map((x) => x.toJson())),
+    "accounts_heads_agents": List<dynamic>.from(accountsHeadsAgents!.map((x) => x.toJson())),
+    "accounts_heads_drivers": List<dynamic>.from(accountsHeadsDrivers!.map((x) => x.toJson())),
+    "bookings_drivers_status": List<dynamic>.from(bookingsDriversStatus!.map((x) => x.toJson())),
+  };
+}
+
+class AccountsHeads {
+  String? accountsHeadsId;
+  String? name;
+  String? roles;
+  String? status;
+
+  AccountsHeads({
+    this.accountsHeadsId,
+    this.name,
+    this.roles,
+    this.status,
+  });
+
+  factory AccountsHeads.fromJson(Map<String, dynamic> json) => AccountsHeads(
+    accountsHeadsId: json["accounts_heads_id"],
+    name: json["name"],
+    roles: json["roles"],
+    status: json["status"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "accounts_heads_id": accountsHeadsId,
+    "name": name,
+    "roles": roles,
+    "status": status,
+  };
+}
+class BookingsDriversStatus {
+  String? bookingsDriversStatusId;
+  String? name;
+  String? status;
+
+  BookingsDriversStatus({
+    this.bookingsDriversStatusId,
+    this.name,
+    this.status,
+  });
+
+  factory BookingsDriversStatus.fromJson(Map<String, dynamic> json) => BookingsDriversStatus(
+    bookingsDriversStatusId: json["bookings_drivers_status_id"],
+    name: json["name"],
+    status: json["status"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "bookings_drivers_status_id": bookingsDriversStatusId,
+    "name": name,
+    "status": status,
   };
 }
 

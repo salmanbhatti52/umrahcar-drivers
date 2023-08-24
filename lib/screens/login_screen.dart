@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -308,10 +309,17 @@ class _LogInPageState extends State<LogInPage> {
                     GestureDetector(
                         onTap: () async {
                           if (_formKey.currentState!.validate()) {
+
+                            final status =
+                            await OneSignal.shared.getDeviceState();
+                            String? onesignalId = status?.userId;
+
+                            print("onesignalId: ${onesignalId}");
+
                             print("email: ${emailController.text}");
                             print("password: ${passwordController.text}");
                             var mapData={
-                              "onesignal_id": "123",
+                              "onesignal_id": "$onesignalId",
                               "email": emailController.text,
                               "password": passwordController.text,
                               "longitude":"",
