@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:umrahcar_driver/models/driver_status_model.dart';
 import 'package:umrahcar_driver/utils/colors.dart';
 import 'package:umrahcar_driver/widgets/button.dart';
 import 'package:umrahcar_driver/screens/tracking_process/tarcking/pickup_screen.dart';
@@ -84,13 +85,15 @@ class _TrackPageState extends State<TrackPage> {
 
   Timer? timer;
   GetAllSystemData getAllSystemData = GetAllSystemData();
-
+  late List<String> driverStatus = [];
+String? selectedDriverStatusValue;
   getSystemAllData() async {
     getAllSystemData = await DioClient().getSystemAllData(context);
     if (getAllSystemData != null) {
       print("GETSystemAllData: ${getAllSystemData.data}");
       setState(() {
         getSettingsData();
+        getDriverStatusData();
       });
     }
   }
@@ -126,6 +129,16 @@ class _TrackPageState extends State<TrackPage> {
       }
     }
   }
+  getDriverStatusData(){
+    driverStatus=[];
+    if (getAllSystemData!.data! != null) {
+      for (int i = 0; i < getAllSystemData!.data!.bookingsDriversStatus!.length; i++) {
+        driverStatus.add(getAllSystemData!.data!.bookingsDriversStatus![i].name!);
+
+        print("Driver Status Data= $driverStatus");
+      }
+    }
+  }
 
   GetBookingListModel getBookingOngoingResponse=GetBookingListModel();
 
@@ -143,6 +156,7 @@ class _TrackPageState extends State<TrackPage> {
         print("latt: ${getBookingOngoingResponse.data![i].guestLattitude!}");
         print("long: ${getBookingOngoingResponse.data![i].guestLongitude!}");
         setState(() {
+
 
         });
       }
@@ -170,6 +184,22 @@ class _TrackPageState extends State<TrackPage> {
     // TODO: implement dispose
     super.dispose();
   }
+
+  DriverStatusModel driverStatusModel=DriverStatusModel();
+  changeDriverStatus(String? statusValue)async{
+    var jsonData={
+      "bookings_id":"${widget.getBookingData!.bookingsId}",
+      "driver_trip_status":"${statusValue}"
+    };
+    print("jsonDatata: ${jsonData}");
+    driverStatusModel= await DioClient().driverStatus(jsonData, context);
+    if(driverStatusModel.message!=null){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${driverStatusModel.message}")));
+    }
+
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -228,6 +258,7 @@ class _TrackPageState extends State<TrackPage> {
                       children: [
                         SizedBox(height: size.height * 0.03),
                         Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             const Text(
                               'Bookings Details',
@@ -239,7 +270,114 @@ class _TrackPageState extends State<TrackPage> {
                               ),
                             ),
                             const SizedBox(width: 20,),
+                            Expanded(
+                              child: Container(
+                                color: Colors.transparent,
+                                width: size.width,
+                                height: 55,
+                                child: ButtonTheme(
+                                  alignedDropdown: true,
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButtonFormField(
+                                      isDense: true,
 
+                                      icon: Padding(
+                                        padding: const EdgeInsets.only(top: 3),
+                                        child: SvgPicture.asset(
+                                          'assets/images/dropdown-icon.svg',
+                                          width: 20,
+                                          height: 20,
+
+                                          fit: BoxFit.scaleDown,
+                                        ),
+                                      ),
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(16)),
+                                          borderSide: BorderSide(
+                                            color: const Color(0xFF000000)
+                                                .withOpacity(0.15),
+                                            width: 1,
+                                          ),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(16)),
+                                          borderSide: BorderSide(
+                                            color: const Color(0xFF000000)
+                                                .withOpacity(0.15),
+                                            width: 1,
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(16)),
+                                          borderSide: BorderSide(
+                                            color: const Color(0xFF000000)
+                                                .withOpacity(0.15),
+                                            width: 1,
+                                          ),
+                                        ),
+                                        // prefixIcon: SvgPicture.asset(
+                                        //   'assets/images/service-icon.svg',
+                                        //   width: 10,
+                                        //   height: 8,
+                                        //   fit: BoxFit.scaleDown,
+                                        // ),
+                                        hintText: 'Driver Status',
+                                        // contentPadding: EdgeInsets.symmetric(horizontal: 25),
+                                        hintStyle: const TextStyle(
+                                          color: Color(0xFF929292),
+                                          fontSize: 10,
+                                          fontFamily: 'Montserrat-Regular',
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      borderRadius: BorderRadius.circular(16),
+                                      items: driverStatus!
+                                          .map(
+                                            (item) => DropdownMenuItem<String>(
+                                          value: item,
+                                          child: Text(
+                                            item,
+                                            style: const TextStyle(
+                                              color: Color(0xFF929292),
+                                              fontSize: 10,
+                                              fontFamily: 'Montserrat-Regular',
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                          .toList(),
+                                      value: selectedDriverStatusValue,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          selectedDriverStatusValue = value;
+                                          print("Selected Status: ${selectedDriverStatusValue}");
+                                          for(int i=0;i<getAllSystemData.data!.bookingsDriversStatus!.length;i++){
+
+                                            if(selectedDriverStatusValue==getAllSystemData.data!.bookingsDriversStatus![i].name){
+
+                                              String statusId=getAllSystemData.data!.bookingsDriversStatus![i].bookingsDriversStatusId!;
+                                              print("Status Id: ${statusId}");
+                                              changeDriverStatus(statusId);
+                                              setState(() {
+
+                                              });
+
+                                            }
+
+                                          }
+
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                         SizedBox(height: size.height * 0.02),

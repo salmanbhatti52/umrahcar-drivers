@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:umrahcar_driver/models/driver_status_model.dart';
 import 'package:umrahcar_driver/models/update_driver_location_model.dart';
 
 import '../models/add_card_model.dart';
@@ -386,6 +387,49 @@ print("model: ${model}");
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No data received.")));
+
+      rethrow;
+    }
+  }
+  Future<DriverStatusModel> driverStatus(Map<String?,dynamic?> model,BuildContext context) async {
+    print("data: ${model}");
+    try {
+      final response =
+      await _dio.post('$baseUrl/drivers_status_update',data: model);
+      if (response.statusCode == 200) {
+        print("hiiii ${response.data}");
+        var res= DriverStatusModel.fromJson(response.data);
+        return res;
+      }
+      else  {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Status Changed.")));
+        throw 'SomeThing Missing';
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Status Changed.")));
+
+      rethrow;
+    }
+  }
+  Future<DriverStatusModel> deleteTransaction(Map<String?,dynamic?> model,BuildContext context) async {
+    print("data: ${model}");
+    try {
+      final response =
+      await _dio.post('$baseUrl/transactions_drivers_delete',data: model);
+      if (response.statusCode == 200) {
+        print("hiiii ${response.data}");
+        var res= DriverStatusModel.fromJson(response.data);
+        return res;
+      }
+      else  {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Unable To Delete Transaction. Only Pending transactions can be deleted")));
+        throw 'SomeThing Missing';
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Unable To Delete Transaction. Only Pending transactions can be deleted")));
 
       rethrow;
     }
