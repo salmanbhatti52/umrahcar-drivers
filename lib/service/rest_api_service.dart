@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:umrahcar_driver/models/distance_calculate_model.dart';
 import 'package:umrahcar_driver/models/driver_status_model.dart';
 import 'package:umrahcar_driver/models/update_driver_location_model.dart';
 
@@ -419,6 +420,29 @@ print("model: ${model}");
       if (response.statusCode == 200) {
         print("hiiii ${response.data}");
         var res= DriverStatusModel.fromJson(response.data);
+        return res;
+      }
+      else  {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Unable To Delete Transaction. Only Pending transactions can be deleted")));
+        throw 'SomeThing Missing';
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Unable To Delete Transaction. Only Pending transactions can be deleted")));
+
+      rethrow;
+    }
+
+  }Future<DistanceCalculatorModel> distanceCalculate(Map<String?,dynamic?> model,BuildContext context) async {
+    print("data: ${model}");
+    try {
+      final response =
+      await _dio.post('$baseUrl/calculate_distance',data: model);
+      if (response.statusCode == 200) {
+        print("hiiii ${response.data}");
+        var res= DistanceCalculatorModel.fromJson(response.data);
         return res;
       }
       else  {

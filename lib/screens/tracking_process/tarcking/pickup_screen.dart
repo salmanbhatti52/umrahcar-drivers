@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:umrahcar_driver/models/distance_calculate_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
@@ -111,6 +112,7 @@ class _PickUpPageState extends State<PickUpPage> {
           print("timer lat: ${timerCount}");
         } else if (pickSettingsData[i].type == "longitude"  && widget.getBookingData!.guestLongitude==null) {
           long = double.parse(pickSettingsData[i].description!);
+          calculateDistance(widget.getBookingData!.vehicles![0].vehiclesDrivers!.longitude,widget.getBookingData!.vehicles![0].vehiclesDrivers!.lattitude);
           print("timer long: ${timerCount}");
         }
       }
@@ -130,6 +132,9 @@ class _PickUpPageState extends State<PickUpPage> {
       if (widget.getBookingData!.bookingsId==getBookingOngoingResponse.data![i].bookingsId) {
         lat = double.parse(getBookingOngoingResponse.data![i].guestLattitude!);
         long=double.parse(getBookingOngoingResponse.data![i].guestLongitude!);
+        String? latt=getBookingOngoingResponse.data![i].vehicles![0].vehiclesDrivers!.lattitude;
+        String? longg=getBookingOngoingResponse.data![i].vehicles![0].vehiclesDrivers!.longitude;
+        calculateDistance(longg,latt);
         print("latt: ${getBookingOngoingResponse.data![i].guestLattitude!}");
         print("long: ${getBookingOngoingResponse.data![i].guestLongitude!}");
         setState(() {
@@ -140,6 +145,30 @@ class _PickUpPageState extends State<PickUpPage> {
 
 
   }
+
+
+  DistanceCalculatorModel distanceCalculatorModel=DistanceCalculatorModel();
+
+String? distance="";
+  calculateDistance(String? longg,String? latt)async{
+    var jsonData={
+      "from_lat":"${latt}",
+      "from_long":"${longg}",
+      "to_lat":"${lat}",
+      "to_long":"${long}"
+    };
+    print("jsonjsonData: ${jsonData}");
+    distanceCalculatorModel=await DioClient().distanceCalculate(jsonData, context);
+    if(distanceCalculatorModel.data !=null){
+      print("distanceeee: ${distanceCalculatorModel.data!.distance}");
+      distance=distanceCalculatorModel.data!.distance;
+      setState(() {
+
+      });
+    }
+  }
+
+
   void initState() {
     getSystemAllData();
 
@@ -236,9 +265,9 @@ class _PickUpPageState extends State<PickUpPage> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              const Text(
-                                '12 Km Away',
-                                style: TextStyle(
+                               Text(
+                                '${distance} Away',
+                                style: const TextStyle(
                                   color: Color(0xFF79BF42),
                                   fontSize: 16,
                                   fontFamily: 'Montserrat-Regular',

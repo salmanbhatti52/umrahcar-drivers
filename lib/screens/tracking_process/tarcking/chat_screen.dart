@@ -187,18 +187,18 @@ class _ChatPageState extends State<ChatPage> {
                                   ),
                                 ),
                                 SizedBox(height: size.height * 0.005),
-                                Align(
-                                  alignment:getChatModel.data!.message![i].receiver=="Drivers" ?  Alignment.centerLeft: Alignment.centerRight,
-                                  child: const Text(
-                                    '02:09',
-                                    style: TextStyle(
-                                      color: Color(0xFF79BF42),
-                                      fontSize: 10,
-                                      fontFamily: 'Montserrat-Regular',
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
+                                // Align(
+                                //   alignment:getChatModel.data!.message![i].receiver=="Drivers" ?  Alignment.centerLeft: Alignment.centerRight,
+                                //   child: const Text(
+                                //     '02:09',
+                                //     style: TextStyle(
+                                //       color: Color(0xFF79BF42),
+                                //       fontSize: 10,
+                                //       fontFamily: 'Montserrat-Regular',
+                                //       fontWeight: FontWeight.w500,
+                                //     ),
+                                //   ),
+                                // ),
                               ],
                             );
                           }),

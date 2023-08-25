@@ -605,6 +605,9 @@ class Vehicle {
 class VehiclesDrivers {
   String? usersDriversId;
   String? parentId;
+  String? onesignalId;
+  String? longitude;
+  String? lattitude;
   String? walletAmount;
   String? driversType;
   String? companyName;
@@ -623,6 +626,9 @@ class VehiclesDrivers {
   VehiclesDrivers({
     this.usersDriversId,
     this.parentId,
+    this.onesignalId,
+    this.longitude,
+    this.lattitude,
     this.walletAmount,
     this.driversType,
     this.companyName,
@@ -642,6 +648,9 @@ class VehiclesDrivers {
   factory VehiclesDrivers.fromJson(Map<String, dynamic> json) => VehiclesDrivers(
     usersDriversId: json["users_drivers_id"],
     parentId: json["parent_id"],
+    onesignalId: json["onesignal_id"],
+    longitude: json["longitude"],
+    lattitude: json["lattitude"],
     walletAmount: json["wallet_amount"],
     driversType: json["drivers_type"],
     companyName: json["company_name"],
@@ -661,6 +670,9 @@ class VehiclesDrivers {
   Map<String, dynamic> toJson() => {
     "users_drivers_id": usersDriversId,
     "parent_id": parentId,
+    "onesignal_id": onesignalId,
+    "longitude": longitude,
+    "lattitude": lattitude,
     "wallet_amount": walletAmount,
     "drivers_type": driversType,
     "company_name": companyName,
