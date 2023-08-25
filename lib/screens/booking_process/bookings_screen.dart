@@ -11,7 +11,8 @@ import '../../service/rest_api_service.dart';
 import '../homepage_screen.dart';
 
 class BookingsPage extends StatefulWidget {
-  const BookingsPage({super.key});
+  int? indexNmbr=0;
+   BookingsPage({super.key,this.indexNmbr});
 
   @override
   State<BookingsPage> createState() => _BookingsPageState();
@@ -158,6 +159,7 @@ class _BookingsPageState extends State<BookingsPage> {
 
   @override
   void initState() {
+    print("bookingPage: ${widget.indexNmbr}");
     getSystemAllData();
     // TODO: implement initState
     super.initState();
@@ -190,7 +192,7 @@ class _BookingsPageState extends State<BookingsPage> {
           child: Column(
             children: [
               SizedBox(height: size.height * 0.02),
-              const TabbarBookings(),
+               TabbarBookings( indexNmbr: widget.indexNmbr),
             ],
           ),
         ),

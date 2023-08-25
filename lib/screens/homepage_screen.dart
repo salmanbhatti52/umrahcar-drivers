@@ -11,12 +11,14 @@ import 'package:umrahcar_driver/service/rest_api_service.dart';
 import 'package:umrahcar_driver/utils/colors.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:umrahcar_driver/utils/const.dart';
+import 'package:umrahcar_driver/widgets/ongoing_list.dart';
 import 'package:umrahcar_driver/widgets/top_boxes.dart';
 import 'package:umrahcar_driver/widgets/home_list.dart';
 import 'package:umrahcar_driver/screens/tracking_process/tarcking/dropoff_screen.dart';
 
 import '../models/get_all_system_data_model.dart';
 import '../models/get_booking_list_model.dart';
+import '../widgets/navbar.dart';
 import '../widgets/upcoming_list.dart';
 
 var userId;
@@ -382,12 +384,39 @@ getSettingsData() {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          box('assets/images/white-fast-car-icon.svg', getBookingOngoingResponse.data!=null ?'${getBookingOngoingResponse.data!.length}':"0",
-                              'On Going Bookings', context),
-                          box('assets/images/white-fast-car-icon.svg',getBookingUpcomingResponse.data!=null ? '${getBookingUpcomingResponse.data!.length}':"0",
-                              'Upcoming Bookings', context),
-                          box('assets/images/white-fast-car-icon.svg',getBookingCompletedResponse.data!=null? '${getBookingCompletedResponse.data!.length}':"0",
-                              'Completed Bookings', context),
+                          InkWell(
+                            onTap: (){
+                              Navigator.pushReplacement(
+                                  context, MaterialPageRoute(builder: (context) =>  NavBar(indexNmbr: 1,)));
+                              setState(() {
+
+                              });
+                            },
+                            child: box('assets/images/white-fast-car-icon.svg', getBookingOngoingResponse.data!=null ?'${getBookingOngoingResponse.data!.length}':"0",
+                                'On Going Bookings', context),
+                          ),
+                          InkWell(
+                            onTap: (){
+                              Navigator.pushReplacement(
+                                  context, MaterialPageRoute(builder: (context) =>  NavBar(indexNmbr: 1,bookingNmbr: 1,)));
+                              setState(() {
+
+                              });
+                            },
+                            child: box('assets/images/white-fast-car-icon.svg',getBookingUpcomingResponse.data!=null ? '${getBookingUpcomingResponse.data!.length}':"0",
+                                'Upcoming Bookings', context),
+                          ),
+                          InkWell(
+                            onTap: (){
+                              Navigator.pushReplacement(
+                                  context, MaterialPageRoute(builder: (context) =>  NavBar(indexNmbr: 1,bookingNmbr: 2,)));
+                              setState(() {
+
+                              });
+                            },
+                            child: box('assets/images/white-fast-car-icon.svg',getBookingCompletedResponse.data!=null? '${getBookingCompletedResponse.data!.length}':"0",
+                                'Completed Bookings', context),
+                          ),
                         ],
                       ),
                       SizedBox(height: size.height * 0.03),
@@ -397,7 +426,7 @@ getSettingsData() {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Upcoming Bookings',
+                              'Ongoing Bookings',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Montserrat-Regular',
@@ -415,7 +444,7 @@ getSettingsData() {
                         height: size.height * 0.279,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child:upComingList(context,getBookingUpcomingResponse),
+                          child:onGoingList(context,getBookingOngoingResponse),
                         ),
                       ),
                     ],

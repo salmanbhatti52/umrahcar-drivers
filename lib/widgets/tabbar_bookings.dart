@@ -4,7 +4,8 @@ import 'package:umrahcar_driver/screens/booking_process/tab_screens/upcoming_scr
 import 'package:umrahcar_driver/screens/booking_process/tab_screens/completed_screen.dart';
 
 class TabbarBookings extends StatefulWidget {
-  const TabbarBookings({super.key});
+  int? indexNmbr=0;
+   TabbarBookings({super.key,this.indexNmbr});
 
   @override
   State<TabbarBookings> createState() => _TabbarBookingsState();
@@ -15,10 +16,21 @@ abstract class TickerProvider {}
 class _TabbarBookingsState extends State<TabbarBookings>
     with TickerProviderStateMixin {
   List<String> tabs = ["On Going", "Upcoming", "Completed"];
+  int index=0;
+  @override
+  void initState() {
+    if(widget.indexNmbr !=null){
+      index=widget.indexNmbr!;
+      setState(() {
 
+      });
+    }
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    TabController tabController = TabController(length: 3, vsync: this);
+    TabController tabController = TabController(length: 3, vsync: this,initialIndex: index);
     return Column(
       children: [
         Padding(

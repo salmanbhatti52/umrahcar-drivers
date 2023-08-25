@@ -165,7 +165,7 @@ class _ChatPageState extends State<ChatPage> {
                                   alignment:getChatModel.data!.message![i].receiver=="Drivers" ?  Alignment.centerLeft: Alignment.centerRight,
                                   child: Container(
                                     decoration:  BoxDecoration(
-                                      color: getChatModel.data!.message![i].receiver=="Drivers" ? Color(0xFF79BF42): Color(0xFF79BF42),
+                                      color: getChatModel.data!.message![i].receiver=="Drivers" ? Color(0xFF79BF42): Colors.blue,
                                       borderRadius: const BorderRadius.only(
                                         topRight: Radius.circular(5),
                                         topLeft: Radius.circular(5),
@@ -177,8 +177,8 @@ class _ChatPageState extends State<ChatPage> {
                                       child: Text(
                                         '${getChatModel.data!.message![i].message}',
                                         style:  TextStyle(
-                                          color: getChatModel.data!.message![i].receiver=="Drivers" ? Colors.black: Colors.black,
-                                          fontSize: 10,
+                                          color: getChatModel.data!.message![i].receiver=="Drivers" ? Colors.black: Colors.white,
+                                          fontSize: 12,
                                           fontFamily: 'Montserrat-Regular',
                                           fontWeight: FontWeight.w600,
                                         ),

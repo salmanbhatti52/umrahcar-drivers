@@ -165,6 +165,7 @@ String? selectedDriverStatusValue;
 
   }
   void initState() {
+
     getSystemAllData();
 
     addCustomIcon();
@@ -175,6 +176,8 @@ String? selectedDriverStatusValue;
       print(
           "log: ${widget.getBookingData!.guestLongitude}");
     }
+    if(widget.getBookingData!.driverTripStatus!=null){
+      selectedDriverStatusValue==widget.getBookingData!.driverTripStatus!.name;}
     // TODO: implement initState
     super.initState();
   }
@@ -270,6 +273,7 @@ String? selectedDriverStatusValue;
                               ),
                             ),
                             const SizedBox(width: 20,),
+                            if(widget.getBookingData!.driverTripStatus!.name!="Ride End")
                             Expanded(
                               child: Container(
                                 color: Colors.transparent,
@@ -352,7 +356,7 @@ String? selectedDriverStatusValue;
                                       )
                                           .toList(),
                                       value: selectedDriverStatusValue,
-                                      onChanged: (value) {
+                                      onChanged: selectedDriverStatusValue=="Ride End" ? null :(String? value) {
                                         setState(() {
                                           selectedDriverStatusValue = value;
                                           print("Selected Status: ${selectedDriverStatusValue}");
@@ -699,7 +703,16 @@ String? selectedDriverStatusValue;
                         SizedBox(height: size.height * 0.03),
 
 
-                        GestureDetector(
+                        selectedDriverStatusValue=="Ride End" ||widget.getBookingData!.driverTripStatus!.name=="Ride End"? GestureDetector(
+                          onTap: () {
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (context) =>  PickUpPage(getBookingData: widget.getBookingData),
+                            //     ));
+                          },
+                          child: button('Completed', context),
+                        ):GestureDetector(
                           onTap: () {
                             Navigator.push(
                                 context,
@@ -707,7 +720,7 @@ String? selectedDriverStatusValue;
                                   builder: (context) =>  PickUpPage(getBookingData: widget.getBookingData),
                                 ));
                           },
-                          child: button('Track', context),
+                          child: button('Track Passenger', context),
                         ),
                         SizedBox(height: size.height * 0.02),
 

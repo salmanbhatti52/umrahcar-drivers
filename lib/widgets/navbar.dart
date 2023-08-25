@@ -11,8 +11,8 @@ import '../screens/wallet_screen.dart';
 class NavBar extends StatefulWidget {
   int? indexNmbr;
   int? walletPage;
-
-   NavBar({super.key,this.indexNmbr,this.walletPage});
+ int? bookingNmbr;
+   NavBar({super.key,this.indexNmbr,this.walletPage,this.bookingNmbr});
 
   @override
   State<NavBar> createState() => _NavBarState();
@@ -27,6 +27,7 @@ class _NavBarState extends State<NavBar> {
     if(widget.indexNmbr !=null)
       index=widget.indexNmbr!;
     print("index Id; ${index}");
+    print("bookingPage0; ${widget.bookingNmbr}");
 
     // TODO: implement initState
     super.initState();
@@ -36,7 +37,7 @@ class _NavBarState extends State<NavBar> {
   Widget build(BuildContext context) {
     final screens = [
       HomePage(),
-      BookingsPage(),
+      BookingsPage(indexNmbr: widget.bookingNmbr),
       ProfilePage(),
       WalletPage(indexNmbr: widget.walletPage,),
       SetttingsPage(),

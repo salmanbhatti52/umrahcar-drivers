@@ -99,6 +99,15 @@ class _LogInPageState extends State<LogInPage> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
+                    SizedBox(height: size.height * 0.02),
+                    const Text(
+                      '(For Drivers)',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'Montserrat-Regular',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                     SizedBox(height: size.height * 0.06),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
