@@ -435,7 +435,8 @@ print("model: ${model}");
       rethrow;
     }
 
-  }Future<DistanceCalculatorModel> distanceCalculate(Map<String?,dynamic?> model,BuildContext context) async {
+  }
+  Future<DistanceCalculatorModel> distanceCalculate(Map<String?,dynamic?> model,BuildContext context) async {
     print("data: ${model}");
     try {
       final response =

@@ -104,7 +104,7 @@ class _WalletPageState extends State<WalletPage> {
 
                             });
                             },
-                            child: bignoimageredbox('Add', 'Debit/Credit card', context)),
+                            child: bignoimageredbox('Debit/Credit', 'Transactions', context)),
                       ],
                     ),
                     SizedBox(height: size.height * 0.03),
@@ -210,7 +210,7 @@ Widget bignoimageredbox(priceText, titleText, context) {
               color: Colors.white,
               fontFamily: 'Montserrat-Regular',
               fontWeight: FontWeight.w600,
-              fontSize: 22,
+              fontSize: 16,
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.01),

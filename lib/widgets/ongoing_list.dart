@@ -10,7 +10,7 @@ Widget onGoingList(BuildContext context,GetBookingListModel getBookingOngoingDat
   var size = MediaQuery.of(context).size;
   return getBookingOngoingData.data !=null ?
   ListView.builder(
-    physics: const BouncingScrollPhysics(),
+    physics: const AlwaysScrollableScrollPhysics(),
     shrinkWrap: true,
     scrollDirection: Axis.vertical,
     itemCount: getBookingOngoingData.data!.length,

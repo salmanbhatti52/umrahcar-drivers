@@ -105,7 +105,7 @@ class _AddCardPageState extends State<AddCardPage> {
               children: [
                 SizedBox(height: size.height * 0.09),
                 const Text(
-                  'Add Debit/Credit Card',
+                  'Add Debit / Credit Transactions ',
                   style: TextStyle(
                     fontSize: 20,
                     fontFamily: 'Montserrat-Regular',
@@ -121,15 +121,14 @@ class _AddCardPageState extends State<AddCardPage> {
                         width: 100,
                         height:100,
                         decoration: const BoxDecoration(
-                            color: Colors.red, shape: BoxShape.circle),
+                            color: Colors.transparent, shape: BoxShape.circle),
                         child: imagePath != null
                             ? Image.file(
                           imagePath!,
                           fit: BoxFit.cover,
                         )
                             : Image.asset(
-                          'assets/images/profile.png',
-                          fit: BoxFit.cover,
+                          'assets/images/place.png',
                         ),
                       ),
                     ),
@@ -293,7 +292,7 @@ class _AddCardPageState extends State<AddCardPage> {
                             //   height: 8,
                             //   fit: BoxFit.scaleDown,
                             // ),
-                            hintText: 'Card Type',
+                            hintText: 'Transaction Type',
                             contentPadding: EdgeInsets.only(left: 35),
                             hintStyle: const TextStyle(
                               color: Color(0xFF929292),

@@ -92,22 +92,23 @@ class _LogInPageState extends State<LogInPage> {
                     ),
                     SizedBox(height: size.height * 0.04),
                     const Text(
-                      'Login to Your Account',
+                      'Welcome to UmrahCar Driver App',
                       style: TextStyle(
                         fontSize: 20,
                         fontFamily: 'Montserrat-Regular',
                         fontWeight: FontWeight.w600,
                       ),
+                      textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: size.height * 0.02),
-                    const Text(
-                      '(For Drivers)',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                    // SizedBox(height: size.height * 0.02),
+                    // const Text(
+                    //   '(For Drivers)',
+                    //   style: TextStyle(
+                    //     fontSize: 18,
+                    //     fontFamily: 'Montserrat-Regular',
+                    //     fontWeight: FontWeight.w500,
+                    //   ),
+                    // ),
                     SizedBox(height: size.height * 0.06),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),

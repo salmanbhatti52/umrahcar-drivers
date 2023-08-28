@@ -428,16 +428,16 @@ String? distance="";
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              SizedBox(width: size.width * 0.05),
-                              const Text(
-                                'Waiting',
-                                style: TextStyle(
-                                  color: Color(0xFF79BF42),
-                                  fontSize: 12,
-                                  fontFamily: 'Montserrat-Regular',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
+                              // SizedBox(width: size.width * 0.05),
+                              // const Text(
+                              //   'Waiting',
+                              //   style: TextStyle(
+                              //     color: Color(0xFF79BF42),
+                              //     fontSize: 12,
+                              //     fontFamily: 'Montserrat-Regular',
+                              //     fontWeight: FontWeight.w500,
+                              //   ),
+                              // ),
                             ],
                           ),
                         ],

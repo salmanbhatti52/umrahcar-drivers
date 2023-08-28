@@ -444,7 +444,14 @@ getSettingsData() {
                         height: size.height * 0.279,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child:onGoingList(context,getBookingOngoingResponse),
+                          child:RefreshIndicator(
+                              onRefresh: ()async{
+                                getBookingListOngoing();
+                                setState(() {
+
+                                });
+                              },
+                              child: onGoingList(context,getBookingOngoingResponse)),
                         ),
                       ),
                     ],
