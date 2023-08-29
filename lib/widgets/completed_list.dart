@@ -125,7 +125,7 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                           'assets/images/small-black-bookings-icon.svg'),
                       SizedBox(width: size.width * 0.01),
                       Text(
-                        '${getData.bookingTime} ${getData.bookingDate}',
+                        '${getData.pickupTime} ${getData.pickupDate}',
                         style: const TextStyle(
                           color: Color(0xFF565656),
                           fontSize: 8,

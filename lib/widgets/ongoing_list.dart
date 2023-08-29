@@ -145,7 +145,7 @@ Widget onGoingList(BuildContext context,GetBookingListModel getBookingOngoingDat
                             'assets/images/small-black-bookings-icon.svg'),
                         SizedBox(width: size.width * 0.01),
                         Text(
-                          '${getData.bookingTime} ${getData.bookingDate}',
+                          '${getData.pickupTime} ${getData.pickupDate}',
                           style: TextStyle(
                             color: Color(0xFF565656),
                             fontSize: 8,
