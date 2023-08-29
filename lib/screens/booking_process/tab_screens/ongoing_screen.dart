@@ -20,12 +20,12 @@ class _OnGoingPageState extends State<OnGoingPage> {
   final GlobalKey<FormState> searchFormKey = GlobalKey<FormState>();
 
   List<String> suggestions = [
-    'apple',
-    'apple red',
-    'ball',
-    'call green',
-    'cat',
-    'cat blue',
+    // 'apple',
+    // 'apple red',
+    // 'ball',
+    // 'call green',
+    // 'cat',
+    // 'cat blue',
   ];
 
   bool isFocused = false;

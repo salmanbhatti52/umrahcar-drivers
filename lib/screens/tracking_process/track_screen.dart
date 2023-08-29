@@ -150,15 +150,20 @@ String? selectedDriverStatusValue;
     getBookingOngoingResponse= await DioClient().getBookingOngoing(mapData, context);
     print("response id: ${getBookingOngoingResponse.data}");
     for(int i=0;i<getBookingOngoingResponse.data!.length;i++) {
-      if (widget.getBookingData!.bookingsId==getBookingOngoingResponse.data![i].bookingsId) {
-        lat = double.parse(getBookingOngoingResponse.data![i].guestLattitude!);
-        long=double.parse(getBookingOngoingResponse.data![i].guestLongitude!);
-        print("latt: ${getBookingOngoingResponse.data![i].guestLattitude!}");
-        print("long: ${getBookingOngoingResponse.data![i].guestLongitude!}");
-        setState(() {
+      if (widget.getBookingData!.bookingsId ==
+          getBookingOngoingResponse.data![i].bookingsId) {
+        if (getBookingOngoingResponse.data![i].guestLattitude  != null   && getBookingOngoingResponse.data![i].guestLongitude  != null ) {
+          lat =
+              double.parse(getBookingOngoingResponse.data![i].guestLattitude!);
+          long =
+              double.parse(getBookingOngoingResponse.data![i].guestLongitude!);
+          print("latt: ${getBookingOngoingResponse.data![i].guestLattitude!}");
+          print("long: ${getBookingOngoingResponse.data![i].guestLongitude!}");
+          setState(() {
 
 
-        });
+          });
+        }
       }
     }
 
@@ -273,7 +278,7 @@ String? selectedDriverStatusValue;
                               ),
                             ),
                             const SizedBox(width: 20,),
-                            if(widget.getBookingData!.driverTripStatus!.name!="Ride End")
+                            if(widget.getBookingData!.driverTripStatus !=null && widget.getBookingData!.driverTripStatus!.name!="Ride End")
                             Expanded(
                               child: Container(
                                 color: Colors.transparent,
