@@ -43,6 +43,23 @@ class _CompletedPageState extends State<CompletedPage> {
 
   }
 
+  GetBookingListModel getBookingCompletedResponseForSearch=GetBookingListModel();
+  getBookingListOngoingSearch(String? searchText)async {
+    print("userIdId ${userId}");
+    getBookingCompletedResponseForSearch.data = [];
+    var mapData = {
+      "users_drivers_id": userId.toString(),
+      "bookings_id": searchText
+    };
+    getBookingCompletedResponseForSearch =
+    await DioClient().getBookingCompleted(mapData, context);
+    print("response id: ${getBookingCompletedResponseForSearch.data}");
+    setState(() {
+      getBookingCompletedResponse.data = [];
+    });
+  }
+
+
   @override
   void initState() {
     getBookingListUpcoming();
@@ -143,6 +160,11 @@ class _CompletedPageState extends State<CompletedPage> {
                   onSearchTextChanged: (value) {
                     setState(() {
                       isFocused = true;
+                      if(value.isNotEmpty){
+                        getBookingListOngoingSearch(value);}
+                      else{
+                        getBookingListUpcoming();
+                      }
                     });
                     return null;
                   },
@@ -173,6 +195,7 @@ class _CompletedPageState extends State<CompletedPage> {
               ),
             ),
             SizedBox(height: size.height * 0.03),
+            getBookingCompletedResponseForSearch.data ==null && searchController.text.isEmpty || searchController.text==""?
             Container(
               color: Colors.transparent,
               height: size.height * 0.6,
@@ -180,7 +203,15 @@ class _CompletedPageState extends State<CompletedPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: completedList(context,getBookingCompletedResponse),
               ),
-            ),
+            ):
+            Container(
+              color: Colors.transparent,
+              height: size.height * 0.6,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: completedList(context,getBookingCompletedResponseForSearch),
+              ),
+            )
           ],
         ),
       ),

@@ -49,6 +49,17 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Text(
+                        "booking id: ${getData.bookingsId}",
+                        style: const TextStyle(
+                          color: Color(0xFF565656),
+                          fontSize: 8,
+                          fontFamily: 'Montserrat-Regular',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+
+                      SizedBox(width: size.width * 0.05),
                       SvgPicture.asset(
                           'assets/images/small-black-location-icon.svg'),
                       SizedBox(width: size.width * 0.01),
