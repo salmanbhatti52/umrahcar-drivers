@@ -747,8 +747,8 @@ String? selectedDriverStatusValue;
                   Navigator.pop(context);
                 },
                 child: Container(
-                    height: 30,
-                    width: 30,
+                    height: 20,
+                    width: 20,
                     child: SvgPicture.asset('assets/images/back-icon.svg',height: 10,width: 10,)),
               ),
             ),
