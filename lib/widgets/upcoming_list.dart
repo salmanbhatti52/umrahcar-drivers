@@ -10,7 +10,7 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
   var size = MediaQuery.of(context).size;
   return getBookingUpcomingResponse.data!=null ?
   ListView.builder(
-    physics: const BouncingScrollPhysics(),
+    physics: const AlwaysScrollableScrollPhysics(),
     shrinkWrap: true,
     scrollDirection: Axis.vertical,
     itemCount: getBookingUpcomingResponse.data!.length,

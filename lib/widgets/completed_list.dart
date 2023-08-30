@@ -9,7 +9,7 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
   var size = MediaQuery.of(context).size;
   return getBookingCompletedResponse.data !=null ?
   ListView.builder(
-    physics: const BouncingScrollPhysics(),
+    physics: const AlwaysScrollableScrollPhysics(),
     shrinkWrap: true,
     scrollDirection: Axis.vertical,
     itemCount: getBookingCompletedResponse.data!.length,

@@ -196,9 +196,17 @@ class _UpcomingPageState extends State<UpcomingPage> {
             Container(
               color: Colors.transparent,
               height: size.height * 0.6,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child:upComingList(context,getBookingUpcomingResponse),
+              child: RefreshIndicator(
+                onRefresh: ()async{
+                  getBookingListUpcoming();
+                  setState(() {
+
+                  });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child:upComingList(context,getBookingUpcomingResponse),
+                ),
               ),
             ):Container(
               color: Colors.transparent,
