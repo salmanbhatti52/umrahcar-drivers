@@ -182,7 +182,11 @@ String? selectedDriverStatusValue;
           "log: ${widget.getBookingData!.guestLongitude}");
     }
     if(widget.getBookingData!.driverTripStatus!=null){
-      selectedDriverStatusValue==widget.getBookingData!.driverTripStatus!.name;}
+      selectedDriverStatusValue=widget.getBookingData!.driverTripStatus!.name;
+     print("driverTripStatus: ${selectedDriverStatusValue}");
+     print("driverTripStatus1: ${widget.getBookingData!.driverTripStatus!.name}");
+
+    }
     // TODO: implement initState
     super.initState();
   }
@@ -742,7 +746,10 @@ String? selectedDriverStatusValue;
                 onTap: () {
                   Navigator.pop(context);
                 },
-                child: SvgPicture.asset('assets/images/back-icon.svg'),
+                child: Container(
+                    height: 30,
+                    width: 30,
+                    child: SvgPicture.asset('assets/images/back-icon.svg',height: 10,width: 10,)),
               ),
             ),
           ],
