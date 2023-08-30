@@ -747,9 +747,14 @@ String? selectedDriverStatusValue;
                   Navigator.pop(context);
                 },
                 child: Container(
-                    height: 20,
-                    width: 20,
-                    child: SvgPicture.asset('assets/images/back-icon.svg',height: 10,width: 10,)),
+                    height: 40,
+                    width: 40,
+                    child: Column(
+                      children: [
+                        SizedBox(height: 10,),
+                        SvgPicture.asset('assets/images/back-icon.svg'),
+                      ],
+                    )),
               ),
             ),
           ],

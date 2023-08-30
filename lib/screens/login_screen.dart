@@ -11,6 +11,7 @@ import 'package:umrahcar_driver/screens/signup_screen.dart';
 import '../models/login_model.dart';
 import '../service/rest_api_service.dart';
 import '../utils/colors.dart';
+import '../utils/const.dart';
 import '../widgets/button.dart';
 import '../widgets/navbar.dart';
 import 'forgot_password_screen.dart';
@@ -61,6 +62,20 @@ class _LogInPageState extends State<LogInPage> {
       return Future.value(false);
     }
     return Future.value(true);
+  }
+
+
+  void configOneSignel()
+  {
+    OneSignal.shared.setAppId(onesignalAppId);
+  }
+
+
+  @override
+  void initState() {
+    configOneSignel();
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
