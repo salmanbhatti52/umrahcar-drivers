@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -40,15 +42,26 @@ class _ChatPageState extends State<ChatPage> {
 
   }
   GlobalKey<RefreshIndicatorState>? refreshKey;
+  Timer? timer;
 
   @override
   void initState() {
     getChatData();
+    timer =
+        Timer.periodic( const Duration(seconds: 8), (timer) => getChatData());
+    setState(() {
+
+    });
     // TODO: implement initState
     super.initState();
   }
 
-
+  @override
+  void dispose() {
+    timer!.cancel();
+    // TODO: implement dispose
+    super.dispose();
+  }
 
 
   @override

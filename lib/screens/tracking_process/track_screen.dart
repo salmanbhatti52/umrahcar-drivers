@@ -712,7 +712,7 @@ String? selectedDriverStatusValue;
                         SizedBox(height: size.height * 0.03),
 
 
-                        selectedDriverStatusValue=="Ride End" ||widget.getBookingData!.driverTripStatus!.name=="Ride End"? GestureDetector(
+                              selectedDriverStatusValue=="Ride End" || widget.getBookingData!.driverTripStatus!=null && widget.getBookingData!.driverTripStatus!.name=="Ride End"? GestureDetector(
                           onTap: () {
                             // Navigator.push(
                             //     context,
