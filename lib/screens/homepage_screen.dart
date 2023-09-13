@@ -441,7 +441,7 @@ getSettingsData() {
                       SizedBox(height: size.height * 0.02),
                       Container(
                         color: Colors.transparent,
-                        height: size.height * 0.279,
+                        height: size.height * 0.273,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child:RefreshIndicator(

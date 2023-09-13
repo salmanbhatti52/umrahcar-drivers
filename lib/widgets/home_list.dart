@@ -5,7 +5,7 @@ import 'package:umrahcar_driver/screens/tracking_process/track_screen.dart';
 Widget homeList(BuildContext context) {
   var size = MediaQuery.of(context).size;
   return ListView.builder(
-    physics: const BouncingScrollPhysics(),
+    physics: const AlwaysScrollableScrollPhysics(),
     shrinkWrap: true,
     scrollDirection: Axis.vertical,
     itemCount: myList.length,
