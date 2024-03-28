@@ -20,7 +20,7 @@ class PendingTransactionPage extends StatefulWidget {
 class _PendingTransactionPageState extends State<PendingTransactionPage> {
   PendingTransactiontModel summaryAgentModel = PendingTransactiontModel();
   getSummaryAgent() async {
-    print("userIdId ${userId}");
+    print("userIdId $userId");
     var mapData = {"users_drivers_id": userId.toString()};
     summaryAgentModel = await DioClient().pendingTransactions(mapData, context);
     if (summaryAgentModel.data != null) {
@@ -99,7 +99,7 @@ DriverStatusModel deleteTransaction=DriverStatusModel();
                     Slidable(
                       key: const ValueKey(0),
                       endActionPane: ActionPane(
-                        motion: ScrollMotion(),
+                        motion: const ScrollMotion(),
                         children: [
                           SlidableAction(
                             onPressed: (context) async {
@@ -109,7 +109,7 @@ DriverStatusModel deleteTransaction=DriverStatusModel();
 
                               });
                             },
-                            backgroundColor: Color(0xFFFE4A49),
+                            backgroundColor: const Color(0xFFFE4A49),
                             foregroundColor: Colors.white,
                             icon: Icons.delete,
                             label: 'Delete',
@@ -123,7 +123,7 @@ DriverStatusModel deleteTransaction=DriverStatusModel();
                           Container(
                             width: 70,
                             height: 70,
-                            margin: EdgeInsets.only(left: 20, right: 20),
+                            margin: const EdgeInsets.only(left: 20, right: 20),
                             decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                             ),
@@ -134,14 +134,14 @@ DriverStatusModel deleteTransaction=DriverStatusModel();
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
+                              SizedBox(
                                 width: 175,
                                 child: Text(
                                   "Txn Type: ${summaryAgentModel.data![i].txnType!}",
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 12,
-                                    fontFamily: 'Montserrat-Regular',
+                                     fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w500,
                                   ),
                                   maxLines: 1,
@@ -154,7 +154,7 @@ DriverStatusModel deleteTransaction=DriverStatusModel();
                                 style: const TextStyle(
                                   color: Color(0xFF565656),
                                   fontSize: 10,
-                                  fontFamily: 'Montserrat-Regular',
+                                  fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -164,7 +164,7 @@ DriverStatusModel deleteTransaction=DriverStatusModel();
                                 style: const TextStyle(
                                   color: Color(0xFF565656),
                                   fontSize: 10,
-                                  fontFamily: 'Montserrat-Regular',
+                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -174,7 +174,7 @@ DriverStatusModel deleteTransaction=DriverStatusModel();
                                 style: const TextStyle(
                                   color: Color(0xFF565656),
                                   fontSize: 10,
-                                  fontFamily: 'Montserrat-Regular',
+                                  fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -184,7 +184,7 @@ DriverStatusModel deleteTransaction=DriverStatusModel();
                                 style: const TextStyle(
                                   color: Color(0xFF565656),
                                   fontSize: 10,
-                                  fontFamily: 'Montserrat-Regular',
+                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -194,7 +194,7 @@ DriverStatusModel deleteTransaction=DriverStatusModel();
                                 style: const TextStyle(
                                   color: Color(0xFF565656),
                                   fontSize: 10,
-                                  fontFamily: 'Montserrat-Regular',
+                                  fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -204,7 +204,7 @@ DriverStatusModel deleteTransaction=DriverStatusModel();
                                 style: const TextStyle(
                                   color: Color(0xFF565656),
                                   fontSize: 10,
-                                  fontFamily: 'Montserrat-Regular',
+                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -214,13 +214,13 @@ DriverStatusModel deleteTransaction=DriverStatusModel();
                           Container(
                             width: size.width * 0.2,
                             height: size.height * 0.024,
-                            margin: EdgeInsets.only(left: 20),
+                            margin: const EdgeInsets.only(left: 20),
                             child: Text(
                               summaryAgentModel.data![i].status!,
                               style: const TextStyle(
-                                color: Color(0xFF0066FF),
+                                color: Color.fromARGB(255, 225, 240, 14),
                                 fontSize: 12,
-                                fontFamily: 'Montserrat-Regular',
+                               fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -228,7 +228,7 @@ DriverStatusModel deleteTransaction=DriverStatusModel();
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                   ]);
@@ -238,13 +238,13 @@ DriverStatusModel deleteTransaction=DriverStatusModel();
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 90),
+                    padding: EdgeInsets.only(left: 100),
                     child: Text(
                       'No Pending Transaction Found',
                       style: TextStyle(
                         color: Color(0xFF565656),
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       textAlign: TextAlign.center,

@@ -19,7 +19,7 @@ class WalletPage extends StatefulWidget {
 class _WalletPageState extends State<WalletPage> {
   SummaryDriversModel getAgentsWidgetData=SummaryDriversModel();
   getSummaryAgent()async{
-    print("userIdId ${userId}");
+    print("userIdId $userId");
     var mapData={
       "users_drivers_id": userId.toString()
     };
@@ -51,8 +51,8 @@ class _WalletPageState extends State<WalletPage> {
         backgroundColor: mainColor,
         body: getAgentsWidgetData.data !=null ?
         Container(
-          decoration: BoxDecoration(
-            color: primaryColor,
+          decoration: const BoxDecoration(
+            color: Color(0xFFFFB940),
             // image: DecorationImage(
             //   image: AssetImage('assets/images/background.png'),
             //   fit: BoxFit.cover,
@@ -63,7 +63,7 @@ class _WalletPageState extends State<WalletPage> {
               Container(
                 color: Colors.transparent,
                 width: size.width,
-                height: size.height * 0.1128,
+                height: size.height * 0.12,
                 child: const Center(
                   child: Padding(
                     padding: EdgeInsets.only(top: 40),
@@ -116,11 +116,11 @@ class _WalletPageState extends State<WalletPage> {
             ],
           ),
         )
-            :Container(
+            :SizedBox(
           height: MediaQuery.of(context).size.height/1,
           child: const Center(
             child: CircularProgressIndicator(
-              color: Colors.blue,
+              color: Colors.amber,
             ),
           ),
         ),
@@ -137,12 +137,13 @@ Widget bignoimagebox(priceText, titleText, context) {
       height: MediaQuery.of(context).size.height * 0.09,
       width: MediaQuery.of(context).size.width * 0.4,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: const Alignment(-0, -1),
-          end: const Alignment(0.037, 1.01),
-          colors: [primaryColor, darkYellowColor],
-          stops: const [0, 1],
-        ),
+        color: const Color(0xfffffb940),
+        // gradient: const LinearGradient(
+        //   begin: Alignment(-0, -1),
+        //   end: Alignment(0.037, 1.01),
+        //   colors: [Color(0x84438f01), Color(0xff7cd037)],
+        //   stops: [0, 1],
+        // ),
         // gradient: LinearGradient(
         //   begin: Alignment.topCenter,
         //   end: Alignment.bottomCenter,
@@ -164,7 +165,7 @@ Widget bignoimagebox(priceText, titleText, context) {
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Colors.white,
-              fontFamily: 'Montserrat-Regular',
+              fontFamily: 'Poppins',
               fontWeight: FontWeight.w600,
               fontSize: 22,
             ),
@@ -175,7 +176,7 @@ Widget bignoimagebox(priceText, titleText, context) {
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Colors.white,
-              fontFamily: 'Montserrat-Regular',
+           fontFamily: 'Poppins',
               fontWeight: FontWeight.w700,
               fontSize: 8,
             ),
@@ -191,12 +192,13 @@ Widget bignoimageredbox(priceText, titleText, context) {
       height: MediaQuery.of(context).size.height * 0.09,
       width: MediaQuery.of(context).size.width * 0.4,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment(-0, -1),
-          end: Alignment(0.037, 1.01),
-          colors: [Color(0xffE03B3B), Color(0xffBF4242)],
-          stops: [0, 1],
-        ),
+       color:   const Color(0xFFDD9519),
+        // gradient: const LinearGradient(
+        //   begin: Alignment(-0, -1),
+        //   end: Alignment(0.037, 1.01),
+        //   colors: [Color(0xffE03B3B), Color(0xffBF4242)],
+        //   stops: [0, 1],
+        // ),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
@@ -209,7 +211,7 @@ Widget bignoimageredbox(priceText, titleText, context) {
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Colors.white,
-              fontFamily: 'Montserrat-Regular',
+               fontFamily: 'Poppins',
               fontWeight: FontWeight.w600,
               fontSize: 16,
             ),
@@ -220,7 +222,7 @@ Widget bignoimageredbox(priceText, titleText, context) {
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Colors.white,
-              fontFamily: 'Montserrat-Regular',
+               fontFamily: 'Poppins',
               fontWeight: FontWeight.w700,
               fontSize: 8,
             ),

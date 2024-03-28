@@ -113,17 +113,17 @@ class _ChatPageState extends State<ChatPage> {
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 16,
-                            fontFamily: 'Montserrat-Regular',
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                         SizedBox(height: size.height * 0.003),
-                        Text(
+                         Text(
                           'Active Now',
                           style: TextStyle(
-                            color: primaryColor,
+                            color: secondaryColor,
                             fontSize: 10,
-                            fontFamily: 'Montserrat-Regular',
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -156,7 +156,7 @@ class _ChatPageState extends State<ChatPage> {
               child: Column(
                 children: [
                   getChatModel.data !=null ?
-                  Container(
+                  SizedBox(
                     height:MediaQuery.of(context).size.height/1.3,
 
                     child: RefreshIndicator(
@@ -178,7 +178,7 @@ class _ChatPageState extends State<ChatPage> {
                                   alignment:getChatModel.data!.message![i].receiver=="Drivers" ?  Alignment.centerLeft: Alignment.centerRight,
                                   child: Container(
                                     decoration:  BoxDecoration(
-                                      color: getChatModel.data!.message![i].receiver=="Drivers" ? primaryColor: Colors.blue,
+                                      color: getChatModel.data!.message![i].receiver=="Drivers" ?  const Color(0xFFF2F2F2): secondaryColor,
                                       borderRadius: const BorderRadius.only(
                                         topRight: Radius.circular(5),
                                         topLeft: Radius.circular(5),
@@ -192,7 +192,7 @@ class _ChatPageState extends State<ChatPage> {
                                         style:  TextStyle(
                                           color: getChatModel.data!.message![i].receiver=="Drivers" ? Colors.black: Colors.white,
                                           fontSize: 12,
-                                          fontFamily: 'Montserrat-Regular',
+                                          fontFamily: 'Poppins',
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
@@ -205,7 +205,7 @@ class _ChatPageState extends State<ChatPage> {
                                 //   child: const Text(
                                 //     '02:09',
                                 //     style: TextStyle(
-                                //       color: primaryColor,
+                                //       color: Color(0xFF79BF42),
                                 //       fontSize: 10,
                                 //       fontFamily: 'Montserrat-Regular',
                                 //       fontWeight: FontWeight.w500,
@@ -217,7 +217,7 @@ class _ChatPageState extends State<ChatPage> {
                           }),
                     ),
                   )
-                      : Container(
+                      : SizedBox(
                       height:MediaQuery.of(context).size.height/1.3,
                       child: const Column(
 
@@ -240,7 +240,7 @@ class _ChatPageState extends State<ChatPage> {
                     },
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
+                      fontFamily: 'Poppins',
                       fontSize: 16,
                       color: Color(0xFF6B7280),
                     ),
@@ -284,7 +284,7 @@ class _ChatPageState extends State<ChatPage> {
                       hintStyle: const TextStyle(
                         color: Color(0xFF929292),
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                        fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       suffixIcon: InkWell(
@@ -316,7 +316,7 @@ class _ChatPageState extends State<ChatPage> {
                         child: Padding(
                           padding: const EdgeInsets.only(right: 10),
                           child: CircleAvatar(
-                            backgroundColor: primaryColor,
+                            backgroundColor: secondaryColor,
                             child: SvgPicture.asset(
                               'assets/images/send-icon.svg',
                               width: 25,

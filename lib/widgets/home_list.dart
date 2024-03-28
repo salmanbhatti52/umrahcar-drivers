@@ -35,7 +35,7 @@ Widget homeList(BuildContext context) {
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16,
-                      fontFamily: 'Montserrat-Regular',
+                      fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -52,7 +52,7 @@ Widget homeList(BuildContext context) {
                         style: TextStyle(
                           color: Color(0xFF565656),
                           fontSize: 8,
-                          fontFamily: 'Montserrat-Regular',
+                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -71,7 +71,7 @@ Widget homeList(BuildContext context) {
                         style: TextStyle(
                           color: Color(0xFF565656),
                           fontSize: 8,
-                          fontFamily: 'Montserrat-Regular',
+                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -90,7 +90,7 @@ Widget homeList(BuildContext context) {
                         style: TextStyle(
                           color: Color(0xFF565656),
                           fontSize: 8,
-                          fontFamily: 'Montserrat-Regular',
+                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -111,13 +111,13 @@ Widget homeList(BuildContext context) {
                   color: Colors.transparent,
                   width: size.width * 0.2,
                   height: size.height * 0.024,
-                  child: Text(
+                  child:  Text(
                     'Details',
                     textAlign: TextAlign.end,
                     style: TextStyle(
-                      color: primaryColor,
+                      color: secondaryColor,
                       fontSize: 12,
-                      fontFamily: 'Montserrat-Regular',
+                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
                     ),
                   ),

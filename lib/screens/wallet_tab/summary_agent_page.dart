@@ -16,7 +16,7 @@ class _SummaryAgentPageState extends State<SummaryAgentPage> {
 
   SummaryDriversModel summaryAgentModel=SummaryDriversModel();
   getSummaryAgent()async{
-    print("userIdId ${userId}");
+    print("userIdId $userId");
     var mapData={
       "users_drivers_id": userId.toString()
     };
@@ -57,7 +57,7 @@ class _SummaryAgentPageState extends State<SummaryAgentPage> {
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -68,14 +68,14 @@ class _SummaryAgentPageState extends State<SummaryAgentPage> {
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
+                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),
                 )
 
               ],
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Row(
               mainAxisAlignment:
               MainAxisAlignment.spaceBetween,
@@ -85,7 +85,7 @@ class _SummaryAgentPageState extends State<SummaryAgentPage> {
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -96,14 +96,14 @@ class _SummaryAgentPageState extends State<SummaryAgentPage> {
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
+                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),
                 )
 
               ],
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Row(
               mainAxisAlignment:
               MainAxisAlignment.spaceBetween,
@@ -113,7 +113,7 @@ class _SummaryAgentPageState extends State<SummaryAgentPage> {
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
+                   fontFamily: 'Poppins',
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -124,14 +124,14 @@ class _SummaryAgentPageState extends State<SummaryAgentPage> {
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),
                 )
 
               ],
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Row(
               mainAxisAlignment:
               MainAxisAlignment.spaceBetween,
@@ -141,7 +141,7 @@ class _SummaryAgentPageState extends State<SummaryAgentPage> {
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -152,14 +152,14 @@ class _SummaryAgentPageState extends State<SummaryAgentPage> {
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),
                 )
 
               ],
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Row(
               mainAxisAlignment:
               MainAxisAlignment.spaceBetween,
@@ -169,7 +169,7 @@ class _SummaryAgentPageState extends State<SummaryAgentPage> {
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
+                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -180,13 +180,13 @@ class _SummaryAgentPageState extends State<SummaryAgentPage> {
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),
                 )
 
               ],
-            ), SizedBox(height: 20,),
+            ), const SizedBox(height: 20,),
             Row(
               mainAxisAlignment:
               MainAxisAlignment.spaceBetween,
@@ -196,7 +196,7 @@ class _SummaryAgentPageState extends State<SummaryAgentPage> {
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
+                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -207,7 +207,7 @@ class _SummaryAgentPageState extends State<SummaryAgentPage> {
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),
                 )
@@ -230,7 +230,7 @@ class _SummaryAgentPageState extends State<SummaryAgentPage> {
                 color: Color(0xFF565656),
                 fontSize: 12,
 
-                fontFamily: 'Montserrat-Regular',
+                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w500,
               ),
               textAlign: TextAlign.center,

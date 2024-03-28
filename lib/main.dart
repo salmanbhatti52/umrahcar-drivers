@@ -33,9 +33,12 @@ class _MyAppState extends State<MyApp> {
       title: 'Umrah Passenger Driver',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: false,
+       
+        primarySwatch: Colors.yellow,
+        
+        
       ),
+      
       home: const SplashScreen(),
     );
   }

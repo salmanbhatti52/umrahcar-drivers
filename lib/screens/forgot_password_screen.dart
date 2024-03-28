@@ -59,27 +59,17 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             child: Column(
               children: [
                 SizedBox(height: size.height * 0.02),
-                Container(
-                    width: size.width,
-                    height: size.height * 0.36,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/new-login-bg.png',
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: SvgPicture.asset(
-                      'assets/images/new-umrah-car-logo-big.svg',
-                      fit: BoxFit.scaleDown,
-                    ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child:SvgPicture.asset(
+                            'assets/images/umrah-passenger-logo.svg'),
                 ),
-                SizedBox(height: size.height * 0.02),
+                SizedBox(height: size.height * 0.04),
                 const Text(
                   'Forgot Password',
                   style: TextStyle(
                     fontSize: 20,
-                    fontFamily: 'Montserrat-Regular',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -89,11 +79,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16,
-                    fontFamily: 'Montserrat-Regular',
+                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                SizedBox(height: size.height * 0.04),
+                SizedBox(height: size.height * 0.06),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextFormField(
@@ -114,7 +104,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
+                     fontFamily: 'Poppins',
                       fontSize: 16,
                       color: Color(0xFF6B7280),
                     ),
@@ -160,7 +150,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       hintStyle: const TextStyle(
                         color: Color(0xFF929292),
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       prefixIcon: SvgPicture.asset(
@@ -185,16 +175,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         );
                         print("response otp: ${response.data!.otp.toString()}");
                         print("response uid: ${response.data!.usersDriversId.toString()}");
-                        if (response != null) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${response.data!.message}")));
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>  VerifyOTPPage(email: emailController.text,verifyOTP: response.data!.otp.toString(),userId: response.data!.usersDriversId ),
-                            ),
-                          );
-                        }
-                      }
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${response.data!.message}")));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>  VerifyOTPPage(email: emailController.text,verifyOTP: response.data!.otp.toString(),userId: response.data!.usersDriversId ),
+                          ),
+                        );
+                                            }
 
 
                     },

@@ -46,11 +46,11 @@ int index=0;
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                 child: TabBar(
                   controller: tabController,
                   indicator: BoxDecoration(
-                    color: primaryColor,
+                    color: buttonColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   // onTap: (index) {
@@ -60,21 +60,25 @@ int index=0;
                   //     return;
                   //   }
                   // },
-                  indicatorColor: primaryColor,
-                  isScrollable: true,
+                  indicatorColor: secondaryColor,
+                  isScrollable: false,
                   labelColor: Colors.white,
-                  labelPadding: const EdgeInsets.symmetric(horizontal: 25),
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  dividerColor: Colors.transparent,
+                 
+              //    labelPadding: const EdgeInsets.symmetric(horizontal: 25),
                   labelStyle: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
-                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Poppins',
+                     fontWeight: FontWeight.w500,
                   ),
                   unselectedLabelColor: const Color(0xFF929292),
+                
                   unselectedLabelStyle: const TextStyle(
                     color: Color(0xFF929292),
                     fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),
                   tabs: const [
@@ -87,7 +91,8 @@ int index=0;
         ),
         SizedBox(
           width: double.maxFinite,
-          height: MediaQuery.of(context).size.height * 0.577,
+          height: MediaQuery.of(context).size.height * 0.573,
+         
           child: TabBarView(
             controller: tabController,
             children: const [

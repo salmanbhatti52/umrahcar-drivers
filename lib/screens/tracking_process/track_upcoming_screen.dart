@@ -54,7 +54,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
-                            fontFamily: 'Montserrat-Regular',
+                           fontFamily: 'Poppins',
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -64,7 +64,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                           style: TextStyle(
                             color: Color(0xFF929292),
                             fontSize: 12,
-                            fontFamily: 'Montserrat-Regular',
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -74,7 +74,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                           style: TextStyle(
                             color: Color(0xFF565656),
                             fontSize: 12,
-                            fontFamily: 'Montserrat-Regular',
+                           fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -84,7 +84,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                           style: TextStyle(
                             color: Color(0xFF929292),
                             fontSize: 12,
-                            fontFamily: 'Montserrat-Regular',
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -94,7 +94,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                           style: TextStyle(
                             color: Color(0xFF565656),
                             fontSize: 12,
-                            fontFamily: 'Montserrat-Regular',
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -112,7 +112,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                               style: TextStyle(
                                 color: Color(0xFF565656),
                                 fontSize: 12,
-                                fontFamily: 'Montserrat-Regular',
+                               fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -134,7 +134,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                                   style: TextStyle(
                                     color: Color(0xFF565656),
                                     fontSize: 12,
-                                    fontFamily: 'Montserrat-Regular',
+                                    fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -154,7 +154,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                                   style: TextStyle(
                                     color: Color(0xFF565656),
                                     fontSize: 12,
-                                    fontFamily: 'Montserrat-Regular',
+                                   fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -187,7 +187,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                                     style: TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
-                                      fontFamily: 'Montserrat-Regular',
+                                     fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -210,7 +210,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                                     style: TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
-                                      fontFamily: 'Montserrat-Regular',
+                                     fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -234,7 +234,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                                     style: TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
-                                      fontFamily: 'Montserrat-Regular',
+                                      fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -254,7 +254,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                                     style: TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
-                                      fontFamily: 'Montserrat-Regular',
+                                    fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),

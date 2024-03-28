@@ -261,16 +261,16 @@ String? distance="";
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
-                                  fontFamily: 'Montserrat-Regular',
+                                  fontFamily: 'Poopins',
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
                                Text(
                                 '${distance} Away',
-                                style: TextStyle(
-                                  color: primaryColor,
+                                style:  TextStyle(
+                                  color: secondaryColor,
                                   fontSize: 16,
-                                  fontFamily: 'Montserrat-Regular',
+                                 fontFamily: 'Poopins',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -304,7 +304,7 @@ String? distance="";
                                           style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 16,
-                                            fontFamily: 'Montserrat-Regular',
+                                           fontFamily: 'Poopins',
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
@@ -314,7 +314,7 @@ String? distance="";
                                           style: const TextStyle(
                                             color: Color(0xFF929292),
                                             fontSize: 12,
-                                            fontFamily: 'Montserrat-Regular',
+                                            fontFamily: 'Poopins',
                                             fontWeight: FontWeight.w400,
                                           ),
                                         ),
@@ -382,7 +382,7 @@ String? distance="";
                                     style: const TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
-                                      fontFamily: 'Montserrat-Regular',
+                                      fontFamily: 'Poopins',
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -402,7 +402,7 @@ String? distance="";
                                     style: const TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
-                                      fontFamily: 'Montserrat-Regular',
+                                      fontFamily: 'Poopins',
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -424,7 +424,7 @@ String? distance="";
                                 style: const TextStyle(
                                   color: Color(0xFF565656),
                                   fontSize: 12,
-                                  fontFamily: 'Montserrat-Regular',
+                                 fontFamily: 'Poopins',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -432,7 +432,7 @@ String? distance="";
                               // const Text(
                               //   'Waiting',
                               //   style: TextStyle(
-                              //     color: primaryColor,
+                              //     color: Color(0xFF79BF42),
                               //     fontSize: 12,
                               //     fontFamily: 'Montserrat-Regular',
                               //     fontWeight: FontWeight.w500,
@@ -511,7 +511,7 @@ String? distance="";
                   color: Color(0xFF565656),
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  fontFamily: 'Montserrat-Regular',
+                 fontFamily: 'Poopins',
                 ),
               ),
               SizedBox(height: size.height * 0.01),
@@ -523,10 +523,10 @@ String? distance="";
                    Text(
                     '${widget.getBookingData!.routes!.pickup!.name}',
                     style: TextStyle(
-                      color: primaryColor,
+                      color: secondaryColor,
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
-                      fontFamily: 'Montserrat-Regular',
+                     fontFamily: 'Poopins',
                     ),
                   ),
                 ],
@@ -539,7 +539,7 @@ String? distance="";
                   color: Colors.black,
                   fontSize: 26,
                   fontWeight: FontWeight.w700,
-                  fontFamily: 'Montserrat-Regular',
+                  fontFamily: 'Poopins',
                 ),
               ),
               SizedBox(height: size.height * 0.08),

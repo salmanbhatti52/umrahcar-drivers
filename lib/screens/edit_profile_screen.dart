@@ -76,7 +76,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   GetDriverProfile getProfileResponse=GetDriverProfile();
   getProfile()async{
-    print("userIdId ${userId}");
+    print("userIdId $userId");
 
     getProfileResponse= await DioClient().getProfile(userId, context);
     if(getProfileResponse.data !=null ) {
@@ -128,7 +128,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             style: TextStyle(
               color: Colors.black,
               fontSize: 26,
-              fontFamily: 'Montserrat-Regular',
+               fontFamily: 'Poppins',
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -210,8 +210,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                                       style: TextStyle(
                                                         color: Colors.black,
                                                         fontSize: 16,
-                                                        fontFamily:
-                                                            'Montserrat-Regular',
+                                                       fontFamily: 'Poppins',
                                                         fontWeight:
                                                             FontWeight.w400,
                                                       ),
@@ -239,8 +238,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                                       style: TextStyle(
                                                         color: Colors.black,
                                                         fontSize: 16,
-                                                        fontFamily:
-                                                            'Montserrat-Regular',
+                                                        fontFamily: 'Poppins',
                                                         fontWeight:
                                                             FontWeight.w400,
                                                       ),
@@ -257,7 +255,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 },
                                 child: CircleAvatar(
                                   radius: 12,
-                                  backgroundColor: primaryColor,
+                                  backgroundColor:  const Color(0xFFDD9519),
                                   child: SvgPicture.asset(
                                     'assets/images/white-camera-icon.svg',
                                     width: 15,
@@ -283,22 +281,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             style: TextStyle(
                               color: Color(0xFF565656),
                               fontSize: 16,
-                              fontFamily: 'Montserrat-Regular',
+                              fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           SizedBox(height: size.height * 0.003),
-                           if(getProfileResponse !=null)
                            Text(
-                            '${getProfileResponse.data!.userData!.name!}',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontFamily: 'Montserrat-Regular',
-                              fontWeight: FontWeight.w600,
-                            ),
+                          getProfileResponse.data!.userData!.name!,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                           fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w600,
                           ),
+                        ),
                         ],
                       ),
                     ),
@@ -319,7 +316,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     },
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
+                    fontFamily: 'Poppins',
                       fontSize: 16,
                       color: Color(0xFF6B7280),
                     ),
@@ -365,7 +362,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       hintStyle: const TextStyle(
                         color: Color(0xFF929292),
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                        fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       prefixIcon: SvgPicture.asset(
@@ -391,7 +388,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     },
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
+                     fontFamily: 'Poppins',
                       fontSize: 16,
                       color: Color(0xFF6B7280),
                     ),
@@ -437,7 +434,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       hintStyle: const TextStyle(
                         color: Color(0xFF929292),
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       prefixIcon: SvgPicture.asset(
@@ -470,7 +467,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
+                       fontFamily: 'Poppins',
                       fontSize: 16,
                       color: Color(0xFF6B7280),
                     ),
@@ -516,7 +513,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       hintStyle: const TextStyle(
                         color: Color(0xFF929292),
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                      fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       prefixIcon: SvgPicture.asset(
@@ -542,7 +539,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     },
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
+                      fontFamily: 'Poppins',
                       fontSize: 16,
                       color: Color(0xFF6B7280),
                     ),
@@ -588,7 +585,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       hintStyle: const TextStyle(
                         color: Color(0xFF929292),
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       prefixIcon: SvgPicture.asset(
@@ -626,7 +623,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             },
                             style: const TextStyle(
                               fontWeight: FontWeight.w400,
-                              fontFamily: 'Montserrat-Regular',
+                              fontFamily: 'Poppins',
                               fontSize: 16,
                               color: Color(0xFF6B7280),
                             ),
@@ -653,7 +650,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               hintStyle: const TextStyle(
                                 color: Color(0xFF929292),
                                 fontSize: 12,
-                                fontFamily: 'Montserrat-Regular',
+                                fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w500,
                               ),
                               prefixIcon: SvgPicture.asset(
@@ -683,7 +680,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     },
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
+                     fontFamily: 'Poppins',
                       fontSize: 16,
                       color: Color(0xFF6B7280),
                     ),
@@ -729,7 +726,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       hintStyle: const TextStyle(
                         color: Color(0xFF929292),
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                       fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       prefixIcon: SvgPicture.asset(
@@ -763,27 +760,25 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           "city": cityController.text,
                           "contact":contactNumberController.text,
                           "whatsapp":whatsappNumberController.text,
-                          "notification_switch":getProfileResponse !=null ? "${getProfileResponse.data!.userData!.notificationSwitch!}":"1234567890",
+                          "notification_switch":getProfileResponse !=null ? getProfileResponse.data!.userData!.notificationSwitch!:"1234567890",
                           "image" : base64img,
 
                         };
-                        print("mapData: ${mapData}");
+                        print("mapData: $mapData");
                         var response = await DioClient().updateProfile(
                             mapData,context
                         );
-                        if(response !=null){
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Profile Updated Successfully")));
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Profile Updated Successfully")));
 
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>  NavBar(indexNmbr: 2),
-                              ));
-                          setState(() {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>  NavBar(indexNmbr: 2),
+                            ));
+                        setState(() {
 
-                          });
-                        }
-
+                        });
+                      
 
 
                       }
@@ -799,7 +794,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
           children: [
             Padding(
               padding: EdgeInsets.only(left: 170),
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: Colors.amber,
+              ),
             ),
           ],
         ),

@@ -29,32 +29,36 @@ class _CompletedPageState extends State<CompletedPage> {
   ];
 
   bool isFocused = false;
-  GetBookingListModel getBookingCompletedResponse = GetBookingListModel();
-  getBookingListUpcoming() async {
+  GetBookingListModel getBookingCompletedResponse=GetBookingListModel();
+  getBookingListUpcoming()async{
     print("uid $userId");
-    var mapData = {"users_drivers_id": userId.toString()};
-    getBookingCompletedResponse =
-        await DioClient().getBookingCompleted(mapData, context);
+    var mapData={
+      "users_drivers_id":userId.toString()
+    };
+    getBookingCompletedResponse= await DioClient().getBookingCompleted(mapData, context);
     print("response id: ${getBookingCompletedResponse.data}");
-    setState(() {});
+    setState(() {
+
+    });
+
   }
 
-  GetBookingListModel getBookingCompletedResponseForSearch =
-      GetBookingListModel();
-  getBookingListOngoingSearch(String? searchText) async {
-    print("userIdId ${userId}");
+  GetBookingListModel getBookingCompletedResponseForSearch=GetBookingListModel();
+  getBookingListOngoingSearch(String? searchText)async {
+    print("userIdId $userId");
     getBookingCompletedResponseForSearch.data = [];
     var mapData = {
       "users_drivers_id": userId.toString(),
       "bookings_id": searchText
     };
     getBookingCompletedResponseForSearch =
-        await DioClient().getBookingCompleted(mapData, context);
+    await DioClient().getBookingCompleted(mapData, context);
     print("response id: ${getBookingCompletedResponseForSearch.data}");
     setState(() {
       getBookingCompletedResponse.data = [];
     });
   }
+
 
   @override
   void initState() {
@@ -62,7 +66,6 @@ class _CompletedPageState extends State<CompletedPage> {
     // TODO: implement initState
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -133,7 +136,7 @@ class _CompletedPageState extends State<CompletedPage> {
                     hintStyle: const TextStyle(
                       color: Color(0xFF929292),
                       fontSize: 12,
-                      fontFamily: 'Montserrat-Regular',
+                     fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
                     ),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 20),
@@ -157,9 +160,9 @@ class _CompletedPageState extends State<CompletedPage> {
                   onSearchTextChanged: (value) {
                     setState(() {
                       isFocused = true;
-                      if (value.isNotEmpty) {
-                        getBookingListOngoingSearch(value);
-                      } else {
+                      if(value.isNotEmpty){
+                        getBookingListOngoingSearch(value);}
+                      else{
                         getBookingListUpcoming();
                       }
                     });
@@ -171,10 +174,7 @@ class _CompletedPageState extends State<CompletedPage> {
                   //   }
                   //   return null;
                   // },
-                  // scrollbarAlwaysVisible: false,
-                  scrollbarDecoration: ScrollbarDecoration(
-                    thumbVisibility: false,
-                  ),
+                  scrollbarAlwaysVisible: false,
                   suggestionState: Suggestion.hidden,
                   suggestions: suggestions
                       .map((e) => SearchFieldListItem<String>(e))
@@ -182,45 +182,42 @@ class _CompletedPageState extends State<CompletedPage> {
                   suggestionStyle: const TextStyle(
                     color: Color(0xFF929292),
                     fontSize: 14,
-                    fontFamily: 'Montserrat-Regular',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),
                   searchStyle: const TextStyle(
                     color: Color(0xFF929292),
                     fontSize: 16,
-                    fontFamily: 'Montserrat-Regular',
+                  fontFamily: 'Poppins',
                     fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
             ),
             SizedBox(height: size.height * 0.03),
-            getBookingCompletedResponseForSearch.data == null &&
-                        searchController.text.isEmpty ||
-                    searchController.text == ""
-                ? Container(
-                    color: Colors.transparent,
-                    height: size.height * 0.6,
-                    child: RefreshIndicator(
-                      onRefresh: () async {
-                        getBookingListUpcoming();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child:
-                            completedList(context, getBookingCompletedResponse),
-                      ),
-                    ),
-                  )
-                : Container(
-                    color: Colors.transparent,
-                    height: size.height * 0.6,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: completedList(
-                          context, getBookingCompletedResponseForSearch),
-                    ),
-                  )
+            getBookingCompletedResponseForSearch.data ==null && searchController.text.isEmpty || searchController.text==""?
+            Container(
+              color: Colors.transparent,
+              height: size.height * 0.6,
+              child: RefreshIndicator(
+                color: Colors.amber,
+                onRefresh: ()async{
+                  getBookingListUpcoming();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: completedList(context,getBookingCompletedResponse),
+                ),
+              ),
+            ):
+            Container(
+              color: Colors.transparent,
+              height: size.height * 0.6,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: completedList(context,getBookingCompletedResponseForSearch),
+              ),
+            )
           ],
         ),
       ),

@@ -41,8 +41,8 @@ class _AddCardPageState extends State<AddCardPage> {
   // String? pickCountry;
   // String? pickState;
 
-  bool _obscure = true;
-  bool _obscure1 = true;
+  final bool _obscure = true;
+  final bool _obscure1 = true;
 
 
   List<String> driverTypeList=[
@@ -108,7 +108,7 @@ class _AddCardPageState extends State<AddCardPage> {
                   'Add Debit / Credit Transactions ',
                   style: TextStyle(
                     fontSize: 20,
-                    fontFamily: 'Montserrat-Regular',
+                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -174,8 +174,7 @@ class _AddCardPageState extends State<AddCardPage> {
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 16,
-                                                fontFamily:
-                                                'Montserrat-Regular',
+                                                 fontFamily: 'Poppins',
                                                 fontWeight:
                                                 FontWeight.w400,
                                               ),
@@ -204,8 +203,7 @@ class _AddCardPageState extends State<AddCardPage> {
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 16,
-                                                fontFamily:
-                                                'Montserrat-Regular',
+                                                 fontFamily: 'Poppins',
                                                 fontWeight:
                                                 FontWeight.w400,
                                               ),
@@ -222,7 +220,7 @@ class _AddCardPageState extends State<AddCardPage> {
                         },
                         child: CircleAvatar(
                           radius: 12,
-                          backgroundColor: primaryColor,
+                          backgroundColor: secondaryColor,
                           child: SvgPicture.asset(
                             'assets/images/white-camera-icon.svg',
                             width: 15,
@@ -293,16 +291,16 @@ class _AddCardPageState extends State<AddCardPage> {
                             //   fit: BoxFit.scaleDown,
                             // ),
                             hintText: 'Transaction Type',
-                            contentPadding: EdgeInsets.only(left: 35),
+                            contentPadding: const EdgeInsets.only(left: 35),
                             hintStyle: const TextStyle(
                               color: Color(0xFF929292),
                               fontSize: 10,
-                              fontFamily: 'Montserrat-Regular',
+                              fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           borderRadius: BorderRadius.circular(16),
-                          items: driverTypeList!
+                          items: driverTypeList
                               .map(
                                 (item) => DropdownMenuItem<String>(
                               value: item,
@@ -311,7 +309,7 @@ class _AddCardPageState extends State<AddCardPage> {
                                 style: const TextStyle(
                                   color: Color(0xFF929292),
                                   fontSize: 10,
-                                  fontFamily: 'Montserrat-Regular',
+                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -322,7 +320,7 @@ class _AddCardPageState extends State<AddCardPage> {
                           onChanged: (value) {
                             setState(() {
                               selectedCompany = value;
-                              print("Selected Company: ${selectedCompany}");
+                              print("Selected Company: $selectedCompany");
                               setState(() {
 
                               });
@@ -348,7 +346,7 @@ class _AddCardPageState extends State<AddCardPage> {
                     },
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
+                      fontFamily: 'Poppins',
                       fontSize: 16,
                       color: Color(0xFF6B7280),
                     ),
@@ -394,7 +392,7 @@ class _AddCardPageState extends State<AddCardPage> {
                       hintStyle: const TextStyle(
                         color: Color(0xFF929292),
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                       fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       // prefixIcon: SvgPicture.asset(
@@ -421,7 +419,7 @@ class _AddCardPageState extends State<AddCardPage> {
                     },
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
+                       fontFamily: 'Poppins',
                       fontSize: 16,
                       color: Color(0xFF6B7280),
                     ),
@@ -467,7 +465,7 @@ class _AddCardPageState extends State<AddCardPage> {
                       hintStyle: const TextStyle(
                         color: Color(0xFF929292),
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                     fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       // prefixIcon: SvgPicture.asset(
@@ -493,22 +491,20 @@ class _AddCardPageState extends State<AddCardPage> {
                           "description":descriptionController.text,
                           "image": base64img
                         };
-                        print("data: ${jsonData}");
+                        print("data: $jsonData");
                         AddCardModel res= await DioClient().addCard(jsonData, context);
                         print("response: ${res.message}");
 
-                        if(res !=null){
-                          ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text("${res.message}")));
+                        ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text("${res.message}")));
 
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => NavBar(indexNmbr: 3,walletPage: 2,)),
-                                  (Route<dynamic> route) => false);
-                          setState(() {
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => NavBar(indexNmbr: 3,walletPage: 2,)),
+                                (Route<dynamic> route) => false);
+                        setState(() {
 
-                          });
-                        }
-
+                        });
+                      
 
 
                       }

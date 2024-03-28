@@ -15,6 +15,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  String backImage = "assets/images/custom-car.png";
   @override
   Widget build(BuildContext context) {
     return initScreen(context);
@@ -31,14 +32,15 @@ class _SplashScreenState extends State<SplashScreen> {
     return Timer(duration, route);
   }
 
-  route() async{
-    final _sharedPref = await SharedPreferences.getInstance();
-    var uid=_sharedPref.getString('userId');
-    print("uiduid: ${uid}");
-    uid !=null? Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) =>  NavBar())):
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const LogInPage()));
+  route() async {
+    final sharedPref = await SharedPreferences.getInstance();
+    var uid = sharedPref.getString('userId');
+    print("uiduid: $uid");
+    uid != null
+        ? Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => NavBar()))
+        : Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const LogInPage()));
   }
 
   initScreen(BuildContext context) {
@@ -47,19 +49,23 @@ class _SplashScreenState extends State<SplashScreen> {
         return Future.value(false);
       },
       child: Scaffold(
-          backgroundColor: primaryColor,
-          body: Container(
-            decoration: const BoxDecoration(
+      backgroundColor: secondaryColor,
+        body: Container(
+            decoration: BoxDecoration(
+              // color: secondaryColor,
               image: DecorationImage(
-                image: AssetImage("assets/images/new-splash-bg.png"),
-                fit: BoxFit.cover,
+                image: AssetImage(backImage),
+                fit: BoxFit.fill,
+                
               ),
             ),
-            child: Center(
-              child: SvgPicture.asset("assets/images/new-splash-icon.svg",
-            ),
-            ),
-          ),
+            child: SvgPicture.asset(
+              'assets/images/umrah-logo.svg',
+             height: double.infinity,
+             width: double.infinity,
+             fit: BoxFit.scaleDown,
+            //   colorBlendMode: BlendMode.darken,
+            )),
       ),
     );
   }

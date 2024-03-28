@@ -99,5 +99,9 @@ flutter:
   - family: Montserrat-Regular
     fonts:
       - asset: assets/fonts/Montserrat-Regular.ttf
+  - family: Poppins
+    fonts:
+      - asset: assets/fonts/Poppins-Regular.ttf
+      
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

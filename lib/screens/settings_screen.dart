@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
@@ -211,8 +210,8 @@ class _SetttingsPageState extends State<SetttingsPage> {
                   children: [
                     SvgPicture.asset(
                       'assets/images/notification-icon.svg',
-                      width: 25,
-                      height: 25,
+                      width: 20,
+                      height: 20,
                     ),
                     SizedBox(width: size.width * 0.04),
                     Column(
@@ -239,12 +238,11 @@ class _SetttingsPageState extends State<SetttingsPage> {
                         ),
                       ],
                     ),
-                    const Spacer(),
-                    // SizedBox(width: size.width * 0.2),
+                    SizedBox(width: size.width * 0.21),
                     FlutterSwitch(
                       width: 45,
                       height: 25,
-                      activeColor: const Color(0xFFFFB940),
+                      activeColor: buttonColor,
                       inactiveColor: const Color(0xFF565656).withOpacity(0.2),
                       activeToggleColor: Colors.white,
                       inactiveToggleColor: const Color(0xFF565656),
@@ -279,7 +277,7 @@ class _SetttingsPageState extends State<SetttingsPage> {
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
-                        fontFamily: 'Montserrat-Regular',
+                        fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -304,7 +302,7 @@ class _SetttingsPageState extends State<SetttingsPage> {
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
-                        fontFamily: 'Montserrat-Regular',
+                        fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -329,7 +327,7 @@ class _SetttingsPageState extends State<SetttingsPage> {
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
-                        fontFamily: 'Montserrat-Regular',
+                        fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -354,7 +352,7 @@ class _SetttingsPageState extends State<SetttingsPage> {
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
-                        fontFamily: 'Montserrat-Regular',
+                      fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -379,7 +377,7 @@ class _SetttingsPageState extends State<SetttingsPage> {
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
-                        fontFamily: 'Montserrat-Regular',
+                        fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -400,13 +398,13 @@ class _SetttingsPageState extends State<SetttingsPage> {
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LogInPage()));
                   },
                   child: Center(
-                    child: Text(
+                    child:  Text(
                       'Logout',
                       style: TextStyle(
+                        color: secondaryColor,
                         fontSize: 20,
-                        color: primaryColor,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.bold,
+                       fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w900,
                       ),
                     ),
                   ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:umrahcar_driver/screens/tracking_process/track_upcoming_screen.dart';
+import 'package:umrahcar_driver/utils/colors.dart';
 
 import '../models/get_booking_list_model.dart';
 import '../screens/tracking_process/track_screen.dart';
@@ -49,7 +50,7 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,
-                        fontFamily: 'Montserrat-Regular',
+                       fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -63,7 +64,7 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
                           style: const TextStyle(
                             color: Color(0xFF565656),
                             fontSize: 8,
-                            fontFamily: 'Montserrat-Regular',
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -77,14 +78,14 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
                           style: const TextStyle(
                             color: Color(0xFF565656),
                             fontSize: 8,
-                            fontFamily: 'Montserrat-Regular',
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                       ],
                     ),
                     SizedBox(height: size.height * 0.005),
-                    Container(
+                    SizedBox(
                       width: 180,
 
                       child: Row(
@@ -105,7 +106,7 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
                                     style: const TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 7,
-                                      fontFamily: 'Montserrat-Regular',
+                                    fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -125,7 +126,7 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
                                       style: const TextStyle(
                                         color: Color(0xFF565656),
                                         fontSize: 7,
-                                        fontFamily: 'Montserrat-Regular',
+                                        fontFamily: 'Poppins',
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
@@ -149,7 +150,7 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
                           style: const TextStyle(
                             color: Color(0xFF565656),
                             fontSize: 8,
-                            fontFamily: 'Montserrat-Regular',
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -166,13 +167,13 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
                           builder: (context) =>  TrackPage(getBookingData: getData),
                         ));
                   },
-                  child: const Text(
+                  child:  Text(
                     'Upcoming',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Color(0xFF0066FF),
+                      color: secondaryColor,
                       fontSize: 12,
-                      fontFamily: 'Montserrat-Regular',
+                    fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -186,8 +187,9 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
     },
   ):Container(
     height: 300,
-    width: 280,
-    child: Center(child: const Text("No Upcoming Booking")),
+    width: 300,
+    margin: const EdgeInsets.only(left: 25),
+    child: const Center(child: Text("No upcoming Booking")),
   );
 }
 

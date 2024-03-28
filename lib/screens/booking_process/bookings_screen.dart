@@ -182,7 +182,7 @@ class _BookingsPageState extends State<BookingsPage> {
             style: TextStyle(
                 color: Colors.black,
                 fontSize: 26,
-                fontFamily: 'Montserrat-Regular',
+             fontFamily: 'Poppins',
                 fontWeight: FontWeight.w700),
           ),
           centerTitle: true,

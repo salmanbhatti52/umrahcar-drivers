@@ -51,7 +51,7 @@ class _DropOffPageState extends State<DropOffPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: size.height * 0.03),
-                        Row(
+                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
@@ -66,9 +66,9 @@ class _DropOffPageState extends State<DropOffPage> {
                             Text(
                               '45 Km Away',
                               style: TextStyle(
-                                color: primaryColor,
+                                color: secondaryColor,
                                 fontSize: 16,
-                                fontFamily: 'Montserrat-Regular',
+                               fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -80,7 +80,7 @@ class _DropOffPageState extends State<DropOffPage> {
                           style: TextStyle(
                             color: Color(0xFF565656),
                             fontSize: 12,
-                            fontFamily: 'Montserrat-Regular',
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -101,7 +101,7 @@ class _DropOffPageState extends State<DropOffPage> {
                                   style: TextStyle(
                                     color: Color(0xFF565656),
                                     fontSize: 12,
-                                    fontFamily: 'Montserrat-Regular',
+                                    fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
@@ -113,7 +113,7 @@ class _DropOffPageState extends State<DropOffPage> {
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 12,
-                                      fontFamily: 'Montserrat-Regular',
+                                     fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500,
                                     ),
                                     minFontSize: 12,
@@ -179,7 +179,7 @@ class _DropOffPageState extends State<DropOffPage> {
                   color: Colors.black,
                   fontSize: 25,
                   fontWeight: FontWeight.w600,
-                  fontFamily: 'Montserrat-Regular',
+                fontFamily: 'Poppins',
                 ),
               ),
               SizedBox(height: size.height * 0.02),
@@ -190,7 +190,7 @@ class _DropOffPageState extends State<DropOffPage> {
                   color: Color(0xFF565656),
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
-                  fontFamily: 'Montserrat-Regular',
+                 fontFamily: 'Poppins',
                 ),
               ),
               SizedBox(height: size.height * 0.06),
@@ -215,7 +215,7 @@ class _DropOffPageState extends State<DropOffPage> {
                           color: Color(0xFF565656),
                           fontSize: 8,
                           fontWeight: FontWeight.w500,
-                          fontFamily: 'Montserrat-Regular',
+                          fontFamily: 'Poppins',
                         ),
                       ),
                     ),
@@ -229,21 +229,21 @@ class _DropOffPageState extends State<DropOffPage> {
                           color: Color(0xFF565656),
                           fontSize: 8,
                           fontWeight: FontWeight.w500,
-                          fontFamily: 'Montserrat-Regular',
+                         fontFamily: 'Poppins',
                         ),
                       ),
                     ),
-                    Positioned(
+                     Positioned(
                       top: 2,
                       left: 70,
                       child: Text(
                         'My Location',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: primaryColor,
+                          color: secondaryColor,
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          fontFamily: 'Montserrat-Regular',
+                           fontFamily: 'Poppins',
                         ),
                       ),
                     ),
@@ -253,23 +253,23 @@ class _DropOffPageState extends State<DropOffPage> {
                       child: Text(
                         '2972 Westheimer Rd. Santa Ana,\nIllinois 85486 ',
                         style: TextStyle(
-                          color: primaryColor,
+                          color: secondaryColor,
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                          fontFamily: 'Montserrat-Regular',
+                        fontFamily: 'Poppins',
                         ),
                       ),
                     ),
-                    Positioned(
+                     Positioned(
                       bottom: 11,
                       left: 70,
                       child: Text(
                         '2972 Westheimer Rd. Santa Ana,\nIllinois 85486 ',
                         style: TextStyle(
-                          color: primaryColor,
+                          color: secondaryColor,
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                          fontFamily: 'Montserrat-Regular',
+                         fontFamily: 'Poppins',
                         ),
                       ),
                     ),
@@ -289,7 +289,7 @@ class _DropOffPageState extends State<DropOffPage> {
                         color: Color(0xFF565656),
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
-                        fontFamily: 'Montserrat-Regular',
+                        fontFamily: 'Poppins',
                       ),
                     ),
                     Container(
@@ -301,7 +301,7 @@ class _DropOffPageState extends State<DropOffPage> {
                           color: Colors.black,
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                          fontFamily: 'Montserrat-Regular',
+                          fontFamily: 'Poppins',
                         ),
                       ),
                     ),
@@ -321,7 +321,7 @@ class _DropOffPageState extends State<DropOffPage> {
                         color: Color(0xFF565656),
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
-                        fontFamily: 'Montserrat-Regular',
+                       fontFamily: 'Poppins',
                       ),
                     ),
                     Container(
@@ -333,7 +333,7 @@ class _DropOffPageState extends State<DropOffPage> {
                           color: Colors.black,
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                          fontFamily: 'Montserrat-Regular',
+                         fontFamily: 'Poppins',
                         ),
                       ),
                     ),
@@ -353,19 +353,19 @@ class _DropOffPageState extends State<DropOffPage> {
                         color: Color(0xFF565656),
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
-                        fontFamily: 'Montserrat-Regular',
+                      fontFamily: 'Poppins',
                       ),
                     ),
                     Container(
                       color: Colors.transparent,
                       width: size.width * 0.215,
-                      child: Text(
+                      child:  Text(
                         '500 SAR ',
                         style: TextStyle(
-                          color: primaryColor,
+                          color: secondaryColor,
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                          fontFamily: 'Montserrat-Regular',
+                         fontFamily: 'Poppins',
                         ),
                       ),
                     ),

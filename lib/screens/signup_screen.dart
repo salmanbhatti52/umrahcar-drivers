@@ -3,7 +3,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -108,15 +107,12 @@ class _SignUpPageState extends State<SignUpPage> {
             child: Column(
               children: [
                 SizedBox(height: size.height * 0.04),
-                SvgPicture.asset(
-                  'assets/images/new-umrah-car-logo-small.svg',
-                ),
                 SizedBox(height: size.height * 0.04),
                 const Text(
                   'Sign Up to Your Account',
                   style: TextStyle(
                     fontSize: 20,
-                    fontFamily: 'Montserrat-Regular',
+                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -129,8 +125,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         width: 100,
                         height:100,
                         decoration: const BoxDecoration(
-                            color: Colors.transparent, shape: BoxShape.circle,
-                        ),
+                            color: Colors.red, shape: BoxShape.circle),
                         child: imagePath != null
                             ? Image.file(
                           imagePath!,
@@ -143,9 +138,9 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     Positioned(
-                      left: 10,
                       bottom: 4,
                       right: -45,
+                      left: 9,
                       child: GestureDetector(
                         onTap: () {
                           showModalBottomSheet(
@@ -184,8 +179,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 16,
-                                                fontFamily:
-                                                'Montserrat-Regular',
+                                                fontFamily: 'Poppins',
                                                 fontWeight:
                                                 FontWeight.w400,
                                               ),
@@ -214,8 +208,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 16,
-                                                fontFamily:
-                                                'Montserrat-Regular',
+                                               fontFamily: 'Poppins',
                                                 fontWeight:
                                                 FontWeight.w400,
                                               ),
@@ -232,7 +225,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         },
                         child: CircleAvatar(
                           radius: 12,
-                          backgroundColor: primaryColor,
+                          backgroundColor: const Color(0xFF79BF42),
                           child: SvgPicture.asset(
                             'assets/images/white-camera-icon.svg',
                             width: 15,
@@ -306,12 +299,12 @@ class _SignUpPageState extends State<SignUpPage> {
                             hintStyle: const TextStyle(
                               color: Color(0xFF929292),
                               fontSize: 10,
-                              fontFamily: 'Montserrat-Regular',
+                              fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           borderRadius: BorderRadius.circular(16),
-                          items: driverTypeList!
+                          items: driverTypeList
                               .map(
                                 (item) => DropdownMenuItem<String>(
                               value: item,
@@ -320,7 +313,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 style: const TextStyle(
                                   color: Color(0xFF929292),
                                   fontSize: 10,
-                                  fontFamily: 'Montserrat-Regular',
+                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -331,7 +324,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           onChanged: (value) {
                             setState(() {
                               selectedCompany = value;
-                              print("Selected Company: ${selectedCompany}");
+                              print("Selected Company: $selectedCompany");
                               setState(() {
 
                               });
@@ -357,7 +350,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     },
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
+                       fontFamily: 'Poppins',
                       fontSize: 16,
                       color: Color(0xFF6B7280),
                     ),
@@ -403,7 +396,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       hintStyle: const TextStyle(
                         color: Color(0xFF929292),
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                        fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       prefixIcon: SvgPicture.asset(
@@ -430,7 +423,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     },
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
+                       fontFamily: 'Poppins',
                       fontSize: 16,
                       color: Color(0xFF6B7280),
                     ),
@@ -476,7 +469,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       hintStyle: const TextStyle(
                         color: Color(0xFF929292),
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       prefixIcon: SvgPicture.asset(
@@ -502,7 +495,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     },
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
+                       fontFamily: 'Poppins',
                       fontSize: 16,
                       color: Color(0xFF6B7280),
                     ),
@@ -548,7 +541,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       hintStyle: const TextStyle(
                         color: Color(0xFF929292),
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                       fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       prefixIcon: SvgPicture.asset(
@@ -582,7 +575,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     // },
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
+                      fontFamily: 'Poppins',
                       fontSize: 16,
                       color: Color(0xFF6B7280),
                     ),
@@ -632,7 +625,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       hintStyle: const TextStyle(
                         color: Color(0xFF929292),
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                       fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       prefixIcon: GestureDetector(
@@ -658,7 +651,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 style: const TextStyle(
                                   color: Colors.black54,
                                   fontSize: 12,
-                                  fontFamily: 'Inter-Light',
+                                  fontFamily: 'Poppins',
                                 ),
                               ),
                             ),
@@ -668,7 +661,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               style: TextStyle(
                                 color: Colors.black54,
                                 fontSize: 12,
-                                fontFamily: 'Inter-SemiBold',
+                               fontFamily: 'Poppins',
                               ),
                             ),
                             SizedBox(width: size.width * 0.02),
@@ -706,7 +699,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     // },
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
+                       fontFamily: 'Poppins',
                       fontSize: 16,
                       color: Color(0xFF6B7280),
                     ),
@@ -756,7 +749,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       hintStyle: const TextStyle(
                         color: Color(0xFF929292),
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       prefixIcon: GestureDetector(
@@ -782,7 +775,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 style: const TextStyle(
                                   color: Colors.black54,
                                   fontSize: 12,
-                                  fontFamily: 'Inter-Light',
+                                  fontFamily: 'Poppins',
                                 ),
                               ),
                             ),
@@ -792,7 +785,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               style: TextStyle(
                                 color: Colors.black54,
                                 fontSize: 12,
-                                fontFamily: 'Inter-SemiBold',
+                                 fontFamily: 'Poppins',
                               ),
                             ),
                             SizedBox(width: size.width * 0.02),
@@ -830,7 +823,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     },
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
+                      fontFamily: 'Poppins',
                       fontSize: 16,
                       color: Color(0xFF6B7280),
                     ),
@@ -876,7 +869,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       hintStyle: const TextStyle(
                         color: Color(0xFF929292),
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                        fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       prefixIcon: SvgPicture.asset(
@@ -906,7 +899,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     },
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
+                      fontFamily: 'Poppins',
                       fontSize: 16,
                       color: Color(0xFF6B7280),
                     ),
@@ -952,7 +945,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       hintStyle: const TextStyle(
                         color: Color(0xFF929292),
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       prefixIcon: SvgPicture.asset(
@@ -1005,7 +998,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     },
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
+                       fontFamily: 'Poppins',
                       fontSize: 16,
                       color: Color(0xFF6B7280),
                     ),
@@ -1051,7 +1044,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       hintStyle: const TextStyle(
                         color: Color(0xFF929292),
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                        fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       prefixIcon: SvgPicture.asset(
@@ -1102,22 +1095,20 @@ class _SignUpPageState extends State<SignUpPage> {
                          "notification_switch":"Yes",
                          "image": base64img
                        };
-                       print("data: ${jsonData}");
+                       print("data: $jsonData");
                        SignUpModel res= await DioClient().signUp(jsonData, context);
                        print("response: ${res.message}");
 
-                       if(res !=null){
-                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Driver added successfully")));
+                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Driver added successfully")));
 
-                         Navigator.of(context).pushAndRemoveUntil(
-                             MaterialPageRoute(
-                                 builder: (context) => const LogInPage()),
-                                 (Route<dynamic> route) => false);
-                         setState(() {
+                       Navigator.of(context).pushAndRemoveUntil(
+                           MaterialPageRoute(
+                               builder: (context) => const LogInPage()),
+                               (Route<dynamic> route) => false);
+                       setState(() {
 
-                         });
-                       }
-
+                       });
+                     
 
 
                       }
@@ -1153,7 +1144,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       'OR',
                       style: TextStyle(
                         fontSize: 16,
-                        fontFamily: 'Montserrat-Regular',
+                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -1176,7 +1167,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16,
-                      fontFamily: 'Montserrat-Regular',
+                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
                     ),
                     children: [
@@ -1192,9 +1183,9 @@ class _SignUpPageState extends State<SignUpPage> {
                             );
                           },
                         text: 'Login',
-                        style: TextStyle(
-                          color: primaryColor,
-                          fontFamily: 'Montserrat-Regular',
+                        style: const TextStyle(
+                         color: Color(0xFFFFB940),
+                          fontFamily: 'Poppins',
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
@@ -217,116 +216,139 @@ class _ProfilePageState extends State<ProfilePage> {
         SingleChildScrollView(
           child: Column(
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  getDriverProfile.data!.userData!.image !=null ?
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: Container(
-                      height: 120,
-                      width: 120,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: NetworkImage("$imageUrl${getDriverProfile.data!.userData!.image}",
-                              ),
-                              fit: BoxFit.cover
-                          )
-                      ),
+              Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        getDriverProfile.data!.userData!.image !=null ?
+                        Padding(
+                          padding: const EdgeInsets.only(top: 60, left: 20),
+                          child: Container(
+                            height: 65,
+                            width: 65,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: NetworkImage("$imageUrl${getDriverProfile.data!.userData!.image}",
+                                    ),
+                                    fit: BoxFit.cover
+                                )
+                            ),
 
+                          ),
+                        ):
+                        Padding(
+                          padding: const EdgeInsets.only(top: 60, left: 20),
+                          child: CircleAvatar(
+                            radius: 35,
+                            child: Image.asset(
+                              'assets/images/profile.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: size.width * 0.03),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 22),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              InkWell(
+                                onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>EditProfilePage()));
+                        },
+                                child: Container(
+                                  color: Colors.transparent,
+                                  width: size.width * 0.4,
+                                  child:  AutoSizeText(
+                                    '${getDriverProfile.data!.userData!.name}',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontFamily: 'Montserrat-Regular',
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    minFontSize: 16,
+                                    maxFontSize: 16,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: size.height * 0.003),
+                              GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (context) => changePassword(),
+                                  );
+                                },
+                                child: const Text(
+                                  'Change Password',
+                                  style: TextStyle(
+                                   color: Color(0xFFFFB940),
+                                    fontSize: 12,
+                                    fontFamily: 'Montserrat-Regular',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                  ):
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: CircleAvatar(
-                      radius: 60,
-                      child: Image.asset(
-                        'assets/images/profile.png',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> const EditProfilePage()));
-                    },
-                    child: Text(
-                      '${getDriverProfile.data!.userData!.name}',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w600,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  SizedBox(height: size.height * 0.003),
-                  GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (context) => changePassword(),
-                      );
-                    },
-                    child: Text(
-                      'Change Password',
-                      style: TextStyle(
-                        color: primaryColor,
-                        fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: Container(
-                      width: size.width * 0.35,
-                      height: size.height * 0.08,
-                      decoration: BoxDecoration(
-                        // color: Colors.red,
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(
-                          width: 1,
-                          color: primaryColor,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 5),
+                      child: Container(
+                        width: size.width * 0.24,
+                        height: size.height * 0.065,
+                        decoration: BoxDecoration(
+                          // color: Colors.red,
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(
+                            width: 1,
+                            color: const Color(0xFF000000).withOpacity(0.15),
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Total Earning',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Color(0xFF565656),
+                                fontSize: 8,
+                                fontFamily: 'Montserrat-Regular',
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(height: size.height * 0.002),
+                             Text(
+                               '${getDriverProfile.data!.userData!.walletAmount}',
+                              style: const TextStyle(
+                               color: Color(0xFFFFB940),
+                                fontSize: 12,
+                                fontFamily: 'Montserrat-Regular',
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Total Earning',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xFF565656),
-                              fontSize: 12,
-                              fontFamily: 'Montserrat-Regular',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          SizedBox(height: size.height * 0.002),
-                           Text(
-                             '${getDriverProfile.data!.userData!.walletAmount}',
-                            style: TextStyle(
-                              color: primaryColor,
-                              fontSize: 16,
-                              fontFamily: 'Montserrat-Regular',
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-              SizedBox(height: size.height * 0.04),
+              SizedBox(height: size.height * 0.06),
               Padding(
                 padding: const EdgeInsets.only(left: 40),
                 child: Row(
@@ -464,7 +486,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
               ),
-              SizedBox(height: size.height * 0.04),
             ],
           ),
         ): Column(
@@ -473,7 +494,9 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox(height: 370,),
             Center(
               child: Container(
-                child: const CircularProgressIndicator(),
+                child: const CircularProgressIndicator(
+                  color: Colors.amber,
+                ),
               ),
             ),
           ],
@@ -497,7 +520,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             insetPadding: const EdgeInsets.only(left: 20, right: 20),
             child: SizedBox(
-              height: size.height * 0.62,
+              height: size.height * 0.60,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
                 child: Form(
@@ -512,7 +535,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           color: Colors.black,
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
-                          fontFamily: 'Montserrat-Regular',
+                           fontFamily: 'Poppins',
                         ),
                       ),
                       SizedBox(height: size.height * 0.04),
@@ -533,7 +556,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           },
                           style: const TextStyle(
                             fontWeight: FontWeight.w400,
-                            fontFamily: 'Montserrat-Regular',
+                             fontFamily: 'Poppins',
                             fontSize: 16,
                             color: Color(0xFF6B7280),
                           ),
@@ -582,7 +605,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             hintStyle: const TextStyle(
                               color: Color(0xFF929292),
                               fontSize: 12,
-                              fontFamily: 'Montserrat-Regular',
+                             fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,
                             ),
                             prefixIcon: SvgPicture.asset(
@@ -633,7 +656,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           },
                           style: const TextStyle(
                             fontWeight: FontWeight.w400,
-                            fontFamily: 'Montserrat-Regular',
+                            fontFamily: 'Poppins',
                             fontSize: 16,
                             color: Color(0xFF6B7280),
                           ),
@@ -682,7 +705,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             hintStyle: const TextStyle(
                               color: Color(0xFF929292),
                               fontSize: 12,
-                              fontFamily: 'Montserrat-Regular',
+                              fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,
                             ),
                             prefixIcon: SvgPicture.asset(
@@ -732,7 +755,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           },
                           style: const TextStyle(
                             fontWeight: FontWeight.w400,
-                            fontFamily: 'Montserrat-Regular',
+                            fontFamily: 'Poppins',
                             fontSize: 16,
                             color: Color(0xFF6B7280),
                           ),
@@ -781,7 +804,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             hintStyle: const TextStyle(
                               color: Color(0xFF929292),
                               fontSize: 12,
-                              fontFamily: 'Montserrat-Regular',
+                              fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,
                             ),
                             prefixIcon: SvgPicture.asset(

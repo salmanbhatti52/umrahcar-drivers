@@ -35,7 +35,7 @@ class _TabbarBookingsState extends State<TabbarBookings>
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding:  const EdgeInsets.symmetric(horizontal: 10),
           child: Container(
               width: MediaQuery.of(context).size.width * 0.9,
               height: MediaQuery.of(context).size.height * 0.055,
@@ -48,28 +48,31 @@ class _TabbarBookingsState extends State<TabbarBookings>
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                 child: TabBar(
                   controller: tabController,
                   indicator: BoxDecoration(
-                    color: primaryColor,
+                    
+                    color: buttonColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  indicatorColor: primaryColor,
-                  isScrollable: true,
+                  indicatorColor: Colors.transparent,
+                  isScrollable: false,  //tabController.length >= 3 ? true : false,
                   labelColor: Colors.white,
-                  labelPadding: const EdgeInsets.symmetric(horizontal: 25),
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  dividerColor: Colors.transparent,
+                 // labelPadding: const EdgeInsets.symmetric(horizontal: 25),
                   labelStyle: const TextStyle(
-                    color: Colors.white,
+                    color: Colors.red,
                     fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),
                   unselectedLabelColor: const Color(0xFF929292),
                   unselectedLabelStyle: const TextStyle(
                     color: Color(0xFF929292),
                     fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),
                   tabs: const [

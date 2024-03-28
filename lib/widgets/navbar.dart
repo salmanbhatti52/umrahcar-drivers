@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:umrahcar_driver/utils/colors.dart';
@@ -25,9 +24,10 @@ class _NavBarState extends State<NavBar> {
 
   @override
   void initState() {
-    if(widget.indexNmbr !=null)
+    if(widget.indexNmbr !=null) {
       index=widget.indexNmbr!;
-    print("index Id; ${index}");
+    }
+    print("index Id; $index");
     print("bookingPage0; ${widget.bookingNmbr}");
 
     // TODO: implement initState
@@ -37,11 +37,11 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     final screens = [
-      HomePage(),
+      const HomePage(),
       BookingsPage(indexNmbr: widget.bookingNmbr),
-      ProfilePage(),
+      const ProfilePage(),
       WalletPage(indexNmbr: widget.walletPage,),
-      SetttingsPage(),
+      const SetttingsPage(),
     ];
 
     return Scaffold(
@@ -65,11 +65,12 @@ class _NavBarState extends State<NavBar> {
             data: NavigationBarThemeData(
               indicatorShape: const CircleBorder(),
               indicatorColor: Colors.transparent,
+             
               labelTextStyle: MaterialStateProperty.all(
-                TextStyle(
-                  color: primaryColor,
+                const TextStyle(
+                  color:  Color(0xFFFFB940),
                   fontSize: 8,
-                  fontFamily: 'Montserrat-Regular',
+                 fontFamily: 'Poppins',
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -77,6 +78,7 @@ class _NavBarState extends State<NavBar> {
             child: NavigationBar(
               backgroundColor: mainColor,
               selectedIndex: index,
+              
               labelBehavior:
                   NavigationDestinationLabelBehavior.onlyShowSelected,
               onDestinationSelected: (index) => setState(() {
@@ -84,33 +86,33 @@ class _NavBarState extends State<NavBar> {
               }),
               destinations: [
                 NavigationDestination(
-                  icon: SvgPicture.asset('assets/images/home-icon.svg'),
+                  icon: SvgPicture.asset('assets/images/home-icon.svg', ),
                   selectedIcon:
-                      SvgPicture.asset('assets/images/active-home-icon.svg'),
+                      SvgPicture.asset('assets/images/active-home-icon.svg', color: const Color(0xFFFFB940),),
                   label: 'Home',
                 ),
                 NavigationDestination(
                   icon: SvgPicture.asset('assets/images/bookings-icon.svg'),
                   selectedIcon: SvgPicture.asset(
-                      'assets/images/active-bookings-icon.svg'),
+                      'assets/images/active-bookings-icon.svg', color: const Color(0xFFFFB940),),
                   label: 'Bookings',
                 ),
                 NavigationDestination(
                   icon: SvgPicture.asset('assets/images/profile-icon.svg'),
                   selectedIcon:
-                      SvgPicture.asset('assets/images/active-profile-icon.svg'),
+                      SvgPicture.asset('assets/images/active-profile-icon.svg', color: const Color(0xFFFFB940),),
                   label: 'Profile',
                 ),
                 NavigationDestination(
                   icon: SvgPicture.asset('assets/images/wallet-icon.svg'),
                   selectedIcon:
-                  SvgPicture.asset('assets/images/active-wallet-icon.svg'),
+                  SvgPicture.asset('assets/images/active-wallet-icon.svg', color: const Color(0xFFFFB940),),
                   label: 'Wallet',
                 ),
                 NavigationDestination(
                   icon: SvgPicture.asset('assets/images/settings-icon.svg'),
                   selectedIcon: SvgPicture.asset(
-                      'assets/images/active-settings-icon.svg'),
+                      'assets/images/active-settings-icon.svg', color: const Color(0xFFFFB940),),
                   label: 'Settings',
                 ),
               ],
