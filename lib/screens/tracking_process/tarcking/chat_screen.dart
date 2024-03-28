@@ -158,9 +158,9 @@ class _ChatPageState extends State<ChatPage> {
                   getChatModel.data !=null ?
                   Container(
                     height:MediaQuery.of(context).size.height/1.3,
-
                     child: RefreshIndicator(
                       key: refreshKey,
+                      color: primaryColor,
                       onRefresh: ()async{
                         await Future.delayed(const Duration(milliseconds: 1500));
                         getChatData();
@@ -178,7 +178,7 @@ class _ChatPageState extends State<ChatPage> {
                                   alignment:getChatModel.data!.message![i].receiver=="Drivers" ?  Alignment.centerLeft: Alignment.centerRight,
                                   child: Container(
                                     decoration:  BoxDecoration(
-                                      color: getChatModel.data!.message![i].receiver=="Drivers" ? primaryColor: Colors.blue,
+                                      color: getChatModel.data!.message![i].receiver=="Drivers" ? const Color(0xFFF2F2F2) : primaryColor,
                                       borderRadius: const BorderRadius.only(
                                         topRight: Radius.circular(5),
                                         topLeft: Radius.circular(5),
