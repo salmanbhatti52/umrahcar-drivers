@@ -1,4 +1,4 @@
-package com.umrahcar_driver.apps
+package com.umrahpassenger.drivers
 
 import io.flutter.embedding.android.FlutterActivity
 

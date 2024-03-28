@@ -238,7 +238,7 @@ DriverStatusModel deleteTransaction=DriverStatusModel();
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 100),
+                    padding: EdgeInsets.only(left: 90),
                     child: Text(
                       'No Pending Transaction Found',
                       style: TextStyle(

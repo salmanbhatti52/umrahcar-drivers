@@ -59,11 +59,22 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             child: Column(
               children: [
                 SizedBox(height: size.height * 0.02),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: SvgPicture.asset('assets/images/umrah-car-logo-big.svg'),
+                Container(
+                    width: size.width,
+                    height: size.height * 0.36,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/new-login-bg.png',
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: SvgPicture.asset(
+                      'assets/images/new-umrah-car-logo-big.svg',
+                      fit: BoxFit.scaleDown,
+                    ),
                 ),
-                SizedBox(height: size.height * 0.04),
+                SizedBox(height: size.height * 0.02),
                 const Text(
                   'Forgot Password',
                   style: TextStyle(
@@ -82,7 +93,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                SizedBox(height: size.height * 0.06),
+                SizedBox(height: size.height * 0.04),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextFormField(

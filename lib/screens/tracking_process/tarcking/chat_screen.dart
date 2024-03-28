@@ -118,10 +118,10 @@ class _ChatPageState extends State<ChatPage> {
                           ),
                         ),
                         SizedBox(height: size.height * 0.003),
-                        const Text(
+                        Text(
                           'Active Now',
                           style: TextStyle(
-                            color: Color(0xFF79BF42),
+                            color: primaryColor,
                             fontSize: 10,
                             fontFamily: 'Montserrat-Regular',
                             fontWeight: FontWeight.w600,
@@ -178,7 +178,7 @@ class _ChatPageState extends State<ChatPage> {
                                   alignment:getChatModel.data!.message![i].receiver=="Drivers" ?  Alignment.centerLeft: Alignment.centerRight,
                                   child: Container(
                                     decoration:  BoxDecoration(
-                                      color: getChatModel.data!.message![i].receiver=="Drivers" ? Color(0xFF79BF42): Colors.blue,
+                                      color: getChatModel.data!.message![i].receiver=="Drivers" ? primaryColor: Colors.blue,
                                       borderRadius: const BorderRadius.only(
                                         topRight: Radius.circular(5),
                                         topLeft: Radius.circular(5),
@@ -205,7 +205,7 @@ class _ChatPageState extends State<ChatPage> {
                                 //   child: const Text(
                                 //     '02:09',
                                 //     style: TextStyle(
-                                //       color: Color(0xFF79BF42),
+                                //       color: primaryColor,
                                 //       fontSize: 10,
                                 //       fontFamily: 'Montserrat-Regular',
                                 //       fontWeight: FontWeight.w500,
@@ -316,7 +316,7 @@ class _ChatPageState extends State<ChatPage> {
                         child: Padding(
                           padding: const EdgeInsets.only(right: 10),
                           child: CircleAvatar(
-                            backgroundColor: const Color(0xFF79BF42),
+                            backgroundColor: primaryColor,
                             child: SvgPicture.asset(
                               'assets/images/send-icon.svg',
                               width: 25,

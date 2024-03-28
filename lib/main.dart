@@ -30,10 +30,11 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
 
     return MaterialApp(
-      title: 'Umrah Car Driver',
+      title: 'Umrah Passenger Driver',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        useMaterial3: false,
       ),
       home: const SplashScreen(),
     );

@@ -23,7 +23,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.umrahcar_driver.apps"
+    namespace "com.umrahpassenger.drivers"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 

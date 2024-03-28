@@ -222,7 +222,7 @@ class _AddCardPageState extends State<AddCardPage> {
                         },
                         child: CircleAvatar(
                           radius: 12,
-                          backgroundColor: const Color(0xFF79BF42),
+                          backgroundColor: primaryColor,
                           child: SvgPicture.asset(
                             'assets/images/white-camera-icon.svg',
                             width: 15,

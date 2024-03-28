@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:umrahcar_driver/screens/wallet_tab/pending_transaction_page.dart';
 import 'package:umrahcar_driver/screens/wallet_tab/summary_agent_page.dart';
+import 'package:umrahcar_driver/utils/colors.dart';
 
 class WalletTabBarScreen extends StatefulWidget {
   int? indexNmbr=0;
@@ -49,7 +50,7 @@ int index=0;
                 child: TabBar(
                   controller: tabController,
                   indicator: BoxDecoration(
-                    color: const Color(0xFF79BF42),
+                    color: primaryColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   // onTap: (index) {
@@ -59,7 +60,7 @@ int index=0;
                   //     return;
                   //   }
                   // },
-                  indicatorColor: const Color(0xFF79BF42),
+                  indicatorColor: primaryColor,
                   isScrollable: true,
                   labelColor: Colors.white,
                   labelPadding: const EdgeInsets.symmetric(horizontal: 25),

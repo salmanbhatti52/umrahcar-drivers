@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -107,6 +108,9 @@ class _SignUpPageState extends State<SignUpPage> {
             child: Column(
               children: [
                 SizedBox(height: size.height * 0.04),
+                SvgPicture.asset(
+                  'assets/images/new-umrah-car-logo-small.svg',
+                ),
                 SizedBox(height: size.height * 0.04),
                 const Text(
                   'Sign Up to Your Account',
@@ -125,7 +129,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         width: 100,
                         height:100,
                         decoration: const BoxDecoration(
-                            color: Colors.red, shape: BoxShape.circle),
+                            color: Colors.transparent, shape: BoxShape.circle,
+                        ),
                         child: imagePath != null
                             ? Image.file(
                           imagePath!,
@@ -138,9 +143,9 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     Positioned(
+                      left: 10,
                       bottom: 4,
                       right: -45,
-                      left: 9,
                       child: GestureDetector(
                         onTap: () {
                           showModalBottomSheet(
@@ -227,7 +232,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         },
                         child: CircleAvatar(
                           radius: 12,
-                          backgroundColor: const Color(0xFF79BF42),
+                          backgroundColor: primaryColor,
                           child: SvgPicture.asset(
                             'assets/images/white-camera-icon.svg',
                             width: 15,
@@ -1187,8 +1192,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             );
                           },
                         text: 'Login',
-                        style: const TextStyle(
-                          color: Color(0xFF79BF42),
+                        style: TextStyle(
+                          color: primaryColor,
                           fontFamily: 'Montserrat-Regular',
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

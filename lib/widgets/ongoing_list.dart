@@ -186,7 +186,7 @@ Widget onGoingList(BuildContext context,GetBookingListModel getBookingOngoingDat
     },
   ):Container(
     height: 300,
-    width: 300,
+    width: 320,
     child: const Center(child: Text("No Ongoing Booking")),
   );
 }

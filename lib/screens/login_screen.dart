@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -101,17 +102,28 @@ class _LogInPageState extends State<LogInPage> {
                 child: Column(
                   children: [
                     SizedBox(height: size.height * 0.04),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: SvgPicture.asset('assets/images/umrah-car-logo-big.svg'),
+                    Container(
+                        width: size.width,
+                        height: size.height * 0.36,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/new-login-bg.png',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: SvgPicture.asset(
+                          'assets/images/new-umrah-car-logo-big.svg',
+                          fit: BoxFit.scaleDown,
+                        ),
                     ),
-                    SizedBox(height: size.height * 0.04),
+                    SizedBox(height: size.height * 0.0),
                     const Text(
-                      'Welcome to UmrahCar Driver App',
+                      'Welcome!\nLogin to your account',
                       style: TextStyle(
                         fontSize: 20,
                         fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -124,7 +136,7 @@ class _LogInPageState extends State<LogInPage> {
                     //     fontWeight: FontWeight.w500,
                     //   ),
                     // ),
-                    SizedBox(height: size.height * 0.06),
+                    SizedBox(height: size.height * 0.04),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: TextFormField(
@@ -314,14 +326,14 @@ class _LogInPageState extends State<LogInPage> {
                           ),
                         );
                       },
-                      child: const Align(
+                      child: Align(
                         alignment: Alignment.centerRight,
                         child: Padding(
-                          padding: EdgeInsets.only(right: 20),
+                          padding: const EdgeInsets.only(right: 20),
                           child: Text(
                             'Forgot Password?',
                             style: TextStyle(
-                              color: Color(0xFF79BF42),
+                              color: primaryColor,
                               fontSize: 12,
                               fontFamily: 'Montserrat-Regular',
                               fontWeight: FontWeight.w500,
@@ -371,7 +383,7 @@ class _LogInPageState extends State<LogInPage> {
 
                         },
                         child: button('Login', context)),
-                    SizedBox(height: size.height * 0.06),
+                    SizedBox(height: size.height * 0.04),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -401,7 +413,7 @@ class _LogInPageState extends State<LogInPage> {
                         ),
                       ],
                     ),
-                    SizedBox(height: size.height * 0.06),
+                    SizedBox(height: size.height * 0.04),
                     RichText(
                       overflow: TextOverflow.clip,
                       textAlign: TextAlign.center,
@@ -426,8 +438,8 @@ class _LogInPageState extends State<LogInPage> {
                                 );
                               },
                             text: 'Sign Up',
-                            style: const TextStyle(
-                              color: Color(0xFF79BF42),
+                            style: TextStyle(
+                              color: primaryColor,
                               fontFamily: 'Montserrat-Regular',
                               fontSize: 16,
                               fontWeight: FontWeight.w600,

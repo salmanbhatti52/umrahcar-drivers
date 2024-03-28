@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:umrahcar_driver/utils/colors.dart';
@@ -65,8 +66,8 @@ class _NavBarState extends State<NavBar> {
               indicatorShape: const CircleBorder(),
               indicatorColor: Colors.transparent,
               labelTextStyle: MaterialStateProperty.all(
-                const TextStyle(
-                  color: Color(0xFF79BF42),
+                TextStyle(
+                  color: primaryColor,
                   fontSize: 8,
                   fontFamily: 'Montserrat-Regular',
                   fontWeight: FontWeight.w400,

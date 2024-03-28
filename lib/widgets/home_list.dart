@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:umrahcar_driver/screens/tracking_process/track_screen.dart';
+import 'package:umrahcar_driver/utils/colors.dart';
 
 Widget homeList(BuildContext context) {
   var size = MediaQuery.of(context).size;
@@ -110,11 +111,11 @@ Widget homeList(BuildContext context) {
                   color: Colors.transparent,
                   width: size.width * 0.2,
                   height: size.height * 0.024,
-                  child: const Text(
+                  child: Text(
                     'Details',
                     textAlign: TextAlign.end,
                     style: TextStyle(
-                      color: Color(0xFF79BF42),
+                      color: primaryColor,
                       fontSize: 12,
                       fontFamily: 'Montserrat-Regular',
                       fontWeight: FontWeight.w500,

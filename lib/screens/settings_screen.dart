@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
@@ -210,8 +211,8 @@ class _SetttingsPageState extends State<SetttingsPage> {
                   children: [
                     SvgPicture.asset(
                       'assets/images/notification-icon.svg',
-                      width: 20,
-                      height: 20,
+                      width: 25,
+                      height: 25,
                     ),
                     SizedBox(width: size.width * 0.04),
                     Column(
@@ -238,11 +239,12 @@ class _SetttingsPageState extends State<SetttingsPage> {
                         ),
                       ],
                     ),
-                    SizedBox(width: size.width * 0.21),
+                    const Spacer(),
+                    // SizedBox(width: size.width * 0.2),
                     FlutterSwitch(
                       width: 45,
                       height: 25,
-                      activeColor: const Color(0xFF79BF42),
+                      activeColor: const Color(0xFFFFB940),
                       inactiveColor: const Color(0xFF565656).withOpacity(0.2),
                       activeToggleColor: Colors.white,
                       inactiveToggleColor: const Color(0xFF565656),
@@ -398,13 +400,13 @@ class _SetttingsPageState extends State<SetttingsPage> {
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LogInPage()));
                   },
                   child: Center(
-                    child: const Text(
+                    child: Text(
                       'Logout',
                       style: TextStyle(
-                        color: Colors.green,
                         fontSize: 20,
+                        color: primaryColor,
                         fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),

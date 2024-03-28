@@ -51,10 +51,10 @@ class _DropOffPageState extends State<DropOffPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: size.height * 0.03),
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               'On the Way',
                               style: TextStyle(
                                 color: Colors.black,
@@ -66,7 +66,7 @@ class _DropOffPageState extends State<DropOffPage> {
                             Text(
                               '45 Km Away',
                               style: TextStyle(
-                                color: Color(0xFF79BF42),
+                                color: primaryColor,
                                 fontSize: 16,
                                 fontFamily: 'Montserrat-Regular',
                                 fontWeight: FontWeight.w500,
@@ -233,40 +233,40 @@ class _DropOffPageState extends State<DropOffPage> {
                         ),
                       ),
                     ),
-                    const Positioned(
+                    Positioned(
                       top: 2,
                       left: 70,
                       child: Text(
                         'My Location',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Color(0xFF79BF42),
+                          color: primaryColor,
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Montserrat-Regular',
                         ),
                       ),
                     ),
-                    const Positioned(
+                    Positioned(
                       top: 74,
                       left: 70,
                       child: Text(
                         '2972 Westheimer Rd. Santa Ana,\nIllinois 85486 ',
                         style: TextStyle(
-                          color: Color(0xFF79BF42),
+                          color: primaryColor,
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Montserrat-Regular',
                         ),
                       ),
                     ),
-                    const Positioned(
+                    Positioned(
                       bottom: 11,
                       left: 70,
                       child: Text(
                         '2972 Westheimer Rd. Santa Ana,\nIllinois 85486 ',
                         style: TextStyle(
-                          color: Color(0xFF79BF42),
+                          color: primaryColor,
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Montserrat-Regular',
@@ -359,10 +359,10 @@ class _DropOffPageState extends State<DropOffPage> {
                     Container(
                       color: Colors.transparent,
                       width: size.width * 0.215,
-                      child: const Text(
+                      child: Text(
                         '500 SAR ',
                         style: TextStyle(
-                          color: Color(0xFF79BF42),
+                          color: primaryColor,
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Montserrat-Regular',

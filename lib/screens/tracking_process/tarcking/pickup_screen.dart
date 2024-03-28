@@ -267,8 +267,8 @@ String? distance="";
                               ),
                                Text(
                                 '${distance} Away',
-                                style: const TextStyle(
-                                  color: Color(0xFF79BF42),
+                                style: TextStyle(
+                                  color: primaryColor,
                                   fontSize: 16,
                                   fontFamily: 'Montserrat-Regular',
                                   fontWeight: FontWeight.w500,
@@ -432,7 +432,7 @@ String? distance="";
                               // const Text(
                               //   'Waiting',
                               //   style: TextStyle(
-                              //     color: Color(0xFF79BF42),
+                              //     color: primaryColor,
                               //     fontSize: 12,
                               //     fontFamily: 'Montserrat-Regular',
                               //     fontWeight: FontWeight.w500,
@@ -523,7 +523,7 @@ String? distance="";
                    Text(
                     '${widget.getBookingData!.routes!.pickup!.name}',
                     style: TextStyle(
-                      color: Color(0xFF79BF42),
+                      color: primaryColor,
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
                       fontFamily: 'Montserrat-Regular',

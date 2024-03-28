@@ -61,11 +61,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
             child: Column(
               children: [
                 SizedBox(height: size.height * 0.02),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: SvgPicture.asset('assets/images/umrah-car-logo-big.svg'),
+                SvgPicture.asset(
+                  'assets/images/new-umrah-car-logo-big.svg',
+                  fit: BoxFit.scaleDown,
                 ),
-                SizedBox(height: size.height * 0.04),
+                // SizedBox(height: size.height * 0.04),
                 const Center(
                   child: Text(
                     'Reset Password',

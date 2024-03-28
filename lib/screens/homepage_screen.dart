@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
@@ -265,11 +266,12 @@ getSettingsData() {
       Stack(
         children: [
             Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/background.png'),
-                fit: BoxFit.cover,
-              ),
+            decoration: BoxDecoration(
+              color: primaryColor,
+              // image: DecorationImage(
+              //   image: AssetImage('assets/images/background.png'),
+              //   fit: BoxFit.cover,
+              // ),
             ),
             child: Column(
               children: [
@@ -278,7 +280,7 @@ getSettingsData() {
                   child: Container(
                     color: Colors.transparent,
                     width: size.width,
-                    height: size.height * 0.259,
+                    height: size.height * 0.2562,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -573,7 +575,7 @@ getSettingsData() {
             ),
           ):
           const Padding(
-            padding: EdgeInsets.only(left: 120, right: 20, top: 180),
+            padding: EdgeInsets.only(left: 100, right: 20, top: 160),
             child: Column(
               children: [
                 SizedBox(height: 130,),
@@ -581,7 +583,6 @@ getSettingsData() {
                   'No Current Booking',
                   style: TextStyle(
                     color: Colors.black,
-
                     fontFamily: 'Montserrat-Regular',
                     fontWeight: FontWeight.w900,
                     fontSize: 15,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:umrahcar_driver/screens/booking_process/tab_screens/ongoing_screen.dart';
 import 'package:umrahcar_driver/screens/booking_process/tab_screens/upcoming_screen.dart';
 import 'package:umrahcar_driver/screens/booking_process/tab_screens/completed_screen.dart';
+import 'package:umrahcar_driver/utils/colors.dart';
 
 class TabbarBookings extends StatefulWidget {
   int? indexNmbr=0;
@@ -51,10 +52,10 @@ class _TabbarBookingsState extends State<TabbarBookings>
                 child: TabBar(
                   controller: tabController,
                   indicator: BoxDecoration(
-                    color: const Color(0xFF79BF42),
+                    color: primaryColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  indicatorColor: const Color(0xFF79BF42),
+                  indicatorColor: primaryColor,
                   isScrollable: true,
                   labelColor: Colors.white,
                   labelPadding: const EdgeInsets.symmetric(horizontal: 25),

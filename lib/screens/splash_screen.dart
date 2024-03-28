@@ -47,8 +47,20 @@ class _SplashScreenState extends State<SplashScreen> {
         return Future.value(false);
       },
       child: Scaffold(
-          backgroundColor: mainColor,
-          body: SvgPicture.asset("assets/images/splash-icon.svg",height: double.infinity,width: double.infinity,fit: BoxFit.fill,)),
+          backgroundColor: primaryColor,
+          body: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/new-splash-bg.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Center(
+              child: SvgPicture.asset("assets/images/new-splash-icon.svg",
+            ),
+            ),
+          ),
+      ),
     );
   }
 }

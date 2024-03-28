@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:umrahcar_driver/utils/colors.dart';
 
 Widget box(image, priceText, titleText, context) {
   return Center(
@@ -7,11 +8,11 @@ Widget box(image, priceText, titleText, context) {
       height: MediaQuery.of(context).size.height * 0.08,
       width: MediaQuery.of(context).size.width * 0.28,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment(-0, -1),
-          end: Alignment(0.037, 1.01),
-          colors: [Color(0x84438f01), Color(0xff7cd037)],
-          stops: [0, 1],
+        gradient: LinearGradient(
+          begin: const Alignment(-0, -1),
+          end: const Alignment(0.037, 1.01),
+          colors: [primaryColor, darkYellowColor],
+          stops: const [0, 1],
         ),
         // gradient: LinearGradient(
         //   begin: Alignment.topCenter,

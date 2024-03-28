@@ -51,18 +51,19 @@ class _WalletPageState extends State<WalletPage> {
         backgroundColor: mainColor,
         body: getAgentsWidgetData.data !=null ?
         Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/background.png'),
-              fit: BoxFit.cover,
-            ),
+          decoration: BoxDecoration(
+            color: primaryColor,
+            // image: DecorationImage(
+            //   image: AssetImage('assets/images/background.png'),
+            //   fit: BoxFit.cover,
+            // ),
           ),
           child: Column(
             children: [
               Container(
                 color: Colors.transparent,
                 width: size.width,
-                height: size.height * 0.12,
+                height: size.height * 0.1128,
                 child: const Center(
                   child: Padding(
                     padding: EdgeInsets.only(top: 40),
@@ -136,11 +137,11 @@ Widget bignoimagebox(priceText, titleText, context) {
       height: MediaQuery.of(context).size.height * 0.09,
       width: MediaQuery.of(context).size.width * 0.4,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment(-0, -1),
-          end: Alignment(0.037, 1.01),
-          colors: [Color(0x84438f01), Color(0xff7cd037)],
-          stops: [0, 1],
+        gradient: LinearGradient(
+          begin: const Alignment(-0, -1),
+          end: const Alignment(0.037, 1.01),
+          colors: [primaryColor, darkYellowColor],
+          stops: const [0, 1],
         ),
         // gradient: LinearGradient(
         //   begin: Alignment.topCenter,
