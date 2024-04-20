@@ -20,8 +20,8 @@ class BookingsPage extends StatefulWidget {
 
 class _BookingsPageState extends State<BookingsPage> {
   bool status = false;
-  bool servicestatus = false;
-  bool haspermission = false;
+  bool serviceStatus = false;
+  bool hasPermission = false;
   late LocationPermission permission;
   late Position position;
   String long = "", lat = "";
@@ -29,8 +29,8 @@ class _BookingsPageState extends State<BookingsPage> {
 
   late StreamSubscription<Position> positionStream;
   checkGps() async {
-    servicestatus = await Geolocator.isLocationServiceEnabled();
-    if(servicestatus){
+    serviceStatus = await Geolocator.isLocationServiceEnabled();
+    if(serviceStatus){
       permission = await Geolocator.checkPermission();
 
       if (permission == LocationPermission.denied) {
@@ -40,16 +40,19 @@ class _BookingsPageState extends State<BookingsPage> {
         }else if(permission == LocationPermission.deniedForever){
           print("'Location permissions are permanently denied");
         }else{
-          haspermission = true;
+          hasPermission = true;
         }
       }else{
-        haspermission = true;
+        hasPermission = true;
       }
 
-      if(haspermission){
-        setState(() {
-          //refresh the UI
-        });
+      if(hasPermission){
+        if(mounted){
+          setState(() {
+            //refresh the UI
+          });
+        }
+
 
         getLocation();
       }
@@ -57,29 +60,36 @@ class _BookingsPageState extends State<BookingsPage> {
       print("GPS Service is not enabled, turn on GPS location");
     }
 
-    setState(() {
-      //refresh the UI
-    });
+    if(mounted){
+      setState(() {
+        //refresh the UI
+      });
+    }
+
   }
 
   getLocation() async {
     position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    print(position.longitude); //Output: 80.24599079
-    print(position.latitude);
-    print("hiiiiiiiiiii");//Output: 29.6593457
+    // print(position.longitude); //Output: 80.24599079
+    // print(position.latitude);
+    // print("hi");//Output: 29.6593457
 
     long = position.longitude.toString();
     lat = position.latitude.toString();
 
 
-    if(long.isNotEmpty && lat.isNotEmpty){
-      updateDriverLocation();
 
+
+    if(mounted){
+      if(long.isNotEmpty && lat.isNotEmpty){
+        updateDriverLocation();
+
+      }
+      setState(() {
+        //refresh UI
+      });
     }
 
-    setState(() {
-      //refresh UI
-    });
 
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
@@ -88,73 +98,83 @@ class _BookingsPageState extends State<BookingsPage> {
 
     StreamSubscription<Position> positionStream = Geolocator.getPositionStream(
         locationSettings: locationSettings).listen((Position position) {
-      print(position.longitude); //Output: 80.24599079
-      print(position.latitude); //Output: 29.6593457
-      print("bye");//Output: 29.6593457
+      // print(position.longitude); //Output: 80.24599079
+      // print(position.latitude); //Output: 29.6593457
+      // print("bye");//Output: 29.6593457
 
       long = position.longitude.toString();
       lat = position.latitude.toString();
 
-      if(long.isNotEmpty && lat.isNotEmpty){
-        updateDriverLocation();
 
+      if(mounted){
+        if(long.isNotEmpty && lat.isNotEmpty){
+          updateDriverLocation();
+
+        }
+        setState(() {
+
+        });
       }
-      setState(() {
-
-      });
     });
   }
   UpdateDriverLocationModel updateDriverLocationModel=UpdateDriverLocationModel();
   updateDriverLocation()async{
-    print(lat);
-    print(long);
-    print(userId);
-    print("done");
+    // print(lat);
+    // print(long);
+    // print(userId);
+    // print("done");
     var jsonData={
-      "users_drivers_id":"${userId.toString()}",
+      "users_drivers_id":userId.toString(),
       "longitude":long,
       "lattitude":lat
     };
 
-    updateDriverLocationModel = await DioClient().updateDriverLocation(jsonData, context);
-    if(updateDriverLocationModel !=null){
-      print("message of location: ${updateDriverLocationModel.message}");
+    updateDriverLocationModel = await DioClient().updateDriverLocation(jsonData,context);
+    print("message of location: ${updateDriverLocationModel.message}");
     }
-  }
+
   GetAllSystemData getAllSystemData = GetAllSystemData();
 
   getSystemAllData() async {
     getAllSystemData = await DioClient().getSystemAllData(context);
-    if (getAllSystemData != null) {
-      print("GETSystemAllData: ${getAllSystemData.data}");
+    // print("GETSystemAllData: ${getAllSystemData.data}");
+    if(mounted){
       setState(() {
         getSettingsData();
       });
     }
-  }
+
+    }
 
   late List<Setting> pickSettingsData = [];
   int timerCount=3;
   getSettingsData() {
-    if (getAllSystemData!.data! != null) {
-      for (int i = 0; i < getAllSystemData!.data!.settings!.length; i++) {
-        pickSettingsData.add(getAllSystemData!.data!.settings![i]);
-        print("Setting time= $pickSettingsData");
-      }
+    for (int i = 0; i < getAllSystemData!.data!.settings!.length; i++) {
+      pickSettingsData.add(getAllSystemData!.data!.settings![i]);
+      // print("Setting time= $pickSettingsData");
+    }
 
-      for (int i = 0; i < pickSettingsData.length; i++) {
-        if (pickSettingsData[i].type == "map_refresh_time") {
-          timerCount = int.parse(pickSettingsData[i].description!);
-          print("timer refresh: ${timerCount}");
+    for (int i = 0; i < pickSettingsData.length; i++) {
+      if (pickSettingsData[i].type == "map_refresh_time") {
+        timerCount = int.parse(pickSettingsData[i].description!);
+        print("timer refresh: $timerCount");
+
+        if(mounted){
           checkGps();
           timer =
               Timer.periodic( Duration(minutes: timerCount), (timer) => checkGps());
           setState(() {});
-
-
         }
       }
     }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    timer?.cancel();
+    super.dispose();
+
   }
 
   @override

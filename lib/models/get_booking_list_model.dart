@@ -4,21 +4,25 @@
 
 class GetBookingListModel {
   String? status;
+  String? message;
   List<GetBookingData>? data;
 
   GetBookingListModel({
     this.status,
+    this.message,
     this.data,
   });
 
   factory GetBookingListModel.fromJson(Map<String, dynamic> json) => GetBookingListModel(
     status: json["status"],
+    message: json["message"],
 
     data: List<GetBookingData>.from(json["data"].map((x) => GetBookingData.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "status": status,
+    "message": message,
     "data": List<dynamic>.from(data!.map((x) => x.toJson())),
   };
 }
@@ -62,7 +66,7 @@ class GetBookingData {
   String? paymentType;
   String? dateAdded;
   String? dateModified;
-  String? finalStatus;
+  FinalStatus? finalStatus;
   String? finalStatusOther;
   String? paymentStatus;
   String? completedStatus;
@@ -174,7 +178,7 @@ class GetBookingData {
     paymentType: json["payment_type"],
     dateAdded: json["date_added"],
     dateModified: json["date_modified"],
-    finalStatus: json["final_status"],
+    finalStatus: json["final_status"] != null ? FinalStatus.fromJson(json["final_status"]) : null,
     finalStatusOther: json["final_status_other"],
     paymentStatus: json["payment_status"],
     completedStatus: json["completed_status"],
@@ -266,6 +270,29 @@ class DriverTripStatus {
 
   Map<String, dynamic> toJson() => {
     "bookings_drivers_status_id": bookingsDriversStatusId,
+    "name": name,
+    "status": status,
+  };
+}
+class FinalStatus {
+  String? bookingsFinalStatusId;
+  String? name;
+  String? status;
+
+  FinalStatus({
+    this.bookingsFinalStatusId,
+    this.name,
+    this.status,
+  });
+
+  factory FinalStatus.fromJson(Map<String, dynamic> json) => FinalStatus(
+    bookingsFinalStatusId: json["bookings_final_status_id"],
+    name: json["name"],
+    status: json["status"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "bookings_final_status_id": bookingsFinalStatusId,
     "name": name,
     "status": status,
   };

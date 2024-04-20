@@ -19,24 +19,20 @@ class _UpcomingPageState extends State<UpcomingPage> {
   TextEditingController searchController = TextEditingController();
   final GlobalKey<FormState> searchFormKey = GlobalKey<FormState>();
 
-  List<String> suggestions = [
-    // 'apple',
-    // 'apple red',
-    // 'ball',
-    // 'call green',
-    // 'cat',
-    // 'cat blue',
-  ];
+  List<String> suggestions = [];
 
   bool isFocused = false;
   GetBookingListModel getBookingUpcomingResponse = GetBookingListModel();
   getBookingListUpcoming() async {
     print("userId $userId");
     var mapData = {"users_drivers_id": userId.toString()};
-    getBookingUpcomingResponse =
-        await DioClient().getBookingupcoming(mapData, context);
-    print("response id: ${getBookingUpcomingResponse.data}");
-    setState(() {});
+    if(mounted){
+      getBookingUpcomingResponse =
+          await DioClient().getBookingupcoming(mapData, context);
+      // print("response id: ${getBookingUpcomingResponse.data}");
+      setState(() {});
+    }
+
   }
 
   GetBookingListModel getBookingUpcomingResponseForSearch =
@@ -48,12 +44,14 @@ class _UpcomingPageState extends State<UpcomingPage> {
       "users_drivers_id": userId.toString(),
       "bookings_id": searchText
     };
-    getBookingUpcomingResponseForSearch =
-        await DioClient().getBookingupcoming(mapData, context);
-    print("response id: ${getBookingUpcomingResponseForSearch.data}");
-    setState(() {
-      getBookingUpcomingResponse.data = [];
-    });
+    if(mounted){
+      getBookingUpcomingResponseForSearch =
+          await DioClient().getBookingupcoming(mapData, context);
+      // print("response id: ${getBookingUpcomingResponseForSearch.data}");
+      setState(() {
+        // getBookingUpcomingResponse.data = [];
+      });
+    }
   }
 
   @override

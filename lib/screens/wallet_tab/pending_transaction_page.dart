@@ -23,11 +23,13 @@ class _PendingTransactionPageState extends State<PendingTransactionPage> {
     print("userIdId ${userId}");
     var mapData = {"users_drivers_id": userId.toString()};
     summaryAgentModel = await DioClient().pendingTransactions(mapData, context);
-    if (summaryAgentModel.data != null) {
+    if (summaryAgentModel.data!.isNotEmpty) {
       print(
           "getProfileResponse name: ${summaryAgentModel.data![0].usersDriversAccountsId}");
     }
-    setState(() {});
+    if(mounted){
+      setState(() {});
+    }
   }
 
   @override
@@ -121,21 +123,25 @@ DriverStatusModel deleteTransaction=DriverStatusModel();
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            width: 70,
-                            height: 70,
-                            margin: EdgeInsets.only(left: 20, right: 20),
+                            width: 100,
+                            height: 100,
+                            margin: EdgeInsets.only(left: 15,right: 5),
                             decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
+                              shape: BoxShape.rectangle,
                             ),
-                            child: Image.network(
-                                "$imageUrl${summaryAgentModel.data![i].image}"),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              child: Image.network(
+                                
+                                  "$imageUrl${summaryAgentModel.data![i].image}",fit: BoxFit.cover,),
+                            ),
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                width: 175,
+                                width: MediaQuery.sizeOf(context).width * 0.40,
                                 child: Text(
                                   "Txn Type: ${summaryAgentModel.data![i].txnType!}",
                                   style: const TextStyle(
@@ -210,11 +216,11 @@ DriverStatusModel deleteTransaction=DriverStatusModel();
                               ),
                             ],
                           ),
-                          SizedBox(height: size.height * 0.02),
+                          SizedBox(width: 10),
                           Container(
-                            width: size.width * 0.2,
-                            height: size.height * 0.024,
-                            margin: EdgeInsets.only(left: 20),
+                            // width: size.width * 0.2,
+                            // height: size.height * 0.024,
+                            margin: EdgeInsets.only(right: 15),
                             child: Text(
                               summaryAgentModel.data![i].status!,
                               style: const TextStyle(

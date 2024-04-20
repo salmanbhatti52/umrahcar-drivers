@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
   route() async{
     final _sharedPref = await SharedPreferences.getInstance();
     var uid=_sharedPref.getString('userId');
-    print("uiduid: ${uid}");
+    print("userId Splash: $uid");
     uid !=null? Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) =>  NavBar())):
     Navigator.pushReplacement(

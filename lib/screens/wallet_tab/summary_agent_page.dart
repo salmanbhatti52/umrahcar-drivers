@@ -1,8 +1,14 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:umrahcar_driver/utils/colors.dart';
 
 import '../../models/summary_agent_model.dart';
 import '../../service/rest_api_service.dart';
 import '../homepage_screen.dart';
+import 'package:http/http.dart' as http;
 
 class SummaryAgentPage extends StatefulWidget {
   const SummaryAgentPage({super.key});
@@ -24,9 +30,11 @@ class _SummaryAgentPageState extends State<SummaryAgentPage> {
     if(summaryAgentModel.data !=null ) {
       print("getProfileResponse name: ${summaryAgentModel.data!.driversName}");
     }
-    setState(() {
+    if(mounted){
+      setState(() {
 
-    });
+      });
+    }
   }
 
 

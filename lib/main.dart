@@ -15,14 +15,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  void configOneSignel()
+  void configOneSignal()
   {
     OneSignal.shared.setAppId(onesignalAppId);
   }
   @override
   void initState() {
-    print("hiii");
-    configOneSignel();
+    configOneSignal();
     // TODO: implement initState
     super.initState();
   }

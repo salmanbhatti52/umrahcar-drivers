@@ -66,7 +66,7 @@ class _LogInPageState extends State<LogInPage> {
   }
 
 
-  void configOneSignel()
+  void configOneSignal()
   {
     OneSignal.shared.setAppId(onesignalAppId);
   }
@@ -74,7 +74,7 @@ class _LogInPageState extends State<LogInPage> {
 
   @override
   void initState() {
-    configOneSignel();
+    configOneSignal();
     // TODO: implement initState
     super.initState();
   }

@@ -35,13 +35,11 @@ class _ProfilePageState extends State<ProfilePage> {
   bool _obscure2 = true;
   getProfile()async{
     getDriverProfile= await DioClient().getProfile(userId, context);
-    if(getDriverProfile !=null){
-      print("name: ${getDriverProfile.data!.userData!.name}");
-      setState(() {
+    print("name: ${getDriverProfile.data!.userData!.name}");
+    setState(() {
 
-      });
+    });
     }
-  }
   bool servicestatus = false;
   bool haspermission = false;
   late LocationPermission permission;
@@ -69,19 +67,24 @@ class _ProfilePageState extends State<ProfilePage> {
       }
 
       if(haspermission){
-        setState(() {
-          //refresh the UI
-        });
+        if(mounted){
+          setState(() {
+            //refresh the UI
+          });
+        }
+
 
         getLocation();
       }
     }else{
       print("GPS Service is not enabled, turn on GPS location");
     }
+    if(mounted){
+      setState(() {
+        //refresh the UI
+      });
+    }
 
-    setState(() {
-      //refresh the UI
-    });
   }
 
   getLocation() async {
@@ -95,13 +98,18 @@ class _ProfilePageState extends State<ProfilePage> {
 
 
     if(long.isNotEmpty && lat.isNotEmpty){
-      updateDriverLocation();
+      if(mounted){
+        updateDriverLocation();
+      }
+
 
     }
+    if(mounted){
+      setState(() {
+        //refresh UI
+      });
+    }
 
-    setState(() {
-      //refresh UI
-    });
 
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
@@ -118,12 +126,18 @@ class _ProfilePageState extends State<ProfilePage> {
       lat = position.latitude.toString();
 
       if(long.isNotEmpty && lat.isNotEmpty){
-        updateDriverLocation();
+        if(mounted){
+          updateDriverLocation();
+        }
+
 
       }
-      setState(() {
+      if(mounted){
+        setState(() {
 
-      });
+        });
+      }
+
     });
   }
   UpdateDriverLocationModel updateDriverLocationModel=UpdateDriverLocationModel();
@@ -139,46 +153,46 @@ class _ProfilePageState extends State<ProfilePage> {
     };
 
     updateDriverLocationModel = await DioClient().updateDriverLocation(jsonData, context);
-    if(updateDriverLocationModel !=null){
-      print("message of location: ${updateDriverLocationModel.message}");
+    print("message of location: ${updateDriverLocationModel.message}");
     }
-  }
 
   GetAllSystemData getAllSystemData = GetAllSystemData();
 
   getSystemAllData() async {
     getAllSystemData = await DioClient().getSystemAllData(context);
-    if (getAllSystemData != null) {
-      print("GETSystemAllData: ${getAllSystemData.data}");
+    print("GETSystemAllData: ${getAllSystemData.data}");
+    if(mounted){
       setState(() {
         getSettingsData();
       });
     }
-  }
+
+    }
 
   late List<Setting> pickSettingsData = [];
   int timerCount=3;
   getSettingsData() {
-    if (getAllSystemData!.data! != null) {
-      for (int i = 0; i < getAllSystemData!.data!.settings!.length; i++) {
-        pickSettingsData.add(getAllSystemData!.data!.settings![i]);
-        print("Setting time= $pickSettingsData");
-      }
+    for (int i = 0; i < getAllSystemData!.data!.settings!.length; i++) {
+      pickSettingsData.add(getAllSystemData!.data!.settings![i]);
+      print("Setting time= $pickSettingsData");
+    }
 
-      for (int i = 0; i < pickSettingsData.length; i++) {
-        if (pickSettingsData[i].type == "map_refresh_time") {
-          timerCount = int.parse(pickSettingsData[i].description!);
-          print("timer refresh: ${timerCount}");
-          checkGps();
-          timer =
-              Timer.periodic( Duration(minutes: timerCount), (timer) => checkGps());
+    for (int i = 0; i < pickSettingsData.length; i++) {
+      if (pickSettingsData[i].type == "map_refresh_time") {
+        timerCount = int.parse(pickSettingsData[i].description!);
+        print("timer refresh: ${timerCount}");
+        checkGps();
+        timer =
+            Timer.periodic( Duration(minutes: timerCount), (timer) => checkGps());
+        if(mounted){
           setState(() {});
-
-
         }
+
+
+
       }
     }
-  }
+    }
 
 
 

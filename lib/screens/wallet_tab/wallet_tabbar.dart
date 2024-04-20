@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:umrahcar_driver/screens/wallet_tab/day_summary_page.dart';
 
 import 'package:umrahcar_driver/screens/wallet_tab/pending_transaction_page.dart';
 import 'package:umrahcar_driver/screens/wallet_tab/summary_agent_page.dart';
@@ -29,14 +30,14 @@ int index=0;
   @override
   Widget build(BuildContext context) {
     TabController tabController =
-    TabController(length: 2, vsync: this, initialIndex: index);
+    TabController(length: 3, vsync: this, initialIndex: index);
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Container(
               width: MediaQuery.of(context).size.width * 0.9,
-              height: MediaQuery.of(context).size.height * 0.055,
+              height: MediaQuery.of(context).size.height * 0.057,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
@@ -80,6 +81,7 @@ int index=0;
                   tabs: const [
                     Tab(text: "Account Summary"),
                     Tab(text: "Pending Transactions"),
+                    Tab(text: "Get Day Summary"),
 
                   ],
                 ),
@@ -87,12 +89,13 @@ int index=0;
         ),
         SizedBox(
           width: double.maxFinite,
-          height: MediaQuery.of(context).size.height * 0.577,
+          height: MediaQuery.of(context).size.height * 0.57,
           child: TabBarView(
             controller: tabController,
             children: const [
               SummaryAgentPage(),
               PendingTransactionPage(),
+              DaySummaryPage()
             ],
           ),
         ),

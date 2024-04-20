@@ -19,14 +19,7 @@ class _OnGoingPageState extends State<OnGoingPage> {
   TextEditingController searchController = TextEditingController();
   final GlobalKey<FormState> searchFormKey = GlobalKey<FormState>();
 
-  List<String> suggestions = [
-    // 'apple',
-    // 'apple red',
-    // 'ball',
-    // 'call green',
-    // 'cat',
-    // 'cat blue',
-  ];
+  List<String> suggestions = [];
 
   bool isFocused = false;
   GetBookingListModel getBookingOngoingResponse = GetBookingListModel();
@@ -34,14 +27,17 @@ class _OnGoingPageState extends State<OnGoingPage> {
   getBookingListOngoing() async {
     print("phoneNmbr $userId");
     var mapData = {"users_drivers_id": userId.toString()};
-    getBookingOngoingResponse =
-        await DioClient().getBookingOngoing(mapData, context);
-    print("response id: ${getBookingOngoingResponse.data}");
-    setState(() {});
+    if(mounted){
+      getBookingOngoingResponse =
+          await DioClient().getBookingOngoing(mapData, context);
+      // print("response id: ${getBookingOngoingResponse.data}");
+      setState(() {});
+    }
   }
 
   GetBookingListModel getBookingOngoingResponseForSearch =
       GetBookingListModel();
+
   getBookingListOngoingSearch(String? searchText) async {
     print("userIdId ${userId}");
     getBookingOngoingResponseForSearch.data = [];
@@ -49,12 +45,15 @@ class _OnGoingPageState extends State<OnGoingPage> {
       "users_drivers_id": userId.toString(),
       "bookings_id": searchText
     };
-    getBookingOngoingResponseForSearch =
-        await DioClient().getBookingOngoing(mapData, context);
-    print("response id: ${getBookingOngoingResponseForSearch.data}");
-    setState(() {
-      getBookingOngoingResponse.data = [];
-    });
+    if(mounted){
+      getBookingOngoingResponseForSearch =
+          await DioClient().getBookingOngoing(mapData, context);
+      // print("response id: ${getBookingOngoingResponseForSearch.data}");
+      setState(() {
+        // getBookingOngoingResponse.data = [];
+      });
+    }
+
   }
 
   @override

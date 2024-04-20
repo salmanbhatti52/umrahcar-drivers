@@ -50,19 +50,23 @@ class _SetttingsPageState extends State<SetttingsPage> {
       }
 
       if(haspermission){
-        setState(() {
-          //refresh the UI
-        });
+        if(mounted){
+          setState(() {
+            //refresh the UI
+          });
+        }
 
         getLocation();
       }
     }else{
       print("GPS Service is not enabled, turn on GPS location");
     }
+    if(mounted){
 
-    setState(() {
-      //refresh the UI
-    });
+      setState(() {
+        //refresh the UI
+      });
+    }
   }
 
   getLocation() async {
@@ -75,14 +79,16 @@ class _SetttingsPageState extends State<SetttingsPage> {
     lat = position.latitude.toString();
 
 
-    if(long.isNotEmpty && lat.isNotEmpty){
-      updateDriverLocation();
 
+    if(mounted){
+      if(long.isNotEmpty && lat.isNotEmpty){
+        updateDriverLocation();
+
+      }
+      setState(() {
+        //refresh UI
+      });
     }
-
-    setState(() {
-      //refresh UI
-    });
 
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
@@ -98,13 +104,17 @@ class _SetttingsPageState extends State<SetttingsPage> {
       long = position.longitude.toString();
       lat = position.latitude.toString();
 
-      if(long.isNotEmpty && lat.isNotEmpty){
-        updateDriverLocation();
 
+      if(mounted){
+        if(long.isNotEmpty && lat.isNotEmpty){
+          updateDriverLocation();
+
+        }
+        setState(() {
+
+        });
       }
-      setState(() {
 
-      });
     });
   }
   UpdateDriverLocationModel updateDriverLocationModel=UpdateDriverLocationModel();
