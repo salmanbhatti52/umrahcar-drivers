@@ -26,11 +26,12 @@ class _SummaryAgentPageState extends State<SummaryAgentPage> {
     var mapData={
       "users_drivers_id": userId.toString()
     };
-    summaryAgentModel= await DioClient().summaryAgent(mapData, context);
-    if(summaryAgentModel.data !=null ) {
-      print("getProfileResponse name: ${summaryAgentModel.data!.driversName}");
-    }
+
     if(mounted){
+      summaryAgentModel= await DioClient().summaryAgent(mapData, context);
+      if(summaryAgentModel.data !=null ) {
+        // print("getProfileResponse name: ${summaryAgentModel.data!.driversName}");
+      }
       setState(() {
 
       });

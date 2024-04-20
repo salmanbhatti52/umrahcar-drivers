@@ -54,15 +54,13 @@ class _SetttingsPageState extends State<SetttingsPage> {
           setState(() {
             //refresh the UI
           });
+          getLocation();
         }
-
-        getLocation();
       }
     }else{
       print("GPS Service is not enabled, turn on GPS location");
     }
     if(mounted){
-
       setState(() {
         //refresh the UI
       });
@@ -71,9 +69,9 @@ class _SetttingsPageState extends State<SetttingsPage> {
 
   getLocation() async {
     position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    print(position.longitude); //Output: 80.24599079
-    print(position.latitude);
-    print("hiiiiiiiiiii");//Output: 29.6593457
+    // print(position.longitude); //Output: 80.24599079
+    // print(position.latitude);
+    // print("hiiiiiiiiiii");//Output: 29.6593457
 
     long = position.longitude.toString();
     lat = position.latitude.toString();
@@ -97,9 +95,9 @@ class _SetttingsPageState extends State<SetttingsPage> {
 
     StreamSubscription<Position> positionStream = Geolocator.getPositionStream(
         locationSettings: locationSettings).listen((Position position) {
-      print(position.longitude); //Output: 80.24599079
-      print(position.latitude); //Output: 29.6593457
-      print("bye");//Output: 29.6593457
+      // print(position.longitude); //Output: 80.24599079
+      // print(position.latitude); //Output: 29.6593457
+      // print("bye");//Output: 29.6593457
 
       long = position.longitude.toString();
       lat = position.latitude.toString();
@@ -119,10 +117,10 @@ class _SetttingsPageState extends State<SetttingsPage> {
   }
   UpdateDriverLocationModel updateDriverLocationModel=UpdateDriverLocationModel();
   updateDriverLocation()async{
-    print(lat);
-    print(long);
-    print(userId);
-    print("done");
+    // print(lat);
+    // print(long);
+    // print(userId);
+    // print("done");
     var jsonData={
       "users_drivers_id":"${userId.toString()}",
       "longitude":long,
@@ -130,16 +128,14 @@ class _SetttingsPageState extends State<SetttingsPage> {
     };
 
     updateDriverLocationModel = await DioClient().updateDriverLocation(jsonData, context);
-    if(updateDriverLocationModel !=null){
-      print("message of location: ${updateDriverLocationModel.message}");
+    print("message of location: ${updateDriverLocationModel.message}");
     }
-  }
   GetAllSystemData getAllSystemData = GetAllSystemData();
 
   getSystemAllData() async {
-    getAllSystemData = await DioClient().getSystemAllData(context);
-    if (getAllSystemData != null) {
-      print("GETSystemAllData: ${getAllSystemData.data}");
+    if(mounted){
+      getAllSystemData = await DioClient().getSystemAllData(context);
+      // print("GETSystemAllData: ${getAllSystemData.data}");
       setState(() {
         getSettingsData();
       });
@@ -152,19 +148,19 @@ class _SetttingsPageState extends State<SetttingsPage> {
     if (getAllSystemData!.data! != null) {
       for (int i = 0; i < getAllSystemData!.data!.settings!.length; i++) {
         pickSettingsData.add(getAllSystemData!.data!.settings![i]);
-        print("Setting time= $pickSettingsData");
+        // print("Setting time= $pickSettingsData");
       }
 
       for (int i = 0; i < pickSettingsData.length; i++) {
         if (pickSettingsData[i].type == "map_refresh_time") {
           timerCount = int.parse(pickSettingsData[i].description!);
           print("timer refresh: ${timerCount}");
-          checkGps();
-          timer =
-              Timer.periodic( Duration(minutes: timerCount), (timer) => checkGps());
-          setState(() {});
-
-
+          if(mounted){
+            checkGps();
+            timer =
+                Timer.periodic( Duration(minutes: timerCount), (timer) => checkGps());
+            setState(() {});
+          }
         }
       }
     }

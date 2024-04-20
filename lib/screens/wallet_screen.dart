@@ -23,13 +23,16 @@ class _WalletPageState extends State<WalletPage> {
     var mapData={
       "users_drivers_id": userId.toString()
     };
-    getAgentsWidgetData= await DioClient().summaryAgent(mapData, context);
-    if(getAgentsWidgetData.data !=null ) {
-      print("getProfileResponse name: ${getAgentsWidgetData.data!.totalDriversBalance}");
-    }
-    setState(() {
+    if(mounted){
+      getAgentsWidgetData= await DioClient().summaryAgent(mapData, context);
+      if(getAgentsWidgetData.data !=null ) {
+        // print("getProfileResponse name: ${getAgentsWidgetData.data!.totalDriversBalance}");
+      }
+      setState(() {
 
-    });
+      });
+    }
+
   }
 
 

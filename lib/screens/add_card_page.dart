@@ -47,7 +47,7 @@ class _AddCardPageState extends State<AddCardPage> {
 
   List<String> driverTypeList=[
     "Credit (Out)",
-    "Debit (In)"
+    // "Debit (In)"
   ];
   String? selectedCompany;
 

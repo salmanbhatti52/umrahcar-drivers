@@ -382,7 +382,7 @@ print("model: ${model}");
 
 
   Future<SummaryDriversModel> summaryAgent(Map<String?,dynamic?> model,BuildContext context) async {
-    print("data: ${model}");
+    print("data: $model");
     try {
       final response =
       await _dio.post('$baseUrl/summary_drivers',data: model);
@@ -421,6 +421,7 @@ print("model: ${model}");
       rethrow;
     }
   }
+
   Future<AddCardModel> addCard(Map<String?,dynamic?> model,BuildContext context) async {
     print("data: ${model}");
     try {

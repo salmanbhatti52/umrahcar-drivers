@@ -33,13 +33,18 @@ class _ProfilePageState extends State<ProfilePage> {
   bool _obscure = true;
   bool _obscure1 = true;
   bool _obscure2 = true;
-  getProfile()async{
-    getDriverProfile= await DioClient().getProfile(userId, context);
-    print("name: ${getDriverProfile.data!.userData!.name}");
-    setState(() {
 
-    });
+  getProfile()async{
+    if(mounted){
+      getDriverProfile= await DioClient().getProfile(userId, context);
+      print("name: ${getDriverProfile.data!.userData!.name}");
+
+      setState(() {
+
+      });
     }
+  }
+
   bool servicestatus = false;
   bool haspermission = false;
   late LocationPermission permission;
@@ -71,10 +76,8 @@ class _ProfilePageState extends State<ProfilePage> {
           setState(() {
             //refresh the UI
           });
+          getLocation();
         }
-
-
-        getLocation();
       }
     }else{
       print("GPS Service is not enabled, turn on GPS location");
@@ -89,25 +92,24 @@ class _ProfilePageState extends State<ProfilePage> {
 
   getLocation() async {
     position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    print(position.longitude); //Output: 80.24599079
-    print(position.latitude);
-    print("hiiiiiiiiiii");//Output: 29.6593457
+    // print(position.longitude); //Output: 80.24599079
+    // print(position.latitude);
+    // print("hiiiiiiiiiii");//Output: 29.6593457
 
     long = position.longitude.toString();
     lat = position.latitude.toString();
 
 
-    if(long.isNotEmpty && lat.isNotEmpty){
-      if(mounted){
-        updateDriverLocation();
-      }
 
-
-    }
     if(mounted){
       setState(() {
         //refresh UI
       });
+      if(long.isNotEmpty && lat.isNotEmpty){
+        if(mounted){
+          updateDriverLocation();
+        }
+      }
     }
 
 
@@ -118,21 +120,20 @@ class _ProfilePageState extends State<ProfilePage> {
 
     StreamSubscription<Position> positionStream = Geolocator.getPositionStream(
         locationSettings: locationSettings).listen((Position position) {
-      print(position.longitude); //Output: 80.24599079
-      print(position.latitude); //Output: 29.6593457
-      print("bye");//Output: 29.6593457
+      // print(position.longitude); //Output: 80.24599079
+      // print(position.latitude); //Output: 29.6593457
+      // print("bye");//Output: 29.6593457
 
       long = position.longitude.toString();
       lat = position.latitude.toString();
 
-      if(long.isNotEmpty && lat.isNotEmpty){
-        if(mounted){
-          updateDriverLocation();
-        }
 
-
-      }
       if(mounted){
+        if(long.isNotEmpty && lat.isNotEmpty){
+          if(mounted){
+            updateDriverLocation();
+          }
+        }
         setState(() {
 
         });
@@ -142,10 +143,10 @@ class _ProfilePageState extends State<ProfilePage> {
   }
   UpdateDriverLocationModel updateDriverLocationModel=UpdateDriverLocationModel();
   updateDriverLocation()async{
-    print(lat);
-    print(long);
-    print(userId);
-    print("done");
+    // print(lat);
+    // print(long);
+    // print(userId);
+    // print("done");
     var jsonData={
       "users_drivers_id":"${userId.toString()}",
       "longitude":long,
@@ -159,9 +160,10 @@ class _ProfilePageState extends State<ProfilePage> {
   GetAllSystemData getAllSystemData = GetAllSystemData();
 
   getSystemAllData() async {
-    getAllSystemData = await DioClient().getSystemAllData(context);
-    print("GETSystemAllData: ${getAllSystemData.data}");
+
     if(mounted){
+      getAllSystemData = await DioClient().getSystemAllData(context);
+      // print("GETSystemAllData: ${getAllSystemData.data}");
       setState(() {
         getSettingsData();
       });
@@ -174,17 +176,18 @@ class _ProfilePageState extends State<ProfilePage> {
   getSettingsData() {
     for (int i = 0; i < getAllSystemData!.data!.settings!.length; i++) {
       pickSettingsData.add(getAllSystemData!.data!.settings![i]);
-      print("Setting time= $pickSettingsData");
+      // print("Setting time= $pickSettingsData");
     }
 
     for (int i = 0; i < pickSettingsData.length; i++) {
       if (pickSettingsData[i].type == "map_refresh_time") {
         timerCount = int.parse(pickSettingsData[i].description!);
         print("timer refresh: ${timerCount}");
-        checkGps();
-        timer =
-            Timer.periodic( Duration(minutes: timerCount), (timer) => checkGps());
+
         if(mounted){
+          checkGps();
+          timer =
+              Timer.periodic( Duration(minutes: timerCount), (timer) => checkGps());
           setState(() {});
         }
 
@@ -195,7 +198,12 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
 
-
+ @override
+  void dispose() {
+    // TODO: implement dispose
+   timer?.cancel();
+    super.dispose();
+  }
   @override
   void initState() {
     getProfile();
