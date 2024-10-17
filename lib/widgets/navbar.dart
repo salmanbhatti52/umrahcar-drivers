@@ -12,8 +12,8 @@ import '../screens/wallet_screen.dart';
 class NavBar extends StatefulWidget {
   int? indexNmbr;
   int? walletPage;
- int? bookingNmbr;
-   NavBar({super.key,this.indexNmbr,this.walletPage,this.bookingNmbr});
+  int? bookingNmbr;
+  NavBar({super.key, this.indexNmbr, this.walletPage, this.bookingNmbr});
 
   @override
   State<NavBar> createState() => _NavBarState();
@@ -22,12 +22,12 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   int index = 0;
 
-
   @override
   void initState() {
-    if(widget.indexNmbr !=null)
-      index=widget.indexNmbr!;
-    print("index Id; ${index}");
+    if (widget.indexNmbr != null) {
+      index = widget.indexNmbr!;
+    }
+    print("index Id; $index");
     print("bookingPage0; ${widget.bookingNmbr}");
 
     // TODO: implement initState
@@ -37,11 +37,13 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     final screens = [
-      HomePage(),
+      const HomePage(),
       BookingsPage(indexNmbr: widget.bookingNmbr),
-      ProfilePage(),
-      WalletPage(indexNmbr: widget.walletPage,),
-      SetttingsPage(),
+      const ProfilePage(),
+      WalletPage(
+        indexNmbr: widget.walletPage,
+      ),
+      const SetttingsPage(),
     ];
 
     return Scaffold(
@@ -68,9 +70,9 @@ class _NavBarState extends State<NavBar> {
               labelTextStyle: MaterialStateProperty.all(
                 TextStyle(
                   color: primaryColor,
-                  fontSize: 8,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
                   fontFamily: 'Montserrat-Regular',
-                  fontWeight: FontWeight.w400,
                 ),
               ),
             ),
@@ -85,32 +87,54 @@ class _NavBarState extends State<NavBar> {
               destinations: [
                 NavigationDestination(
                   icon: SvgPicture.asset('assets/images/home-icon.svg'),
-                  selectedIcon:
-                      SvgPicture.asset('assets/images/active-home-icon.svg'),
+                  selectedIcon: SvgPicture.asset(
+                    'assets/images/active-home-icon.svg',
+                    width: 24,
+                    height: 24,
+                    color: buttonColor,
+                  ),
                   label: 'Home',
                 ),
                 NavigationDestination(
                   icon: SvgPicture.asset('assets/images/bookings-icon.svg'),
                   selectedIcon: SvgPicture.asset(
-                      'assets/images/active-bookings-icon.svg'),
+                    'assets/images/active-bookings-icon.svg',
+                    width: 24,
+                    height: 24,
+                    color: buttonColor,
+                  ),
                   label: 'Bookings',
                 ),
                 NavigationDestination(
                   icon: SvgPicture.asset('assets/images/profile-icon.svg'),
-                  selectedIcon:
-                      SvgPicture.asset('assets/images/active-profile-icon.svg'),
+                  selectedIcon: SvgPicture.asset(
+                    'assets/images/active-profile-icon.svg',
+                    width: 24,
+                    height: 24,
+                    color: buttonColor,
+                  ),
                   label: 'Profile',
                 ),
                 NavigationDestination(
-                  icon: SvgPicture.asset('assets/images/wallet-icon.svg'),
-                  selectedIcon:
-                  SvgPicture.asset('assets/images/active-wallet-icon.svg'),
+                  icon: SvgPicture.asset(
+                    'assets/images/wallet-icon.svg',
+                  ),
+                  selectedIcon: SvgPicture.asset(
+                    'assets/images/active-wallet-icon.svg',
+                    width: 24,
+                    height: 24,
+                    color: buttonColor,
+                  ),
                   label: 'Wallet',
                 ),
                 NavigationDestination(
                   icon: SvgPicture.asset('assets/images/settings-icon.svg'),
                   selectedIcon: SvgPicture.asset(
-                      'assets/images/active-settings-icon.svg'),
+                    'assets/images/active-settings-icon.svg',
+                    width: 24,
+                    height: 24,
+                    color: buttonColor,
+                  ),
                   label: 'Settings',
                 ),
               ],

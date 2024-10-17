@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:umrahcar_driver/screens/splash_screen.dart';
 import 'package:umrahcar_driver/utils/const.dart';
@@ -15,19 +16,22 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  void configOneSignal()
-  {
+  void configOneSignal() {
     OneSignal.shared.setAppId(onesignalAppId);
   }
+
   @override
   void initState() {
     configOneSignal();
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
     return MaterialApp(
       title: 'Umrah Passenger Driver',
       debugShowCheckedModeBanner: false,

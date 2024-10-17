@@ -39,15 +39,14 @@ class _HomePageState extends State<HomePage> {
     var uid = sharedPref.getString('userId');
     userId = uid;
     print("userId Home121: $userId");
-     getProfile();
-     getBookingListOngoing();
-     getBookingListUpcoming();
-     getBookingListCompleted();
-     getSystemAllData();
+    getProfile();
+    getBookingListOngoing();
+    getBookingListUpcoming();
+    getBookingListCompleted();
+    getSystemAllData();
   }
 
   getProfile() async {
-
     if (mounted) {
       getDriverProfile = await DioClient().getProfile(userId, context);
       print("name: ${getDriverProfile.data!.userData!.name}");
@@ -58,25 +57,23 @@ class _HomePageState extends State<HomePage> {
   GetBookingListModel getBookingOngoingResponse = GetBookingListModel();
 
   getBookingListOngoing() async {
-   if(mounted){
-     // print("userId $userId");
-     var mapData = {"users_drivers_id": userId.toString()};
-     getBookingOngoingResponse =
-     await DioClient().getBookingOngoing(mapData, context);
-     // print("get booking ongoing res : ${getBookingOngoingResponse.data}");
-     setState(() {});
-   }
+    if (mounted) {
+      // print("userId $userId");
+      var mapData = {"users_drivers_id": userId.toString()};
+      getBookingOngoingResponse =
+          await DioClient().getBookingOngoing(mapData, context);
+      // print("get booking ongoing res : ${getBookingOngoingResponse.data}");
+      setState(() {});
+    }
   }
 
   GetBookingListModel getBookingUpcomingResponse = GetBookingListModel();
   getBookingListUpcoming() async {
-
-
-    if(mounted){
+    if (mounted) {
       // print("userId $userId");
       var mapData = {"users_drivers_id": userId.toString()};
       getBookingUpcomingResponse =
-      await DioClient().getBookingupcoming(mapData, context);
+          await DioClient().getBookingupcoming(mapData, context);
       // print("get booking upcoming res: ${getBookingUpcomingResponse.data}");
       setState(() {});
     }
@@ -84,12 +81,11 @@ class _HomePageState extends State<HomePage> {
 
   GetBookingListModel getBookingCompletedResponse = GetBookingListModel();
   getBookingListCompleted() async {
-
-    if(mounted){
+    if (mounted) {
       // print("uid $userId");
       var mapData = {"users_drivers_id": userId.toString()};
       getBookingCompletedResponse =
-      await DioClient().getBookingCompleted(mapData, context);
+          await DioClient().getBookingCompleted(mapData, context);
       setState(() {});
     }
   }
@@ -121,7 +117,7 @@ class _HomePageState extends State<HomePage> {
       }
 
       if (haspermission) {
-        if(mounted){
+        if (mounted) {
           setState(() {
             //refresh the UI
           });
@@ -132,12 +128,11 @@ class _HomePageState extends State<HomePage> {
     } else {
       print("GPS Service is not enabled, turn on GPS location");
     }
-    if(mounted){
+    if (mounted) {
       setState(() {
         //refresh the UI
       });
     }
-
   }
 
   getLocation() async {
@@ -150,7 +145,7 @@ class _HomePageState extends State<HomePage> {
     long = position.longitude.toString();
     lat = position.latitude.toString();
 
-    if(mounted){
+    if (mounted) {
       if (long.isNotEmpty && lat.isNotEmpty) {
         updateDriverLocation();
       }
@@ -159,7 +154,6 @@ class _HomePageState extends State<HomePage> {
         //refresh UI
       });
     }
-
 
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
@@ -176,13 +170,12 @@ class _HomePageState extends State<HomePage> {
       long = position.longitude.toString();
       lat = position.latitude.toString();
 
-      if(mounted){
+      if (mounted) {
         if (long.isNotEmpty && lat.isNotEmpty) {
           updateDriverLocation();
         }
         setState(() {});
       }
-
     });
   }
 
@@ -198,20 +191,18 @@ class _HomePageState extends State<HomePage> {
       "longitude": long,
       "lattitude": lat
     };
-    if(mounted){
+    if (mounted) {
       updateDriverLocationModel =
-      await DioClient().updateDriverLocation(jsonData, context);
+          await DioClient().updateDriverLocation(jsonData, context);
       print("message of location: ${updateDriverLocationModel.message}");
     }
-
-    }
+  }
 
   GetAllSystemData getAllSystemData = GetAllSystemData();
 
   getSystemAllData() async {
-
     // print("GETSystemAllData: ${getAllSystemData.data?.vehicles}");
-    if(mounted){
+    if (mounted) {
       getAllSystemData = await DioClient().getSystemAllData(context);
       setState(() {
         getSettingsData();
@@ -233,16 +224,15 @@ class _HomePageState extends State<HomePage> {
         timerCount = int.parse(pickSettingsData[i].description!);
         print("timer refresh: $timerCount");
 
-        if(mounted){
+        if (mounted) {
           checkGps();
           timer = Timer.periodic(
               Duration(minutes: timerCount), (timer) => checkGps());
           setState(() {});
         }
-
       }
     }
-    }
+  }
 
   @override
   void initState() {
@@ -272,92 +262,91 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   decoration: BoxDecoration(
                     color: primaryColor,
-                    // image: DecorationImage(
-                    //   image: AssetImage('assets/images/background.png'),
-                    //   fit: BoxFit.cover,
-                    // ),
                   ),
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 20),
-                        child: Container(
-                          color: Colors.transparent,
-                          width: size.width,
-                          height: MediaQuery.sizeOf(context).height * 0.25,
-                          // height: size.height * 0.2562,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              getDriverProfile.data!.userData!.image != null
-                                  ? Padding(
-                                      padding: const EdgeInsets.only(left: 20),
-                                      child: Container(
-                                        height: 65,
-                                        width: 65,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                                image: NetworkImage(
-                                                  "$imageUrl${getDriverProfile.data!.userData!.image}",
-                                                ),
-                                                fit: BoxFit.cover)),
-                                      ),
-                                    )
-                                  : Padding(
-                                      padding: const EdgeInsets.only(left: 20),
-                                      child: CircleAvatar(
-                                        radius: 35,
-                                        child: Image.asset(
-                                          'assets/images/profile.png',
-                                          fit: BoxFit.cover,
-                                        ),
+                      Container(
+                        color: Colors.transparent,
+                        width: size.width,
+                        height: size.height * 0.252,
+                        // height: size.height * 0.2562,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            getDriverProfile.data!.userData!.image != null
+                                ? Padding(
+                                    padding: const EdgeInsets.only(left: 20),
+                                    child: Container(
+                                      height: 65,
+                                      width: 65,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                              image: NetworkImage(
+                                                "$imageUrl${getDriverProfile.data!.userData!.image}",
+                                              ),
+                                              fit: BoxFit.cover)),
+                                    ),
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.only(left: 20),
+                                    child: CircleAvatar(
+                                      radius: 35,
+                                      child: Image.asset(
+                                        'assets/images/profile.png',
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
-                              SizedBox(width: size.width * 0.02),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width: 180,
-                                    child: Text(
-                                      '${getDriverProfile.data!.userData!.name}',
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontFamily: 'Montserrat-Regular',
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
+                                  ),
+                            SizedBox(width: size.width * 0.02),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 180,
+                                  child: Text(
+                                    '${getDriverProfile.data!.userData!.name}',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontFamily: 'Montserrat-Regular',
+                                      fontWeight: FontWeight.w600,
                                     ),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                  SizedBox(height: size.height * 0.002),
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                          'assets/images/white-location-icon.svg'),
-                                      SizedBox(width: size.width * 0.01),
-                                      SizedBox(
-                                        width: 180,
-                                        child: Text(
-                                          '${getDriverProfile.data!.userData!.city}',
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 12,
-                                            fontFamily: 'Montserrat-Regular',
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
+                                ),
+                                SizedBox(height: size.height * 0.002),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/images/white-location-icon.svg'),
+                                    SizedBox(width: size.width * 0.01),
+                                    SizedBox(
+                                      width: 180,
+                                      child: Text(
+                                        '${getDriverProfile.data!.userData!.city}',
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontFamily: 'Montserrat-Regular',
+                                          fontWeight: FontWeight.w500,
                                         ),
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                    ],
-                                  ),
-                                ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const Spacer(),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                right: 10,
+                                bottom: 10,
                               ),
-                              Spacer(),
-                              Container(
+                              child: Container(
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
@@ -368,120 +357,123 @@ class _HomePageState extends State<HomePage> {
                                 child: SvgPicture.asset(
                                     'assets/images/green-notification-icon.svg'),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(height: size.height * 0.04),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: mainColor,
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: size.height * 0.17),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => NavBar(
-                                                  indexNmbr: 1,
-                                                )));
-                                    setState(() {});
-                                  },
-                                  child: box(
-                                      'assets/images/white-fast-car-icon.svg',
-                                      getBookingOngoingResponse.data != null
-                                          ? '${getBookingOngoingResponse.data!.length}'
-                                          : "0",
-                                      'On Going Bookings',
-                                      context),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => NavBar(
-                                                  indexNmbr: 1,
-                                                  bookingNmbr: 1,
-                                                )));
-                                    setState(() {});
-                                  },
-                                  child: box(
-                                      'assets/images/white-fast-car-icon.svg',
-                                      getBookingUpcomingResponse.data != null
-                                          ? '${getBookingUpcomingResponse.data!.length}'
-                                          : "0",
-                                      'Upcoming Bookings',
-                                      context),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => NavBar(
-                                                  indexNmbr: 1,
-                                                  bookingNmbr: 2,
-                                                )));
-                                    setState(() {});
-                                  },
-                                  child: box(
-                                      'assets/images/white-fast-car-icon.svg',
-                                      getBookingCompletedResponse.data != null
-                                          ? '${getBookingCompletedResponse.data!.length}'
-                                          : "0",
-                                      'Completed Bookings',
-                                      context),
-                                ),
-                              ],
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: mainColor,
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
                             ),
-                            SizedBox(height: size.height * 0.03),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              child: Row(
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: size.height * 0.17),
+                              Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
-                                    'Ongoing Bookings',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontFamily: 'Montserrat-Regular',
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
-                                    ),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => NavBar(
+                                                    indexNmbr: 1,
+                                                  )));
+                                      setState(() {});
+                                    },
+                                    child: box(
+                                        'assets/images/white-fast-car-icon.svg',
+                                        getBookingOngoingResponse.data != null
+                                            ? '${getBookingOngoingResponse.data!.length}'
+                                            : "0",
+                                        'On Going Bookings',
+                                        context),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => NavBar(
+                                                    indexNmbr: 1,
+                                                    bookingNmbr: 1,
+                                                  )));
+                                      setState(() {});
+                                    },
+                                    child: box(
+                                        'assets/images/white-fast-car-icon.svg',
+                                        getBookingUpcomingResponse.data != null
+                                            ? '${getBookingUpcomingResponse.data!.length}'
+                                            : "0",
+                                        'Upcoming Bookings',
+                                        context),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => NavBar(
+                                                    indexNmbr: 1,
+                                                    bookingNmbr: 2,
+                                                  )));
+                                      setState(() {});
+                                    },
+                                    child: box(
+                                        'assets/images/white-fast-car-icon.svg',
+                                        getBookingCompletedResponse.data != null
+                                            ? '${getBookingCompletedResponse.data!.length}'
+                                            : "0",
+                                        'Completed Bookings',
+                                        context),
                                   ),
                                 ],
                               ),
-                            ),
-                            SizedBox(height: size.height * 0.02),
-                            Container(
-                              color: Colors.transparent,
-                              height: size.height * 0.273,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                child: RefreshIndicator(
-                                    onRefresh: () async {
-                                      getBookingListOngoing();
-                                      setState(() {});
-                                    },
-                                    child: onGoingList(
-                                        context, getBookingOngoingResponse)),
+                              SizedBox(height: size.height * 0.03),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Ongoing Bookings',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: 'Montserrat-Regular',
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                              SizedBox(height: size.height * 0.02),
+                              Container(
+                                color: Colors.transparent,
+                                height: size.height * 0.273,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  child: RefreshIndicator(
+                                      onRefresh: () async {
+                                        getBookingListOngoing();
+                                        setState(() {});
+                                      },
+                                      child: onGoingList(
+                                          context, getBookingOngoingResponse)),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -627,7 +619,7 @@ class _HomePageState extends State<HomePage> {
           : Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 370,
                 ),
                 Center(

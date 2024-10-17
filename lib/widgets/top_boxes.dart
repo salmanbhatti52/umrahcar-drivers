@@ -8,12 +8,13 @@ Widget box(image, priceText, titleText, context) {
       height: MediaQuery.of(context).size.height * 0.08,
       width: MediaQuery.of(context).size.width * 0.28,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: const Alignment(-0, -1),
-          end: const Alignment(0.037, 1.01),
-          colors: [primaryColor, darkYellowColor],
-          stops: const [0, 1],
-        ),
+        color: primaryColor,
+        // gradient: LinearGradient(
+        //   begin: const Alignment(-0, -1),
+        //   end: const Alignment(0.037, 1.01),
+        //   colors: [primaryColor, darkYellowColor],
+        //   stops: const [0, 1],
+        // ),
         // gradient: LinearGradient(
         //   begin: Alignment.topCenter,
         //   end: Alignment.bottomCenter,

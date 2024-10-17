@@ -31,14 +31,15 @@ class _SplashScreenState extends State<SplashScreen> {
     return Timer(duration, route);
   }
 
-  route() async{
-    final _sharedPref = await SharedPreferences.getInstance();
-    var uid=_sharedPref.getString('userId');
+  route() async {
+    final sharedPref = await SharedPreferences.getInstance();
+    var uid = sharedPref.getString('userId');
     print("userId Splash: $uid");
-    uid !=null? Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) =>  NavBar())):
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const LogInPage()));
+    uid != null
+        ? Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => NavBar()))
+        : Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const LogInPage()));
   }
 
   initScreen(BuildContext context) {
@@ -47,19 +48,21 @@ class _SplashScreenState extends State<SplashScreen> {
         return Future.value(false);
       },
       child: Scaffold(
-          backgroundColor: primaryColor,
-          body: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/new-splash-bg.png"),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Center(
-              child: SvgPicture.asset("assets/images/new-splash-icon.svg",
-            ),
-            ),
-          ),
+        backgroundColor: Colors.white,
+        body: Center(
+          child: SizedBox(
+              height: 250,
+              width: 250,
+              child: Center(
+                child: SvgPicture.asset(
+                  'assets/app-icon.svg',
+                  height: double.infinity,
+                  width: double.infinity,
+                  fit: BoxFit.scaleDown,
+                  //   colorBlendMode: BlendMode.darken,
+                ),
+              )),
+        ),
       ),
     );
   }
