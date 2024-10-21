@@ -5,8 +5,8 @@ import 'package:umrahcar_driver/screens/booking_process/tab_screens/completed_sc
 import 'package:umrahcar_driver/utils/colors.dart';
 
 class TabbarBookings extends StatefulWidget {
-  int? indexNmbr=0;
-   TabbarBookings({super.key,this.indexNmbr});
+  int? indexNmbr = 0;
+  TabbarBookings({super.key, this.indexNmbr});
 
   @override
   State<TabbarBookings> createState() => _TabbarBookingsState();
@@ -17,28 +17,28 @@ abstract class TickerProvider {}
 class _TabbarBookingsState extends State<TabbarBookings>
     with TickerProviderStateMixin {
   List<String> tabs = ["On Going", "Upcoming", "Completed"];
-  int index=0;
+  int index = 0;
   @override
   void initState() {
-    if(widget.indexNmbr !=null){
-      index=widget.indexNmbr!;
-      setState(() {
-
-      });
+    if (widget.indexNmbr != null) {
+      index = widget.indexNmbr!;
+      setState(() {});
     }
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    TabController tabController = TabController(length: 3, vsync: this,initialIndex: index);
+    TabController tabController =
+        TabController(length: 3, vsync: this, initialIndex: index);
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: MediaQuery.of(context).size.height * 0.055,
+              width: MediaQuery.of(context).size.width * 0.93,
+              height: MediaQuery.of(context).size.height * 0.070,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
@@ -53,7 +53,7 @@ class _TabbarBookingsState extends State<TabbarBookings>
                   controller: tabController,
                   indicator: BoxDecoration(
                     color: primaryColor,
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(35),
                   ),
                   indicatorColor: primaryColor,
                   isScrollable: true,
@@ -63,14 +63,14 @@ class _TabbarBookingsState extends State<TabbarBookings>
                     color: Colors.white,
                     fontSize: 12,
                     fontFamily: 'Montserrat-Regular',
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w900,
                   ),
                   unselectedLabelColor: const Color(0xFF929292),
                   unselectedLabelStyle: const TextStyle(
                     color: Color(0xFF929292),
                     fontSize: 12,
                     fontFamily: 'Montserrat-Regular',
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w700,
                   ),
                   tabs: const [
                     Tab(text: "On Going"),

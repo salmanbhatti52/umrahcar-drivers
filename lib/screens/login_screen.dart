@@ -8,7 +8,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:umrahcar_driver/screens/signup_screen.dart';
 
-
 import '../models/login_model.dart';
 import '../service/rest_api_service.dart';
 import '../utils/colors.dart';
@@ -37,7 +36,7 @@ class _LogInPageState extends State<LogInPage> {
   String? validateEmail(String? value) {
     bool emailValid = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
         .hasMatch(value!);
-    if (value.length == 0) {
+    if (value.isEmpty) {
       return "Email field is required!";
     } else if (!emailValid) {
       return "Email field is not valid!";
@@ -65,12 +64,9 @@ class _LogInPageState extends State<LogInPage> {
     return Future.value(true);
   }
 
-
-  void configOneSignal()
-  {
+  void configOneSignal() {
     OneSignal.shared.setAppId(onesignalAppId);
   }
-
 
   @override
   void initState() {
@@ -103,19 +99,13 @@ class _LogInPageState extends State<LogInPage> {
                   children: [
                     SizedBox(height: size.height * 0.04),
                     Container(
-                        width: size.width,
-                        height: size.height * 0.36,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/new-login-bg.png',
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        child: SvgPicture.asset(
-                          'assets/images/new-umrah-car-logo-big.svg',
-                          fit: BoxFit.scaleDown,
-                        ),
+                      width: size.width,
+                      height: size.height * 0.36,
+                      decoration: const BoxDecoration(),
+                      child: SvgPicture.asset(
+                        'assets/app-icon.svg',
+                        fit: BoxFit.scaleDown,
+                      ),
                     ),
                     SizedBox(height: size.height * 0.0),
                     const Text(
@@ -144,7 +134,7 @@ class _LogInPageState extends State<LogInPage> {
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
                           bool emailValid = RegExp(
-                              r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+                                  r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
                               .hasMatch(value!);
                           if (value.isEmpty) {
                             return "Email field is required!";
@@ -170,7 +160,7 @@ class _LogInPageState extends State<LogInPage> {
                           ),
                           border: OutlineInputBorder(
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(16)),
+                                const BorderRadius.all(Radius.circular(16)),
                             borderSide: BorderSide(
                               color: const Color(0xFF000000).withOpacity(0.15),
                               width: 1,
@@ -178,7 +168,7 @@ class _LogInPageState extends State<LogInPage> {
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(16)),
+                                const BorderRadius.all(Radius.circular(16)),
                             borderSide: BorderSide(
                               color: const Color(0xFF000000).withOpacity(0.15),
                               width: 1,
@@ -186,7 +176,7 @@ class _LogInPageState extends State<LogInPage> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(16)),
+                                const BorderRadius.all(Radius.circular(16)),
                             borderSide: BorderSide(
                               color: const Color(0xFF000000).withOpacity(0.15),
                               width: 1,
@@ -227,8 +217,7 @@ class _LogInPageState extends State<LogInPage> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Password field is required!';
-                          }
-                          else if(value.length <6){
+                          } else if (value.length < 6) {
                             return "Password must be 6 Digits";
                           }
                           return null;
@@ -249,7 +238,7 @@ class _LogInPageState extends State<LogInPage> {
                           ),
                           border: OutlineInputBorder(
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(16)),
+                                const BorderRadius.all(Radius.circular(16)),
                             borderSide: BorderSide(
                               color: const Color(0xFF000000).withOpacity(0.15),
                               width: 1,
@@ -257,7 +246,7 @@ class _LogInPageState extends State<LogInPage> {
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(16)),
+                                const BorderRadius.all(Radius.circular(16)),
                             borderSide: BorderSide(
                               color: const Color(0xFF000000).withOpacity(0.15),
                               width: 1,
@@ -265,7 +254,7 @@ class _LogInPageState extends State<LogInPage> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(16)),
+                                const BorderRadius.all(Radius.circular(16)),
                             borderSide: BorderSide(
                               color: const Color(0xFF000000).withOpacity(0.15),
                               width: 1,
@@ -301,17 +290,17 @@ class _LogInPageState extends State<LogInPage> {
                             },
                             child: _obscure
                                 ? SvgPicture.asset(
-                              'assets/images/hide-password-icon.svg',
-                              width: 25,
-                              height: 25,
-                              fit: BoxFit.scaleDown,
-                            )
+                                    'assets/images/hide-password-icon.svg',
+                                    width: 25,
+                                    height: 25,
+                                    fit: BoxFit.scaleDown,
+                                  )
                                 : SvgPicture.asset(
-                              'assets/images/show-password-icon.svg',
-                              width: 25,
-                              height: 25,
-                              fit: BoxFit.scaleDown,
-                            ),
+                                    'assets/images/show-password-icon.svg',
+                                    width: 25,
+                                    height: 25,
+                                    fit: BoxFit.scaleDown,
+                                  ),
                           ),
                         ),
                       ),
@@ -346,41 +335,40 @@ class _LogInPageState extends State<LogInPage> {
                     GestureDetector(
                         onTap: () async {
                           if (_formKey.currentState!.validate()) {
-
                             final status =
-                            await OneSignal.shared.getDeviceState();
+                                await OneSignal.shared.getDeviceState();
                             String? onesignalId = status?.userId;
 
-                            print("onesignalId: ${onesignalId}");
+                            print("onesignalId: $onesignalId");
 
                             print("email: ${emailController.text}");
                             print("password: ${passwordController.text}");
-                            var mapData={
+                            var mapData = {
                               "onesignal_id": "$onesignalId",
                               "email": emailController.text,
                               "password": passwordController.text,
-                              "longitude":"",
-                              "lattitude":""
-
+                              "longitude": "",
+                              "lattitude": ""
                             };
-                            var response = await DioClient().login(
-                                mapData,context
-                            );
-                            print("response id: ${response.data!.userData!.email}");
-                            if (response != null) {
-
-                              SharedPreferences prefs = await SharedPreferences.getInstance();
-                              await prefs.setString("userId", response.data!.userData!.usersDriversId!);
-                              await prefs.setString("oneSignalId", response.data!.userData!.onesignalId!);
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>NavBar()));
-                              // Navigator.of(context).pushAndRemoveUntil(
-                              //     MaterialPageRoute(
-                              //         builder: (context) => const HomePage()),
-                              //         (Route<dynamic> route) => false);
-                            }
+                            var response =
+                                await DioClient().login(mapData, context);
+                            print(
+                                "response id: ${response.data!.userData!.email}");
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            await prefs.setString("userId",
+                                response.data!.userData!.usersDriversId!);
+                            await prefs.setString("oneSignalId",
+                                response.data!.userData!.onesignalId!);
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => NavBar()));
+                            // Navigator.of(context).pushAndRemoveUntil(
+                            //     MaterialPageRoute(
+                            //         builder: (context) => const HomePage()),
+                            //         (Route<dynamic> route) => false);
                           }
-
-
                         },
                         child: button('Login', context)),
                     SizedBox(height: size.height * 0.04),
@@ -433,7 +421,7 @@ class _LogInPageState extends State<LogInPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>  const SignUpPage(),
+                                    builder: (context) => const SignUpPage(),
                                   ),
                                 );
                               },

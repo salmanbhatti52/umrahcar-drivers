@@ -58,21 +58,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                SizedBox(height: size.height * 0.02),
-                Container(
-                    width: size.width,
-                    height: size.height * 0.36,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/new-login-bg.png',
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: SvgPicture.asset(
-                      'assets/images/new-umrah-car-logo-big.svg',
-                      fit: BoxFit.scaleDown,
-                    ),
+                SvgPicture.asset(
+                  'assets/app-icon.svg',
+                  width: 150,
+                  height: 150,
+                  fit: BoxFit.scaleDown,
                 ),
                 SizedBox(height: size.height * 0.02),
                 const Text(
@@ -101,7 +91,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       bool emailValid = RegExp(
-                          r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+                              r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
                           .hasMatch(value!);
                       if (value.isEmpty) {
                         return "Email field is required!";
@@ -111,7 +101,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         return null;
                       }
                     },
-
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Montserrat-Regular',
@@ -127,21 +116,24 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         wordSpacing: 2,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
@@ -177,26 +169,26 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     onTap: () async {
                       if (_formKey.currentState!.validate()) {
                         print("email: ${emailController.text}");
-                        var mapData={
+                        var mapData = {
                           "email": emailController.text,
                         };
-                        var response = await DioClient().forgotPasswordOtp(
-                            mapData,context
-                        );
+                        var response = await DioClient()
+                            .forgotPasswordOtp(mapData, context);
                         print("response otp: ${response.data!.otp.toString()}");
-                        print("response uid: ${response.data!.usersDriversId.toString()}");
-                        if (response != null) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${response.data!.message}")));
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>  VerifyOTPPage(email: emailController.text,verifyOTP: response.data!.otp.toString(),userId: response.data!.usersDriversId ),
-                            ),
-                          );
-                        }
+                        print(
+                            "response uid: ${response.data!.usersDriversId.toString()}");
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text("${response.data!.message}")));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VerifyOTPPage(
+                                email: emailController.text,
+                                verifyOTP: response.data!.otp.toString(),
+                                userId: response.data!.usersDriversId),
+                          ),
+                        );
                       }
-
-
                     },
                     child: button('Confirm', context)),
                 SizedBox(height: size.height * 0.02),

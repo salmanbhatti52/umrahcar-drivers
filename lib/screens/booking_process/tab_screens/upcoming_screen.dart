@@ -30,7 +30,9 @@ class _UpcomingPageState extends State<UpcomingPage> {
       getBookingUpcomingResponse =
           await DioClient().getBookingupcoming(mapData, context);
       // print("response id: ${getBookingUpcomingResponse.data}");
-      setState(() {});
+         if (mounted) {
+                              setState(() {});
+                            }
     }
 
   }
@@ -202,7 +204,9 @@ class _UpcomingPageState extends State<UpcomingPage> {
                     child: RefreshIndicator(
                       onRefresh: () async {
                         getBookingListUpcoming();
-                        setState(() {});
+                          if (mounted) {
+                              setState(() {});
+                            }
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),

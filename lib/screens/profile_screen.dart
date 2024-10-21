@@ -24,7 +24,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  GetDriverProfile getDriverProfile=GetDriverProfile();
+  GetDriverProfile getDriverProfile = GetDriverProfile();
   TextEditingController currentPasswordController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -34,14 +34,12 @@ class _ProfilePageState extends State<ProfilePage> {
   bool _obscure1 = true;
   bool _obscure2 = true;
 
-  getProfile()async{
-    if(mounted){
-      getDriverProfile= await DioClient().getProfile(userId, context);
+  getProfile() async {
+    if (mounted) {
+      getDriverProfile = await DioClient().getProfile(userId, context);
       print("name: ${getDriverProfile.data!.userData!.name}");
 
-      setState(() {
-
-      });
+      setState(() {});
     }
   }
 
@@ -55,43 +53,43 @@ class _ProfilePageState extends State<ProfilePage> {
   late StreamSubscription<Position> positionStream;
   checkGps() async {
     servicestatus = await Geolocator.isLocationServiceEnabled();
-    if(servicestatus){
+    if (servicestatus) {
       permission = await Geolocator.checkPermission();
 
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
           print('Location permissions are denied');
-        }else if(permission == LocationPermission.deniedForever){
+        } else if (permission == LocationPermission.deniedForever) {
           print("'Location permissions are permanently denied");
-        }else{
+        } else {
           haspermission = true;
         }
-      }else{
+      } else {
         haspermission = true;
       }
 
-      if(haspermission){
-        if(mounted){
+      if (haspermission) {
+        if (mounted) {
           setState(() {
             //refresh the UI
           });
           getLocation();
         }
       }
-    }else{
+    } else {
       print("GPS Service is not enabled, turn on GPS location");
     }
-    if(mounted){
+    if (mounted) {
       setState(() {
         //refresh the UI
       });
     }
-
   }
 
   getLocation() async {
-    position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
     // print(position.longitude); //Output: 80.24599079
     // print(position.latitude);
     // print("hiiiiiiiiiii");//Output: 29.6593457
@@ -99,27 +97,25 @@ class _ProfilePageState extends State<ProfilePage> {
     long = position.longitude.toString();
     lat = position.latitude.toString();
 
-
-
-    if(mounted){
+    if (mounted) {
       setState(() {
         //refresh UI
       });
-      if(long.isNotEmpty && lat.isNotEmpty){
-        if(mounted){
+      if (long.isNotEmpty && lat.isNotEmpty) {
+        if (mounted) {
           updateDriverLocation();
         }
       }
     }
-
 
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
       distanceFilter: 100,
     );
 
-    StreamSubscription<Position> positionStream = Geolocator.getPositionStream(
-        locationSettings: locationSettings).listen((Position position) {
+    StreamSubscription<Position> positionStream =
+        Geolocator.getPositionStream(locationSettings: locationSettings)
+            .listen((Position position) {
       // print(position.longitude); //Output: 80.24599079
       // print(position.latitude); //Output: 29.6593457
       // print("bye");//Output: 29.6593457
@@ -127,83 +123,77 @@ class _ProfilePageState extends State<ProfilePage> {
       long = position.longitude.toString();
       lat = position.latitude.toString();
 
-
-      if(mounted){
-        if(long.isNotEmpty && lat.isNotEmpty){
-          if(mounted){
+      if (mounted) {
+        if (long.isNotEmpty && lat.isNotEmpty) {
+          if (mounted) {
             updateDriverLocation();
           }
         }
-        setState(() {
-
-        });
+        setState(() {});
       }
-
     });
   }
-  UpdateDriverLocationModel updateDriverLocationModel=UpdateDriverLocationModel();
-  updateDriverLocation()async{
+
+  UpdateDriverLocationModel updateDriverLocationModel =
+      UpdateDriverLocationModel();
+  updateDriverLocation() async {
     // print(lat);
     // print(long);
     // print(userId);
     // print("done");
-    var jsonData={
-      "users_drivers_id":"${userId.toString()}",
-      "longitude":long,
-      "lattitude":lat
+    var jsonData = {
+      "users_drivers_id": userId.toString(),
+      "longitude": long,
+      "lattitude": lat
     };
 
-    updateDriverLocationModel = await DioClient().updateDriverLocation(jsonData, context);
+    updateDriverLocationModel =
+        await DioClient().updateDriverLocation(jsonData, context);
     print("message of location: ${updateDriverLocationModel.message}");
-    }
+  }
 
   GetAllSystemData getAllSystemData = GetAllSystemData();
 
   getSystemAllData() async {
-
-    if(mounted){
+    if (mounted) {
       getAllSystemData = await DioClient().getSystemAllData(context);
       // print("GETSystemAllData: ${getAllSystemData.data}");
       setState(() {
         getSettingsData();
       });
     }
-
-    }
+  }
 
   late List<Setting> pickSettingsData = [];
-  int timerCount=3;
+  int timerCount = 3;
   getSettingsData() {
-    for (int i = 0; i < getAllSystemData!.data!.settings!.length; i++) {
-      pickSettingsData.add(getAllSystemData!.data!.settings![i]);
+    for (int i = 0; i < getAllSystemData.data!.settings!.length; i++) {
+      pickSettingsData.add(getAllSystemData.data!.settings![i]);
       // print("Setting time= $pickSettingsData");
     }
 
     for (int i = 0; i < pickSettingsData.length; i++) {
       if (pickSettingsData[i].type == "map_refresh_time") {
         timerCount = int.parse(pickSettingsData[i].description!);
-        print("timer refresh: ${timerCount}");
+        print("timer refresh: $timerCount");
 
-        if(mounted){
+        if (mounted) {
           checkGps();
-          timer =
-              Timer.periodic( Duration(minutes: timerCount), (timer) => checkGps());
+          timer = Timer.periodic(
+              Duration(minutes: timerCount), (timer) => checkGps());
           setState(() {});
         }
-
-
-
       }
     }
-    }
+  }
 
-
- @override
+  @override
   void dispose() {
     // TODO: implement dispose
-   timer?.cancel();
+    timer?.cancel();
     super.dispose();
   }
+
   @override
   void initState() {
     getProfile();
@@ -235,271 +225,291 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           centerTitle: true,
         ),
-        body: getDriverProfile.data !=null?
-        SingleChildScrollView(
-          child: Column(
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  getDriverProfile.data!.userData!.image !=null ?
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: Container(
-                      height: 120,
-                      width: 120,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: NetworkImage("$imageUrl${getDriverProfile.data!.userData!.image}",
-                              ),
-                              fit: BoxFit.cover
-                          )
-                      ),
-
-                    ),
-                  ):
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: CircleAvatar(
-                      radius: 60,
-                      child: Image.asset(
-                        'assets/images/profile.png',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> const EditProfilePage()));
-                    },
-                    child: Text(
-                      '${getDriverProfile.data!.userData!.name}',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w600,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  SizedBox(height: size.height * 0.003),
-                  GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (context) => changePassword(),
-                      );
-                    },
-                    child: Text(
-                      'Change Password',
-                      style: TextStyle(
-                        color: primaryColor,
-                        fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: Container(
-                      width: size.width * 0.35,
-                      height: size.height * 0.08,
-                      decoration: BoxDecoration(
-                        // color: Colors.red,
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(
-                          width: 1,
-                          color: primaryColor,
-                        ),
-                      ),
+        body: getDriverProfile.data != null
+            ? SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 10.0),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Total Earning',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xFF565656),
-                              fontSize: 12,
-                              fontFamily: 'Montserrat-Regular',
-                              fontWeight: FontWeight.w500,
-                            ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // Profile Image Section
+                              getDriverProfile.data!.userData!.image != null
+                                  ? Container(
+                                      height: 80,
+                                      width: 80,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                            "$imageUrl${getDriverProfile.data!.userData!.image}",
+                                          ),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    )
+                                  : const CircleAvatar(
+                                      radius: 40,
+                                      backgroundImage: AssetImage(
+                                          'assets/images/profile.png'),
+                                    ),
+
+                              const SizedBox(
+                                  width:
+                                      10), // Spacing between image and user info
+
+                              // User Name Section (beside profile pic)
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const EditProfilePage()),
+                                        );
+                                      },
+                                      child: Text(
+                                        '${getDriverProfile.data!.userData!.name}',
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontFamily: 'Montserrat-Regular',
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              // Total Earnings Section (Text only)
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  const Text(
+                                    'Total Earning',
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      color: Color(0xFF565656),
+                                      fontSize: 14,
+                                      fontFamily: 'Montserrat-Regular',
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  SizedBox(height: size.height * 0.002),
+                                  Text(
+                                    '${getDriverProfile.data!.userData!.walletAmount}',
+                                    style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 18,
+                                      fontFamily: 'Montserrat-Regular',
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          SizedBox(height: size.height * 0.002),
-                           Text(
-                             '${getDriverProfile.data!.userData!.walletAmount}',
-                            style: TextStyle(
-                              color: primaryColor,
-                              fontSize: 16,
-                              fontFamily: 'Montserrat-Regular',
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+
+                          // Change Password Section
                         ],
                       ),
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 40, right: 40),
+                      child: TextFormField(
+                        readOnly: true,
+                        initialValue: getDriverProfile.data!.userData!.name,
+                        decoration: InputDecoration(
+                          icon: SvgPicture.asset(
+                            'assets/images/name-icon.svg',
+                            width: 25,
+                            height: 25,
+                          ),
+                          labelText: 'Name',
+                          labelStyle: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontFamily: 'Montserrat-Regular',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: size.height * 0.05),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 40, right: 40),
+                      child: TextFormField(
+                        readOnly: true,
+                        initialValue:
+                            getDriverProfile.data!.userData!.companyName,
+                        decoration: InputDecoration(
+                          icon: SvgPicture.asset(
+                            'assets/images/business-name-icon.svg',
+                            width: 25,
+                            height: 25,
+                          ),
+                          labelText: 'Company Name',
+                          labelStyle: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontFamily: 'Montserrat-Regular',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: size.height * 0.05),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 40, right: 40),
+                      child: TextFormField(
+                        readOnly: true,
+                        initialValue: getDriverProfile.data!.userData!.email,
+                        decoration: InputDecoration(
+                          icon: SvgPicture.asset(
+                            'assets/images/email-icon.svg',
+                            width: 20,
+                            height: 20,
+                          ),
+                          labelText: 'Email',
+                          labelStyle: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontFamily: 'Montserrat-Regular',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: size.height * 0.05),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 40, right: 40),
+                      child: TextFormField(
+                        readOnly: true,
+                        initialValue: getDriverProfile.data!.userData!.city,
+                        decoration: InputDecoration(
+                          icon: SvgPicture.asset(
+                            'assets/images/city-icon.svg',
+                            width: 25,
+                            height: 25,
+                          ),
+                          labelText: 'City',
+                          labelStyle: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontFamily: 'Montserrat-Regular',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: size.height * 0.05),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 40, right: 40),
+                      child: TextFormField(
+                        readOnly: true,
+                        initialValue: getDriverProfile.data!.userData!.contact,
+                        decoration: InputDecoration(
+                          icon: SvgPicture.asset(
+                            'assets/images/contact-icon.svg',
+                            width: 25,
+                            height: 25,
+                          ),
+                          labelText: 'Contact',
+                          labelStyle: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontFamily: 'Montserrat-Regular',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: size.height * 0.05),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 40, right: 40),
+                      child: TextFormField(
+                        readOnly: true,
+                        initialValue: getDriverProfile.data!.userData!.whatsapp,
+                        decoration: InputDecoration(
+                          icon: SvgPicture.asset(
+                            'assets/images/whatsapp-icon.svg',
+                            width: 25,
+                            height: 25,
+                          ),
+                          labelText: 'WhatsApp',
+                          labelStyle: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontFamily: 'Montserrat-Regular',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: size.height * 0.04),
+                    GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) => changePassword(),
+                        );
+                      },
+                      child: Container(
+                        width: 256,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color:
+                              primaryColor, // Set the button background color
+                          borderRadius:
+                              BorderRadius.circular(30), // Rounded corners
+                        ),
+                        alignment: Alignment
+                            .center, // Center the text inside the button
+                        child: const Text(
+                          'Change Password',
+                          style: TextStyle(
+                            color: Colors
+                                .white, // Set text color to white for contrast
+                            fontSize:
+                                14, // Increase font size for better visibility
+                            fontFamily: 'Montserrat-Regular',
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: size.height * 0.04),
+                  ],
+                ),
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 370,
+                  ),
+                  Center(
+                    child: Container(
+                      child: const CircularProgressIndicator(),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: size.height * 0.04),
-              Padding(
-                padding: const EdgeInsets.only(left: 40),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/name-icon.svg',
-                      width: 25,
-                      height: 25,
-                    ),
-                    SizedBox(width: size.width * 0.04),
-                     Text(
-                       '${getDriverProfile.data!.userData!.name}',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: size.height * 0.05),
-              Padding(
-                padding: const EdgeInsets.only(left: 40),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/business-name-icon.svg',
-                      width: 25,
-                      height: 25,
-                    ),
-                    SizedBox(width: size.width * 0.04),
-                     Text(
-                       '${getDriverProfile.data!.userData!.companyName}',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: size.height * 0.05),
-              Padding(
-                padding: const EdgeInsets.only(left: 40),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/email-icon.svg',
-                      width: 20,
-                      height: 20,
-                    ),
-                    SizedBox(width: size.width * 0.04),
-                     Text(
-                       '${getDriverProfile.data!.userData!.email}',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: size.height * 0.05),
-              Padding(
-                padding: const EdgeInsets.only(left: 40),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/city-icon.svg',
-                      width: 25,
-                      height: 25,
-                    ),
-                    SizedBox(width: size.width * 0.04),
-                     Text(
-                       '${getDriverProfile.data!.userData!.city}',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: size.height * 0.05),
-              Padding(
-                padding: const EdgeInsets.only(left: 40),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/contact-icon.svg',
-                      width: 25,
-                      height: 25,
-                    ),
-                    SizedBox(width: size.width * 0.04),
-                     Text(
-                       '${getDriverProfile.data!.userData!.contact}',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: size.height * 0.05),
-              Padding(
-                padding: const EdgeInsets.only(left: 40),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/whatsapp-icon.svg',
-                      width: 25,
-                      height: 25,
-                    ),
-                    SizedBox(width: size.width * 0.04),
-                     Text(
-                       '${getDriverProfile.data!.userData!.whatsapp}',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: size.height * 0.04),
-            ],
-          ),
-        ): Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 370,),
-            Center(
-              child: Container(
-                child: const CircularProgressIndicator(),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -511,7 +521,8 @@ class _ProfilePageState extends State<ProfilePage> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: StatefulBuilder(
-        builder: (BuildContext context, void Function(void Function()) setState) {
+        builder:
+            (BuildContext context, void Function(void Function()) setState) {
           return Dialog(
             backgroundColor: Colors.white,
             shape: RoundedRectangleBorder(
@@ -521,7 +532,8 @@ class _ProfilePageState extends State<ProfilePage> {
             child: SizedBox(
               height: size.height * 0.62,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
                 child: Form(
                   key: changePasswordFormKey,
                   child: Column(
@@ -547,8 +559,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Currrent Password field is required!';
-                            }
-                            else if(value.length <6){
+                            } else if (value.length < 6) {
                               return "Password must be 6 Digits";
                             }
                             return null;
@@ -569,30 +580,34 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                             border: OutlineInputBorder(
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(16)),
+                                  const BorderRadius.all(Radius.circular(16)),
                               borderSide: BorderSide(
-                                color: const Color(0xFF000000).withOpacity(0.15),
+                                color:
+                                    const Color(0xFF000000).withOpacity(0.15),
                                 width: 1,
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(16)),
+                                  const BorderRadius.all(Radius.circular(16)),
                               borderSide: BorderSide(
-                                color: const Color(0xFF000000).withOpacity(0.15),
+                                color:
+                                    const Color(0xFF000000).withOpacity(0.15),
                                 width: 1,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(16)),
+                                  const BorderRadius.all(Radius.circular(16)),
                               borderSide: BorderSide(
-                                color: const Color(0xFF000000).withOpacity(0.15),
+                                color:
+                                    const Color(0xFF000000).withOpacity(0.15),
                                 width: 1,
                               ),
                             ),
                             errorBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(16)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16)),
                               borderSide: BorderSide(
                                 color: Colors.red,
                                 width: 1,
@@ -622,17 +637,17 @@ class _ProfilePageState extends State<ProfilePage> {
                               },
                               child: _obscure
                                   ? SvgPicture.asset(
-                                'assets/images/hide-password-icon.svg',
-                                width: 25,
-                                height: 25,
-                                fit: BoxFit.scaleDown,
-                              )
+                                      'assets/images/hide-password-icon.svg',
+                                      width: 25,
+                                      height: 25,
+                                      fit: BoxFit.scaleDown,
+                                    )
                                   : SvgPicture.asset(
-                                'assets/images/show-password-icon.svg',
-                                width: 25,
-                                height: 25,
-                                fit: BoxFit.scaleDown,
-                              ),
+                                      'assets/images/show-password-icon.svg',
+                                      width: 25,
+                                      height: 25,
+                                      fit: BoxFit.scaleDown,
+                                    ),
                             ),
                           ),
                         ),
@@ -647,8 +662,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'New Password field is required!';
-                            }
-                            else if(value.length <6){
+                            } else if (value.length < 6) {
                               return "Password must be 6 Digits";
                             }
                             return null;
@@ -669,30 +683,34 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                             border: OutlineInputBorder(
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(16)),
+                                  const BorderRadius.all(Radius.circular(16)),
                               borderSide: BorderSide(
-                                color: const Color(0xFF000000).withOpacity(0.15),
+                                color:
+                                    const Color(0xFF000000).withOpacity(0.15),
                                 width: 1,
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(16)),
+                                  const BorderRadius.all(Radius.circular(16)),
                               borderSide: BorderSide(
-                                color: const Color(0xFF000000).withOpacity(0.15),
+                                color:
+                                    const Color(0xFF000000).withOpacity(0.15),
                                 width: 1,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(16)),
+                                  const BorderRadius.all(Radius.circular(16)),
                               borderSide: BorderSide(
-                                color: const Color(0xFF000000).withOpacity(0.15),
+                                color:
+                                    const Color(0xFF000000).withOpacity(0.15),
                                 width: 1,
                               ),
                             ),
                             errorBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(16)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16)),
                               borderSide: BorderSide(
                                 color: Colors.red,
                                 width: 1,
@@ -721,17 +739,17 @@ class _ProfilePageState extends State<ProfilePage> {
                               },
                               child: _obscure1
                                   ? SvgPicture.asset(
-                                'assets/images/hide-password-icon.svg',
-                                width: 25,
-                                height: 25,
-                                fit: BoxFit.scaleDown,
-                              )
+                                      'assets/images/hide-password-icon.svg',
+                                      width: 25,
+                                      height: 25,
+                                      fit: BoxFit.scaleDown,
+                                    )
                                   : SvgPicture.asset(
-                                'assets/images/show-password-icon.svg',
-                                width: 25,
-                                height: 25,
-                                fit: BoxFit.scaleDown,
-                              ),
+                                      'assets/images/show-password-icon.svg',
+                                      width: 25,
+                                      height: 25,
+                                      fit: BoxFit.scaleDown,
+                                    ),
                             ),
                           ),
                         ),
@@ -746,8 +764,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Confirm Password field is required!';
-                            }
-                            else if(value.length <6){
+                            } else if (value.length < 6) {
                               return "Password must be 6 Digits";
                             }
                             return null;
@@ -768,30 +785,34 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                             border: OutlineInputBorder(
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(16)),
+                                  const BorderRadius.all(Radius.circular(16)),
                               borderSide: BorderSide(
-                                color: const Color(0xFF000000).withOpacity(0.15),
+                                color:
+                                    const Color(0xFF000000).withOpacity(0.15),
                                 width: 1,
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(16)),
+                                  const BorderRadius.all(Radius.circular(16)),
                               borderSide: BorderSide(
-                                color: const Color(0xFF000000).withOpacity(0.15),
+                                color:
+                                    const Color(0xFF000000).withOpacity(0.15),
                                 width: 1,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(16)),
+                                  const BorderRadius.all(Radius.circular(16)),
                               borderSide: BorderSide(
-                                color: const Color(0xFF000000).withOpacity(0.15),
+                                color:
+                                    const Color(0xFF000000).withOpacity(0.15),
                                 width: 1,
                               ),
                             ),
                             errorBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(16)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16)),
                               borderSide: BorderSide(
                                 color: Colors.red,
                                 width: 1,
@@ -820,17 +841,17 @@ class _ProfilePageState extends State<ProfilePage> {
                               },
                               child: _obscure2
                                   ? SvgPicture.asset(
-                                'assets/images/hide-password-icon.svg',
-                                width: 25,
-                                height: 25,
-                                fit: BoxFit.scaleDown,
-                              )
+                                      'assets/images/hide-password-icon.svg',
+                                      width: 25,
+                                      height: 25,
+                                      fit: BoxFit.scaleDown,
+                                    )
                                   : SvgPicture.asset(
-                                'assets/images/show-password-icon.svg',
-                                width: 25,
-                                height: 25,
-                                fit: BoxFit.scaleDown,
-                              ),
+                                      'assets/images/show-password-icon.svg',
+                                      width: 25,
+                                      height: 25,
+                                      fit: BoxFit.scaleDown,
+                                    ),
                             ),
                           ),
                         ),
@@ -839,36 +860,33 @@ class _ProfilePageState extends State<ProfilePage> {
                       GestureDetector(
                         onTap: () async {
                           if (changePasswordFormKey.currentState!.validate()) {
-                            print("users_agents_id: ${userId}");
+                            print("users_agents_id: $userId");
                             print("current: ${currentPasswordController.text}");
-                            print("new_password: ${newPasswordController.text}");
-                            print("confirm_password: ${confirmPasswordController.text}");
-                            var mapData={
-                              "users_drivers_id":"$userId",
-                              "old_password":currentPasswordController.text,
-                              "new_password":newPasswordController.text,
-                              "confirm_password":" ${confirmPasswordController.text}"
+                            print(
+                                "new_password: ${newPasswordController.text}");
+                            print(
+                                "confirm_password: ${confirmPasswordController.text}");
+                            var mapData = {
+                              "users_drivers_id": "$userId",
+                              "old_password": currentPasswordController.text,
+                              "new_password": newPasswordController.text,
+                              "confirm_password":
+                                  " ${confirmPasswordController.text}"
                             };
-                            var response = await DioClient().changeUserPassword(
-                                mapData,context
-                            );
+                            var response = await DioClient()
+                                .changeUserPassword(mapData, context);
                             print("response otp: ${response.message}");
-                            if (response != null) {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${response.message}")));
-                              Navigator.pop(context);
-                              currentPasswordController.text="";
-                              newPasswordController.text="";
-                              confirmPasswordController.text="";
-                              _obscure2=true;
-                              _obscure1=true;
-                              _obscure=true;
-                              setState(() {
-                              });
-                            }
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("${response.message}")));
+                            Navigator.pop(context);
+                            currentPasswordController.text = "";
+                            newPasswordController.text = "";
+                            confirmPasswordController.text = "";
+                            _obscure2 = true;
+                            _obscure1 = true;
+                            _obscure = true;
+                            setState(() {});
                           }
-
-
-
                         },
                         child: dialogButton('Update', context),
                       ),
@@ -879,18 +897,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           );
         },
-
       ),
     );
   }
-
-
-
 }
-
-
-
-
-
-
-

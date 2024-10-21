@@ -466,7 +466,9 @@ class _HomePageState extends State<HomePage> {
                                   child: RefreshIndicator(
                                       onRefresh: () async {
                                         getBookingListOngoing();
-                                        setState(() {});
+                                        if (mounted) {
+                                          setState(() {});
+                                        }
                                       },
                                       child: onGoingList(
                                           context, getBookingOngoingResponse)),
@@ -561,30 +563,28 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         ],
                                       ),
-                                      Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                              'assets/images/location-icon.svg'),
-                                          SizedBox(width: size.width * 0.02),
-                                          Container(
-                                            color: Colors.transparent,
-                                            width: size.width * 0.25,
-                                            child: AutoSizeText(
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          right: 10,
+                                          top: 10,
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                                'assets/images/location-icon.svg'),
+                                            SizedBox(width: size.width * 0.01),
+                                            Text(
                                               '${getBookingOngoingResponse.data![0].name}',
                                               style: const TextStyle(
                                                 color: Color(0xFF565656),
                                                 fontFamily:
                                                     'Montserrat-Regular',
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 8,
+                                                fontWeight: FontWeight.w900,
+                                                fontSize: 12,
                                               ),
-                                              minFontSize: 8,
-                                              maxFontSize: 8,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),

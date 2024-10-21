@@ -26,25 +26,26 @@ class _CompletedPageState extends State<CompletedPage> {
   getBookingListUpcoming() async {
     print("uid $userId");
     var mapData = {"users_drivers_id": userId.toString()};
-    if(mounted){
+    if (mounted) {
       getBookingCompletedResponse =
           await DioClient().getBookingCompleted(mapData, context);
       // print("response id: ${getBookingCompletedResponse.data}");
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     }
-
   }
 
   GetBookingListModel getBookingCompletedResponseForSearch =
       GetBookingListModel();
   getBookingListOngoingSearch(String? searchText) async {
-    print("userIdId ${userId}");
+    print("userIdId $userId");
     getBookingCompletedResponseForSearch.data = [];
     var mapData = {
       "users_drivers_id": userId.toString(),
       "bookings_id": searchText
     };
-    if(mounted){
+    if (mounted) {
       getBookingCompletedResponseForSearch =
           await DioClient().getBookingCompleted(mapData, context);
       // print("response id: ${getBookingCompletedResponseForSearch.data}");

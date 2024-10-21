@@ -48,14 +48,8 @@ class _SignUpPageState extends State<SignUpPage> {
   bool _obscure = true;
   bool _obscure1 = true;
 
-
-  List<String> driverTypeList=[
-    "Company",
-    "Individual"
-  ];
+  List<String> driverTypeList = ["Company", "Individual"];
   String? selectedCompany;
-
-
 
   File? imagePath;
   String? base64img;
@@ -77,11 +71,9 @@ class _SignUpPageState extends State<SignUpPage> {
           imagePath = imageTemporary;
           print("newImage $imagePath");
           print("newImage64 $base64img");
-          if(imagePath !=null){
+          if (imagePath != null) {
             Navigator.pop(context);
-            setState(() {
-
-            });
+            setState(() {});
           }
         });
       }
@@ -92,14 +84,12 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-
     var size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-
         backgroundColor: mainColor,
         body: Form(
           key: signUpFormKey,
@@ -109,7 +99,9 @@ class _SignUpPageState extends State<SignUpPage> {
               children: [
                 SizedBox(height: size.height * 0.04),
                 SvgPicture.asset(
-                  'assets/images/new-umrah-car-logo-small.svg',
+                  'assets/app-icon.svg',
+                  height: 150,
+                  width: 150,
                 ),
                 SizedBox(height: size.height * 0.04),
                 const Text(
@@ -127,19 +119,20 @@ class _SignUpPageState extends State<SignUpPage> {
                       borderRadius: BorderRadius.circular(50),
                       child: Container(
                         width: 100,
-                        height:100,
+                        height: 100,
                         decoration: const BoxDecoration(
-                            color: Colors.transparent, shape: BoxShape.circle,
+                          color: Colors.transparent,
+                          shape: BoxShape.circle,
                         ),
                         child: imagePath != null
                             ? Image.file(
-                          imagePath!,
-                          fit: BoxFit.cover,
-                        )
+                                imagePath!,
+                                fit: BoxFit.cover,
+                              )
                             : Image.asset(
-                          'assets/images/profile.png',
-                          fit: BoxFit.cover,
-                        ),
+                                'assets/images/profile.png',
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
                     Positioned(
@@ -162,13 +155,11 @@ class _SignUpPageState extends State<SignUpPage> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 20),
                                   child: Column(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       GestureDetector(
                                         onTap: () {
                                           pickImage(ImageSource.camera);
-
                                         },
                                         child: Row(
                                           children: [
@@ -177,28 +168,24 @@ class _SignUpPageState extends State<SignUpPage> {
                                               width: 30,
                                               height: 30,
                                             ),
-                                            SizedBox(
-                                                width: size.width * 0.04),
+                                            SizedBox(width: size.width * 0.04),
                                             const Text(
                                               'Take a picture',
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 16,
                                                 fontFamily:
-                                                'Montserrat-Regular',
-                                                fontWeight:
-                                                FontWeight.w400,
+                                                    'Montserrat-Regular',
+                                                fontWeight: FontWeight.w400,
                                               ),
                                             ),
                                           ],
                                         ),
                                       ),
-                                      SizedBox(
-                                          height: size.height * 0.04),
+                                      SizedBox(height: size.height * 0.04),
                                       GestureDetector(
                                         onTap: () {
                                           pickImage(ImageSource.gallery);
-
                                         },
                                         child: Row(
                                           children: [
@@ -207,17 +194,15 @@ class _SignUpPageState extends State<SignUpPage> {
                                               width: 30,
                                               height: 30,
                                             ),
-                                            SizedBox(
-                                                width: size.width * 0.04),
+                                            SizedBox(width: size.width * 0.04),
                                             const Text(
                                               'Choose a picture',
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 16,
                                                 fontFamily:
-                                                'Montserrat-Regular',
-                                                fontWeight:
-                                                FontWeight.w400,
+                                                    'Montserrat-Regular',
+                                                fontWeight: FontWeight.w400,
                                               ),
                                             ),
                                           ],
@@ -245,7 +230,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   ],
                 ),
                 SizedBox(height: size.height * 0.04),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Container(
@@ -256,43 +240,41 @@ class _SignUpPageState extends State<SignUpPage> {
                       alignedDropdown: true,
                       child: DropdownButtonHideUnderline(
                         child: DropdownButtonFormField(
-                            isDense: true,
-
+                          isDense: true,
                           icon: Padding(
                             padding: const EdgeInsets.only(top: 3),
                             child: SvgPicture.asset(
                               'assets/images/dropdown-icon.svg',
                               width: 20,
                               height: 20,
-
                               fit: BoxFit.scaleDown,
                             ),
                           ),
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(16)),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(16)),
                               borderSide: BorderSide(
-                                color: const Color(0xFF000000)
-                                    .withOpacity(0.15),
+                                color:
+                                    const Color(0xFF000000).withOpacity(0.15),
                                 width: 1,
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(16)),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(16)),
                               borderSide: BorderSide(
-                                color: const Color(0xFF000000)
-                                    .withOpacity(0.15),
+                                color:
+                                    const Color(0xFF000000).withOpacity(0.15),
                                 width: 1,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(16)),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(16)),
                               borderSide: BorderSide(
-                                color: const Color(0xFF000000)
-                                    .withOpacity(0.15),
+                                color:
+                                    const Color(0xFF000000).withOpacity(0.15),
                                 width: 1,
                               ),
                             ),
@@ -311,30 +293,28 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                           ),
                           borderRadius: BorderRadius.circular(16),
-                          items: driverTypeList!
+                          items: driverTypeList
                               .map(
                                 (item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item,
-                                style: const TextStyle(
-                                  color: Color(0xFF929292),
-                                  fontSize: 10,
-                                  fontFamily: 'Montserrat-Regular',
-                                  fontWeight: FontWeight.w500,
+                                  value: item,
+                                  child: Text(
+                                    item,
+                                    style: const TextStyle(
+                                      color: Color(0xFF929292),
+                                      fontSize: 10,
+                                      fontFamily: 'Montserrat-Regular',
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          )
+                              )
                               .toList(),
                           value: selectedCompany,
                           onChanged: (value) {
                             setState(() {
                               selectedCompany = value;
-                              print("Selected Company: ${selectedCompany}");
-                              setState(() {
-
-                              });
+                              print("Selected Company: $selectedCompany");
+                              setState(() {});
                             });
                           },
                         ),
@@ -343,7 +323,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
                 SizedBox(height: size.height * 0.02),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextFormField(
@@ -370,21 +349,24 @@ class _SignUpPageState extends State<SignUpPage> {
                         wordSpacing: 2,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
@@ -416,8 +398,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
                 SizedBox(height: size.height * 0.02),
-
-                  Padding(
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextFormField(
                     controller: businessNameController,
@@ -443,21 +424,24 @@ class _SignUpPageState extends State<SignUpPage> {
                         wordSpacing: 2,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
@@ -515,21 +499,24 @@ class _SignUpPageState extends State<SignUpPage> {
                         wordSpacing: 2,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
@@ -594,10 +581,9 @@ class _SignUpPageState extends State<SignUpPage> {
                         fontWeight: FontWeight.bold,
                         wordSpacing: 2,
                       ),
-
                       border: OutlineInputBorder(
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(10)),
+                            const BorderRadius.all(Radius.circular(10)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
@@ -605,7 +591,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(14)),
+                            const BorderRadius.all(Radius.circular(14)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
@@ -613,7 +599,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(16)),
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
@@ -638,7 +624,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       prefixIcon: GestureDetector(
                         onTap: () async {
                           final code =
-                          await countryPicker.showPicker(context: context);
+                              await countryPicker.showPicker(context: context);
                           setState(() {
                             countryCode = code;
                           });
@@ -648,8 +634,6 @@ class _SignUpPageState extends State<SignUpPage> {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-
-
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: Text(
@@ -678,13 +662,13 @@ class _SignUpPageState extends State<SignUpPage> {
                               height: 25,
                               fit: BoxFit.scaleDown,
                             ),
-
                           ],
                         ),
                       ),
                     ),
                   ),
-                ), SizedBox(height: size.height * 0.02),
+                ),
+                SizedBox(height: size.height * 0.02),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextFormField(
@@ -718,10 +702,9 @@ class _SignUpPageState extends State<SignUpPage> {
                         fontWeight: FontWeight.bold,
                         wordSpacing: 2,
                       ),
-
                       border: OutlineInputBorder(
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(10)),
+                            const BorderRadius.all(Radius.circular(10)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
@@ -729,7 +712,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(14)),
+                            const BorderRadius.all(Radius.circular(14)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
@@ -737,7 +720,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(16)),
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
@@ -762,7 +745,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       prefixIcon: GestureDetector(
                         onTap: () async {
                           final code =
-                          await countryPicker.showPicker(context: context);
+                              await countryPicker.showPicker(context: context);
                           setState(() {
                             countryCode1 = code;
                           });
@@ -772,8 +755,6 @@ class _SignUpPageState extends State<SignUpPage> {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-
-
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: Text(
@@ -802,14 +783,12 @@ class _SignUpPageState extends State<SignUpPage> {
                               height: 25,
                               fit: BoxFit.scaleDown,
                             ),
-
                           ],
                         ),
                       ),
                     ),
                   ),
                 ),
-
                 SizedBox(height: size.height * 0.02),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -818,7 +797,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       bool emailValid = RegExp(
-                          r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+                              r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
                           .hasMatch(value!);
                       if (value.isEmpty) {
                         return "Email field is required!";
@@ -843,21 +822,24 @@ class _SignUpPageState extends State<SignUpPage> {
                         wordSpacing: 2,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
@@ -898,8 +880,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Password field is required!';
-                      }
-                      else if(value.length < 6){
+                      } else if (value.length < 6) {
                         return "Password must be 6 Digits";
                       }
                       return null;
@@ -919,21 +900,24 @@ class _SignUpPageState extends State<SignUpPage> {
                         wordSpacing: 2,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
@@ -994,11 +978,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Confirm Password field is required!';
-                      }
-                      else if(value.length < 6){
+                      } else if (value.length < 6) {
                         return "Password must be 6 Digits";
-                      }
-                      else if(value != passwordController.text){
+                      } else if (value != passwordController.text) {
                         return "Confirm Password and Password are not same";
                       }
                       return null;
@@ -1018,21 +1000,24 @@ class _SignUpPageState extends State<SignUpPage> {
                         wordSpacing: 2,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
                           color: const Color(0xFF000000).withOpacity(0.15),
                           width: 1,
@@ -1086,55 +1071,59 @@ class _SignUpPageState extends State<SignUpPage> {
                 SizedBox(height: size.height * 0.03),
                 GestureDetector(
                     onTap: () async {
-                      if(signUpFormKey.currentState!.validate() && countryCode !=null && selectedCompany !=null && base64img !=null && countryCode1 !=null){
+                      if (signUpFormKey.currentState!.validate() &&
+                          countryCode != null &&
+                          selectedCompany != null &&
+                          base64img != null &&
+                          countryCode1 != null) {
+                        var jsonData = {
+                          "longitude": "",
+                          "lattitude": "",
+                          "drivers_type": selectedCompany,
+                          "company_name": businessNameController.text,
+                          "name": nameController.text,
+                          "email": emailController.text,
+                          "password": passwordController.text,
+                          "contact":
+                              "${countryCode!.dialCode}${contactNumberController.text}",
+                          "whatsapp":
+                              "${countryCode1!.dialCode}${whatsappNumberController.text}",
+                          "city": cityController.text,
+                          "notification_switch": "Yes",
+                          "image": base64img
+                        };
+                        print("data: $jsonData");
+                        SignUpModel res =
+                            await DioClient().signUp(jsonData, context);
+                        print("response: ${res.message}");
 
-                       var jsonData= {
-                         "longitude":"",
-                         "lattitude":"",
-                         "drivers_type":selectedCompany,
-                         "company_name": businessNameController.text,
-                         "name": nameController.text,
-                         "email":emailController.text,
-                         "password": passwordController.text,
-                         "contact":"${countryCode!.dialCode}${contactNumberController.text}",
-                         "whatsapp":"${countryCode1!.dialCode}${whatsappNumberController.text}",
-                         "city": cityController.text,
-                         "notification_switch":"Yes",
-                         "image": base64img
-                       };
-                       print("data: ${jsonData}");
-                       SignUpModel res= await DioClient().signUp(jsonData, context);
-                       print("response: ${res.message}");
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Driver added successfully")));
 
-                       if(res !=null){
-                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Driver added successfully")));
-
-                         Navigator.of(context).pushAndRemoveUntil(
-                             MaterialPageRoute(
-                                 builder: (context) => const LogInPage()),
-                                 (Route<dynamic> route) => false);
-                         setState(() {
-
-                         });
-                       }
-
-
-
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => const LogInPage()),
+                            (Route<dynamic> route) => false);
+                        setState(() {});
+                      } else if (selectedCompany == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Please Select Driver Type")));
+                      } else if (countryCode == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Please Select Country Code")));
+                      } else if (countryCode1 == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text(
+                                    "Please Select WhatsApp Country Code")));
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Please Select Image")));
                       }
-                      else if(selectedCompany ==null){
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please Select Driver Type")));
-                      }else if(countryCode ==null){
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please Select Country Code")));
-                         }
-                      else if(countryCode1 ==null){
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please Select WhatsApp Country Code")));
-                      }
-                      else{
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please Select Image")));
-
-                      }
-
-
                     },
                     child: button('Signup', context)),
                 SizedBox(height: size.height * 0.03),

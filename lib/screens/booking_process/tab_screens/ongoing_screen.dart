@@ -27,11 +27,13 @@ class _OnGoingPageState extends State<OnGoingPage> {
   getBookingListOngoing() async {
     print("phoneNmbr $userId");
     var mapData = {"users_drivers_id": userId.toString()};
-    if(mounted){
+    if (mounted) {
       getBookingOngoingResponse =
           await DioClient().getBookingOngoing(mapData, context);
       // print("response id: ${getBookingOngoingResponse.data}");
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     }
   }
 
@@ -39,13 +41,13 @@ class _OnGoingPageState extends State<OnGoingPage> {
       GetBookingListModel();
 
   getBookingListOngoingSearch(String? searchText) async {
-    print("userIdId ${userId}");
+    print("userIdId $userId");
     getBookingOngoingResponseForSearch.data = [];
     var mapData = {
       "users_drivers_id": userId.toString(),
       "bookings_id": searchText
     };
-    if(mounted){
+    if (mounted) {
       getBookingOngoingResponseForSearch =
           await DioClient().getBookingOngoing(mapData, context);
       // print("response id: ${getBookingOngoingResponseForSearch.data}");
@@ -53,7 +55,6 @@ class _OnGoingPageState extends State<OnGoingPage> {
         // getBookingOngoingResponse.data = [];
       });
     }
-
   }
 
   @override
@@ -206,7 +207,9 @@ class _OnGoingPageState extends State<OnGoingPage> {
                       child: RefreshIndicator(
                           onRefresh: () async {
                             getBookingListOngoing();
-                            setState(() {});
+                            if (!mounted) {
+                              setState(() {});
+                            }
                           },
                           child:
                               onGoingList(context, getBookingOngoingResponse)),

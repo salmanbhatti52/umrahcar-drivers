@@ -33,34 +33,34 @@ class _SetttingsPageState extends State<SetttingsPage> {
   late StreamSubscription<Position> positionStream;
   checkGps() async {
     servicestatus = await Geolocator.isLocationServiceEnabled();
-    if(servicestatus){
+    if (servicestatus) {
       permission = await Geolocator.checkPermission();
 
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
           print('Location permissions are denied');
-        }else if(permission == LocationPermission.deniedForever){
+        } else if (permission == LocationPermission.deniedForever) {
           print("'Location permissions are permanently denied");
-        }else{
+        } else {
           haspermission = true;
         }
-      }else{
+      } else {
         haspermission = true;
       }
 
-      if(haspermission){
-        if(mounted){
+      if (haspermission) {
+        if (mounted) {
           setState(() {
             //refresh the UI
           });
           getLocation();
         }
       }
-    }else{
+    } else {
       print("GPS Service is not enabled, turn on GPS location");
     }
-    if(mounted){
+    if (mounted) {
       setState(() {
         //refresh the UI
       });
@@ -68,7 +68,8 @@ class _SetttingsPageState extends State<SetttingsPage> {
   }
 
   getLocation() async {
-    position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
     // print(position.longitude); //Output: 80.24599079
     // print(position.latitude);
     // print("hiiiiiiiiiii");//Output: 29.6593457
@@ -76,12 +77,9 @@ class _SetttingsPageState extends State<SetttingsPage> {
     long = position.longitude.toString();
     lat = position.latitude.toString();
 
-
-
-    if(mounted){
-      if(long.isNotEmpty && lat.isNotEmpty){
+    if (mounted) {
+      if (long.isNotEmpty && lat.isNotEmpty) {
         updateDriverLocation();
-
       }
       setState(() {
         //refresh UI
@@ -93,8 +91,9 @@ class _SetttingsPageState extends State<SetttingsPage> {
       distanceFilter: 100,
     );
 
-    StreamSubscription<Position> positionStream = Geolocator.getPositionStream(
-        locationSettings: locationSettings).listen((Position position) {
+    StreamSubscription<Position> positionStream =
+        Geolocator.getPositionStream(locationSettings: locationSettings)
+            .listen((Position position) {
       // print(position.longitude); //Output: 80.24599079
       // print(position.latitude); //Output: 29.6593457
       // print("bye");//Output: 29.6593457
@@ -102,38 +101,37 @@ class _SetttingsPageState extends State<SetttingsPage> {
       long = position.longitude.toString();
       lat = position.latitude.toString();
 
-
-      if(mounted){
-        if(long.isNotEmpty && lat.isNotEmpty){
+      if (mounted) {
+        if (long.isNotEmpty && lat.isNotEmpty) {
           updateDriverLocation();
-
         }
-        setState(() {
-
-        });
+        setState(() {});
       }
-
     });
   }
-  UpdateDriverLocationModel updateDriverLocationModel=UpdateDriverLocationModel();
-  updateDriverLocation()async{
+
+  UpdateDriverLocationModel updateDriverLocationModel =
+      UpdateDriverLocationModel();
+  updateDriverLocation() async {
     // print(lat);
     // print(long);
     // print(userId);
     // print("done");
-    var jsonData={
-      "users_drivers_id":"${userId.toString()}",
-      "longitude":long,
-      "lattitude":lat
+    var jsonData = {
+      "users_drivers_id": "${userId.toString()}",
+      "longitude": long,
+      "lattitude": lat
     };
 
-    updateDriverLocationModel = await DioClient().updateDriverLocation(jsonData, context);
+    updateDriverLocationModel =
+        await DioClient().updateDriverLocation(jsonData, context);
     print("message of location: ${updateDriverLocationModel.message}");
-    }
+  }
+
   GetAllSystemData getAllSystemData = GetAllSystemData();
 
   getSystemAllData() async {
-    if(mounted){
+    if (mounted) {
       getAllSystemData = await DioClient().getSystemAllData(context);
       // print("GETSystemAllData: ${getAllSystemData.data}");
       setState(() {
@@ -143,7 +141,7 @@ class _SetttingsPageState extends State<SetttingsPage> {
   }
 
   late List<Setting> pickSettingsData = [];
-  int timerCount=3;
+  int timerCount = 3;
   getSettingsData() {
     if (getAllSystemData!.data! != null) {
       for (int i = 0; i < getAllSystemData!.data!.settings!.length; i++) {
@@ -155,10 +153,10 @@ class _SetttingsPageState extends State<SetttingsPage> {
         if (pickSettingsData[i].type == "map_refresh_time") {
           timerCount = int.parse(pickSettingsData[i].description!);
           print("timer refresh: ${timerCount}");
-          if(mounted){
+          if (mounted) {
             checkGps();
-            timer =
-                Timer.periodic( Duration(minutes: timerCount), (timer) => checkGps());
+            timer = Timer.periodic(
+                Duration(minutes: timerCount), (timer) => checkGps());
             setState(() {});
           }
         }
@@ -172,6 +170,7 @@ class _SetttingsPageState extends State<SetttingsPage> {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -201,7 +200,7 @@ class _SetttingsPageState extends State<SetttingsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: size.height * 0.08),
+                SizedBox(height: size.height * 0.02),
                 const Text(
                   'Notifications',
                   textAlign: TextAlign.center,
@@ -250,7 +249,7 @@ class _SetttingsPageState extends State<SetttingsPage> {
                     FlutterSwitch(
                       width: 45,
                       height: 25,
-                      activeColor: const Color(0xFFFFB940),
+                      activeColor: ConstantColor.primaryColor,
                       inactiveColor: const Color(0xFF565656).withOpacity(0.2),
                       activeToggleColor: Colors.white,
                       inactiveToggleColor: const Color(0xFF565656),
@@ -274,150 +273,300 @@ class _SetttingsPageState extends State<SetttingsPage> {
                   endIndent: 10,
                 ),
                 SizedBox(height: size.height * 0.03),
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/account-icon.svg',
-                    ),
-                    SizedBox(width: size.width * 0.05),
-                    const Text(
-                      'Account Settings',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 12.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white, // Background color (optional)
+                    borderRadius: BorderRadius.circular(10), // Rounded corners
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3), // Subtle shadow
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 3), // Shadow position
                       ),
-                    ),
-                    const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: SvgPicture.asset(
-                        'assets/images/left-arrow-icon.svg',
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      // Account icon
+                      SvgPicture.asset(
+                        'assets/images/account-icon.svg',
+                        width: 24, // Adjust size of the icon
+                        height: 24,
                       ),
-                    ),
-                  ],
+
+                      SizedBox(
+                          width: size.width *
+                              0.05), // Spacing between icon and text
+
+                      // Account settings text
+                      const Expanded(
+                        child: Text(
+                          'Account Settings',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontFamily: 'Montserrat-Regular',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+
+                      // Right arrow icon
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: SvgPicture.asset(
+                          'assets/images/left-arrow-icon.svg',
+                          width: 20, // Adjust size of the icon
+                          height: 20,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(height: size.height * 0.03),
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/about-us-icon.svg',
-                    ),
-                    SizedBox(width: size.width * 0.05),
-                    const Text(
-                      'About Us',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
+                // About Us
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 12.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
                       ),
-                    ),
-                    const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: SvgPicture.asset(
-                        'assets/images/left-arrow-icon.svg',
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/images/about-us-icon.svg',
+                        width: 24,
+                        height: 24,
                       ),
-                    ),
-                  ],
+                      SizedBox(width: size.width * 0.05),
+                      const Expanded(
+                        child: Text(
+                          'About Us',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontFamily: 'Montserrat-Regular',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: SvgPicture.asset(
+                          'assets/images/left-arrow-icon.svg',
+                          width: 20,
+                          height: 20,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+
                 SizedBox(height: size.height * 0.03),
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/contact-us-icon.svg',
-                    ),
-                    SizedBox(width: size.width * 0.05),
-                    const Text(
-                      'Contact Us',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
+
+// Contact Us
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 12.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
                       ),
-                    ),
-                    const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: SvgPicture.asset(
-                        'assets/images/left-arrow-icon.svg',
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/images/contact-us-icon.svg',
+                        width: 24,
+                        height: 24,
                       ),
-                    ),
-                  ],
+                      SizedBox(width: size.width * 0.05),
+                      const Expanded(
+                        child: Text(
+                          'Contact Us',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontFamily: 'Montserrat-Regular',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: SvgPicture.asset(
+                          'assets/images/left-arrow-icon.svg',
+                          width: 20,
+                          height: 20,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+
                 SizedBox(height: size.height * 0.03),
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/terms-icon.svg',
-                    ),
-                    SizedBox(width: size.width * 0.05),
-                    const Text(
-                      'Terms And Conditions',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
+
+// Terms And Conditions
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 12.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
                       ),
-                    ),
-                    const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: SvgPicture.asset(
-                        'assets/images/left-arrow-icon.svg',
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/images/terms-icon.svg',
+                        width: 24,
+                        height: 24,
                       ),
-                    ),
-                  ],
+                      SizedBox(width: size.width * 0.05),
+                      const Expanded(
+                        child: Text(
+                          'Terms And Conditions',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontFamily: 'Montserrat-Regular',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: SvgPicture.asset(
+                          'assets/images/left-arrow-icon.svg',
+                          width: 20,
+                          height: 20,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+
                 SizedBox(height: size.height * 0.03),
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/privacy-icon.svg',
-                    ),
-                    SizedBox(width: size.width * 0.05),
-                    const Text(
-                      'Privacy Policy',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
+
+// Privacy Policy
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 12.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
                       ),
-                    ),
-                    const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: SvgPicture.asset(
-                        'assets/images/left-arrow-icon.svg',
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/images/privacy-icon.svg',
+                        width: 24,
+                        height: 24,
                       ),
-                    ),
-                  ],
+                      SizedBox(width: size.width * 0.05),
+                      const Expanded(
+                        child: Text(
+                          'Privacy Policy',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontFamily: 'Montserrat-Regular',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: SvgPicture.asset(
+                          'assets/images/left-arrow-icon.svg',
+                          width: 20,
+                          height: 20,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                SizedBox(height: size.height * 0.12),
-                InkWell(
-                  onTap: ()async {
-                    SharedPreferences preferences = await SharedPreferences.getInstance();
-                    await preferences.clear();
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LogInPage()));
-                  },
-                  child: Center(
-                    child: Text(
-                      'Logout',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: primaryColor,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.bold,
+
+                SizedBox(height: size.height * 0.05),
+                Center(
+                  child: GestureDetector(
+                    onTap: () async {
+                      SharedPreferences preferences =
+                          await SharedPreferences.getInstance();
+                      await preferences.clear();
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LogInPage()),
+                      );
+                    },
+                    child: Container(
+                      width: 256,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        color: primaryColor, // Set the button color here
+                        borderRadius:
+                            BorderRadius.circular(25), // Rounded corners
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 3), // Shadow position
+                          ),
+                        ],
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Logout',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors
+                                .white, // Text color set to white for contrast
+                            fontFamily: 'Montserrat-Regular',
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: size.height * 0.03),
+
+                SizedBox(height: size.height * 0.02),
               ],
             ),
           ),
