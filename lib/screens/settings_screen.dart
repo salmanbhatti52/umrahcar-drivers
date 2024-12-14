@@ -2,11 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:umrahcar_driver/screens/about_us.dart';
+import 'package:umrahcar_driver/screens/privacy_policy.dart';
+import 'package:umrahcar_driver/screens/terms_conditions.dart';
 import 'package:umrahcar_driver/utils/colors.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../models/get_all_system_data_model.dart';
 import '../models/update_driver_location_model.dart';
@@ -164,6 +169,18 @@ class _SetttingsPageState extends State<SetttingsPage> {
     }
   }
 
+  final String phoneNumber = '966567799616';
+
+  Future<void> _openWhatsApp() async {
+    final Uri whatsappUri = Uri.parse('https://wa.me/$phoneNumber');
+    if (await canLaunchUrl(whatsappUri)) {
+      await launchUrl(whatsappUri, mode: LaunchMode.externalApplication);
+    } else {
+      // Handle the error
+      throw 'Could not open WhatsApp.';
+    }
+  }
+
   @override
   void initState() {
     getSystemAllData();
@@ -272,252 +289,288 @@ class _SetttingsPageState extends State<SetttingsPage> {
                   indent: 10,
                   endIndent: 10,
                 ),
-                SizedBox(height: size.height * 0.03),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 12.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white, // Background color (optional)
-                    borderRadius: BorderRadius.circular(10), // Rounded corners
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3), // Subtle shadow
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset: Offset(0, 3), // Shadow position
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      // Account icon
-                      SvgPicture.asset(
-                        'assets/images/account-icon.svg',
-                        width: 24, // Adjust size of the icon
-                        height: 24,
-                      ),
-
-                      SizedBox(
-                          width: size.width *
-                              0.05), // Spacing between icon and text
-
-                      // Account settings text
-                      const Expanded(
-                        child: Text(
-                          'Account Settings',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Montserrat-Regular',
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-
-                      // Right arrow icon
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: SvgPicture.asset(
-                          'assets/images/left-arrow-icon.svg',
-                          width: 20, // Adjust size of the icon
-                          height: 20,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // SizedBox(height: size.height * 0.03),
+                // Container(
+                //   padding: const EdgeInsets.symmetric(
+                //       horizontal: 16.0, vertical: 12.0),
+                //   decoration: BoxDecoration(
+                //     color: Colors.white, // Background color (optional)
+                //     borderRadius: BorderRadius.circular(10), // Rounded corners
+                //     boxShadow: [
+                //       BoxShadow(
+                //         color: Colors.grey.withOpacity(0.3), // Subtle shadow
+                //         spreadRadius: 1,
+                //         blurRadius: 5,
+                //         offset: Offset(0, 3), // Shadow position
+                //       ),
+                //     ],
+                //   ),
+                //   child: Row(
+                //     children: [
+                //       // Account icon
+                //       SvgPicture.asset(
+                //         'assets/images/account-icon.svg',
+                //         width: 24, // Adjust size of the icon
+                //         height: 24,
+                //       ),
+                //
+                //       SizedBox(
+                //           width: size.width *
+                //               0.05), // Spacing between icon and text
+                //
+                //       // Account settings text
+                //       const Expanded(
+                //         child: Text(
+                //           'Account Settings',
+                //           style: TextStyle(
+                //             color: Colors.black,
+                //             fontSize: 16,
+                //             fontFamily: 'Montserrat-Regular',
+                //             fontWeight: FontWeight.w500,
+                //           ),
+                //         ),
+                //       ),
+                //
+                //       // Right arrow icon
+                //       Padding(
+                //         padding: const EdgeInsets.only(right: 8.0),
+                //         child: SvgPicture.asset(
+                //           'assets/images/left-arrow-icon.svg',
+                //           width: 20, // Adjust size of the icon
+                //           height: 20,
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 SizedBox(height: size.height * 0.03),
                 // About Us
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 12.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/images/about-us-icon.svg',
-                        width: 24,
-                        height: 24,
-                      ),
-                      SizedBox(width: size.width * 0.05),
-                      const Expanded(
-                        child: Text(
-                          'About Us',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Montserrat-Regular',
-                            fontWeight: FontWeight.w500,
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AboutUs(),
+                    ));
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 12.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/images/about-us-icon.svg',
+                          width: 24,
+                          height: 24,
+                        ),
+                        SizedBox(width: size.width * 0.05),
+                        const Expanded(
+                          child: Text(
+                            'About Us',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontFamily: 'Montserrat-Regular',
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: SvgPicture.asset(
-                          'assets/images/left-arrow-icon.svg',
-                          width: 20,
-                          height: 20,
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: SvgPicture.asset(
+                            'assets/images/left-arrow-icon.svg',
+                            width: 20,
+                            height: 20,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
 
                 SizedBox(height: size.height * 0.03),
 
 // Contact Us
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 12.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/images/contact-us-icon.svg',
-                        width: 24,
-                        height: 24,
-                      ),
-                      SizedBox(width: size.width * 0.05),
-                      const Expanded(
-                        child: Text(
-                          'Contact Us',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Montserrat-Regular',
-                            fontWeight: FontWeight.w500,
+                GestureDetector(
+                  onTap: _openWhatsApp,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 12.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        // SvgPicture.asset(
+                        //   'assets/images/whatsapp-icon.svg',
+                        //   width: 24,
+                        //   height: 24,
+                        // ),
+                        SvgPicture.asset(
+                          'assets/images/whatsapp-icon.svg',
+                          width: 25,
+                          height: 25,
+                          fit: BoxFit.scaleDown,
+                        ),
+                        SizedBox(width: size.width * 0.05),
+                        const Expanded(
+                          child: Text(
+                            'Contact Us',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontFamily: 'Montserrat-Regular',
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: SvgPicture.asset(
-                          'assets/images/left-arrow-icon.svg',
-                          width: 20,
-                          height: 20,
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: SvgPicture.asset(
+                            'assets/images/left-arrow-icon.svg',
+                            width: 20,
+                            height: 20,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
 
                 SizedBox(height: size.height * 0.03),
 
 // Terms And Conditions
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 12.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/images/terms-icon.svg',
-                        width: 24,
-                        height: 24,
-                      ),
-                      SizedBox(width: size.width * 0.05),
-                      const Expanded(
-                        child: Text(
-                          'Terms And Conditions',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Montserrat-Regular',
-                            fontWeight: FontWeight.w500,
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const TermsConditions(),
+                        ));
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 12.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/images/terms-icon.svg',
+                          width: 24,
+                          height: 24,
+                        ),
+                        SizedBox(width: size.width * 0.05),
+                        const Expanded(
+                          child: Text(
+                            'Terms And Conditions',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontFamily: 'Montserrat-Regular',
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: SvgPicture.asset(
-                          'assets/images/left-arrow-icon.svg',
-                          width: 20,
-                          height: 20,
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: SvgPicture.asset(
+                            'assets/images/left-arrow-icon.svg',
+                            width: 20,
+                            height: 20,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
 
                 SizedBox(height: size.height * 0.03),
 
 // Privacy Policy
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 12.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/images/privacy-icon.svg',
-                        width: 24,
-                        height: 24,
-                      ),
-                      SizedBox(width: size.width * 0.05),
-                      const Expanded(
-                        child: Text(
-                          'Privacy Policy',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Montserrat-Regular',
-                            fontWeight: FontWeight.w500,
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PrivacyPolicy(),
+                        ));
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 12.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/images/privacy-icon.svg',
+                          width: 24,
+                          height: 24,
+                        ),
+                        SizedBox(width: size.width * 0.05),
+                        const Expanded(
+                          child: Text(
+                            'Privacy Policy',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontFamily: 'Montserrat-Regular',
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: SvgPicture.asset(
-                          'assets/images/left-arrow-icon.svg',
-                          width: 20,
-                          height: 20,
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: SvgPicture.asset(
+                            'assets/images/left-arrow-icon.svg',
+                            width: 20,
+                            height: 20,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
 
@@ -546,7 +599,7 @@ class _SetttingsPageState extends State<SetttingsPage> {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 2,
                             blurRadius: 5,
-                            offset: Offset(0, 3), // Shadow position
+                            offset: const Offset(0, 3), // Shadow position
                           ),
                         ],
                       ),
