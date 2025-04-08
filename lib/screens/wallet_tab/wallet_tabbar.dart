@@ -13,6 +13,7 @@ class WalletTabBarScreen extends StatefulWidget {
   State<WalletTabBarScreen> createState() => _WalletTabBarScreenState();
 }
 
+
 abstract class TickerProvider {}
 
 class _WalletTabBarScreenState extends State<WalletTabBarScreen>
@@ -36,56 +37,48 @@ int index=0;
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: MediaQuery.of(context).size.height * 0.057,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(30),
-                border: Border.all(
-                  width: 1,
-                  color: const Color(0xFF000000).withOpacity(0.15),
-                ),
+            width: MediaQuery.of(context).size.width * 0.9,
+            height: MediaQuery.of(context).size.height * 0.057,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
+              borderRadius: BorderRadius.circular(30),
+              border: Border.all(
+                width: 1,
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                child: TabBar(
-                  controller: tabController,
-                  indicator: BoxDecoration(
-                    color: primaryColor,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  // onTap: (index) {
-                  //   if (tabController.indexIsChanging) {
-                  //     tabController.index = tabController.previousIndex;
-                  //   } else {
-                  //     return;
-                  //   }
-                  // },
-                  indicatorColor: primaryColor,
-                  isScrollable: true,
-                  labelColor: Colors.white,
-                  labelPadding: const EdgeInsets.symmetric(horizontal: 25),
-                  labelStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
-                    fontWeight: FontWeight.w500,
-                  ),
-                  unselectedLabelColor: const Color(0xFF929292),
-                  unselectedLabelStyle: const TextStyle(
-                    color: Color(0xFF929292),
-                    fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
-                    fontWeight: FontWeight.w500,
-                  ),
-                  tabs: const [
-                    Tab(text: "Account Summary"),
-                    Tab(text: "Pending Transactions"),
-                    Tab(text: "Get Day Summary"),
-
-                  ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+              child: TabBar(
+                controller: tabController,
+                indicator: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.circular(20),
                 ),
-              )),
+                indicatorColor: primaryColor,
+                isScrollable: true,
+                labelColor: Colors.white,
+                labelPadding: const EdgeInsets.symmetric(horizontal: 25),
+                labelStyle: const TextStyle(
+                  fontSize: 12,
+                  fontFamily: 'Montserrat-Regular',
+                  fontWeight: FontWeight.w500,
+                ),
+                unselectedLabelColor: ConstantColor.greyColor,
+                unselectedLabelStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: ConstantColor.greyColor,
+                  fontSize: 12,
+                  fontFamily: 'Montserrat-Regular',
+                  fontWeight: FontWeight.w500,
+                ),
+                tabs: const [
+                  Tab(text: "Account Summary"),
+                  Tab(text: "Pending Transactions"),
+                  Tab(text: "Get Day Summary"),
+                ],
+              ),
+            ),
+          ),
         ),
         SizedBox(
           width: double.maxFinite,
@@ -95,7 +88,7 @@ int index=0;
             children: const [
               SummaryAgentPage(),
               PendingTransactionPage(),
-              DaySummaryPage()
+              DaySummaryPage(),
             ],
           ),
         ),

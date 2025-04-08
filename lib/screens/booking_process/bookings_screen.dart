@@ -187,23 +187,52 @@ class _BookingsPageState extends State<BookingsPage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return WillPopScope(
-      onWillPop: () {
-        return Future.value(false);
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (!didPop) {
+          final shouldExit = await showDialog<bool>(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              title: const Text('Active Tracking'),
+              content: const Text(
+                'Closing the app will stop location updates. '
+                    'This may affect your active bookings.',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, false),
+                  child: const Text('Stay'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, true),
+                  child: const Text('Exit'),
+                ),
+              ],
+            ),
+          );
+
+          if (shouldExit == true) {
+            Navigator.of(context).pop(result);
+          }
+        }
       },
       child: Scaffold(
-        backgroundColor: mainColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: mainColor,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
           automaticallyImplyLeading: false,
-          title: const Text(
+          title: Text(
             'Bookings',
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 26,
-                fontFamily: 'Montserrat-Regular',
-                fontWeight: FontWeight.w700),
+            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+              fontSize: 26,
+              fontWeight: FontWeight.w700,
+            ),
           ),
           centerTitle: true,
         ),
@@ -212,7 +241,7 @@ class _BookingsPageState extends State<BookingsPage> {
           child: Column(
             children: [
               SizedBox(height: size.height * 0.02),
-               TabbarBookings( indexNmbr: widget.indexNmbr),
+              TabbarBookings(indexNmbr: widget.indexNmbr),
             ],
           ),
         ),

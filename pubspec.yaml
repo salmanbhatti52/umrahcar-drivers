@@ -38,8 +38,6 @@ dependencies:
   fluttertoast: ^8.2.2
   auto_size_text: ^3.0.0
   flutter_pin_code_fields: ^2.2.0
-  fl_country_code_picker: ^0.0.4
-  country_picker_plus: ^2.0.1
   image_picker: ^0.8.7+5
   searchfield: ^0.8.3
   flutter_switch: ^0.3.2
@@ -55,6 +53,8 @@ dependencies:
   rename: ^2.1.1
   onesignal_flutter: ^3.5.1
   flutter_slidable: ^3.0.0
+  provider: ^6.1.4
+  country_code_picker: ^3.3.0
 
 dev_dependencies:
   flutter_test:

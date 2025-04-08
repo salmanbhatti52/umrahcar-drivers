@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:fl_country_code_picker/fl_country_code_picker.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,7 +34,6 @@ class _AddCardPageState extends State<AddCardPage> {
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   final GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
-  final countryPicker = const FlCountryCodePicker();
   CountryCode? countryCode;
   CountryCode? countryCode1;
   // String? pickCountry;
@@ -88,15 +86,11 @@ class _AddCardPageState extends State<AddCardPage> {
 
   @override
   Widget build(BuildContext context) {
-
     var size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () {
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-
-        backgroundColor: mainColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: Form(
           key: signUpFormKey,
           child: SingleChildScrollView(
@@ -104,9 +98,9 @@ class _AddCardPageState extends State<AddCardPage> {
             child: Column(
               children: [
                 SizedBox(height: size.height * 0.09),
-                const Text(
-                  'Add Debit / Credit Transactions ',
-                  style: TextStyle(
+                Text(
+                  'Add Debit / Credit Transactions',
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontSize: 20,
                     fontFamily: 'Montserrat-Regular',
                     fontWeight: FontWeight.w600,
@@ -119,17 +113,14 @@ class _AddCardPageState extends State<AddCardPage> {
                       borderRadius: BorderRadius.circular(50),
                       child: Container(
                         width: 100,
-                        height:100,
-                        decoration: const BoxDecoration(
-                            color: Colors.transparent, shape: BoxShape.circle),
-                        child: imagePath != null
-                            ? Image.file(
-                          imagePath!,
-                          fit: BoxFit.cover,
-                        )
-                            : Image.asset(
-                          'assets/images/place.png',
+                        height: 100,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.surface,
+                          shape: BoxShape.circle,
                         ),
+                        child: imagePath != null
+                            ? Image.file(imagePath!, fit: BoxFit.cover)
+                            : Image.asset('assets/images/place.png', fit: BoxFit.cover),
                       ),
                     ),
                     Positioned(
@@ -140,75 +131,50 @@ class _AddCardPageState extends State<AddCardPage> {
                         onTap: () {
                           showModalBottomSheet(
                             context: context,
-                            backgroundColor: Colors.white,
+                            backgroundColor: Theme.of(context).colorScheme.surface,
                             elevation: 10,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            builder: (BuildContext context) {
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                            builder: (context) {
                               return SizedBox(
                                 height: size.height * 0.2,
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
+                                  padding: const EdgeInsets.symmetric(horizontal: 20),
                                   child: Column(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       GestureDetector(
-                                        onTap: () {
-                                          pickImage(ImageSource.camera);
-
-                                        },
+                                        onTap: () => pickImage(ImageSource.camera),
                                         child: Row(
                                           children: [
                                             SvgPicture.asset(
                                               'assets/images/camera-icon.svg',
                                               width: 30,
                                               height: 30,
+                                              color: Theme.of(context).colorScheme.onSurface,
                                             ),
-                                            SizedBox(
-                                                width: size.width * 0.04),
-                                            const Text(
+                                            SizedBox(width: size.width * 0.04),
+                                            Text(
                                               'Take a picture',
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 16,
-                                                fontFamily:
-                                                'Montserrat-Regular',
-                                                fontWeight:
-                                                FontWeight.w400,
-                                              ),
+                                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16),
                                             ),
                                           ],
                                         ),
                                       ),
-                                      SizedBox(
-                                          height: size.height * 0.04),
+                                      SizedBox(height: size.height * 0.04),
                                       GestureDetector(
-                                        onTap: () {
-                                          pickImage(ImageSource.gallery);
-
-                                        },
+                                        onTap: () => pickImage(ImageSource.gallery),
                                         child: Row(
                                           children: [
                                             SvgPicture.asset(
                                               'assets/images/gallery-icon.svg',
                                               width: 30,
                                               height: 30,
+                                              color: Theme.of(context).colorScheme.onSurface,
                                             ),
-                                            SizedBox(
-                                                width: size.width * 0.04),
-                                            const Text(
+                                            SizedBox(width: size.width * 0.04),
+                                            Text(
                                               'Choose a picture',
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 16,
-                                                fontFamily:
-                                                'Montserrat-Regular',
-                                                fontWeight:
-                                                FontWeight.w400,
-                                              ),
+                                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16),
                                             ),
                                           ],
                                         ),
@@ -235,299 +201,169 @@ class _AddCardPageState extends State<AddCardPage> {
                   ],
                 ),
                 SizedBox(height: size.height * 0.04),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Container(
-                    color: Colors.transparent,
-                    width: size.width,
-                    height: 55,
-                    child: ButtonTheme(
-                      alignedDropdown: true,
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButtonFormField(
-                          isDense: true,
-
-                          icon: Padding(
-                            padding: const EdgeInsets.only(top: 3),
-                            child: SvgPicture.asset(
-                              'assets/images/dropdown-icon.svg',
-                              width: 20,
-                              height: 20,
-
-                              fit: BoxFit.scaleDown,
-                            ),
-                          ),
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(16)),
-                              borderSide: BorderSide(
-                                color: const Color(0xFF000000)
-                                    .withOpacity(0.15),
-                                width: 1,
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(16)),
-                              borderSide: BorderSide(
-                                color: const Color(0xFF000000)
-                                    .withOpacity(0.15),
-                                width: 1,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(16)),
-                              borderSide: BorderSide(
-                                color: const Color(0xFF000000)
-                                    .withOpacity(0.15),
-                                width: 1,
-                              ),
-                            ),
-                            // prefixIcon: SvgPicture.asset(
-                            //   'assets/images/service-icon.svg',
-                            //   width: 10,
-                            //   height: 8,
-                            //   fit: BoxFit.scaleDown,
-                            // ),
-                            hintText: 'Transaction Type',
-                            contentPadding: EdgeInsets.only(left: 35),
-                            hintStyle: const TextStyle(
-                              color: Color(0xFF929292),
-                              fontSize: 10,
-                              fontFamily: 'Montserrat-Regular',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          borderRadius: BorderRadius.circular(16),
-                          items: driverTypeList!
-                              .map(
-                                (item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item,
-                                style: const TextStyle(
-                                  color: Color(0xFF929292),
-                                  fontSize: 10,
-                                  fontFamily: 'Montserrat-Regular',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          )
-                              .toList(),
-                          value: selectedCompany,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedCompany = value;
-                              print("Selected Company: ${selectedCompany}");
-                              setState(() {
-
-                              });
-                            });
-                          },
-                        ),
+                  child: DropdownButtonFormField<String>(
+                    isDense: true,
+                    icon: Padding(
+                      padding: const EdgeInsets.only(top: 3),
+                      child: SvgPicture.asset(
+                        'assets/images/dropdown-icon.svg',
+                        width: 20,
+                        height: 20,
+                        fit: BoxFit.scaleDown,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderSide: BorderSide(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15)),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderSide: BorderSide(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderSide: BorderSide(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15)),
+                      ),
+                      hintText: 'Transaction Type',
+                      contentPadding: const EdgeInsets.only(left: 35),
+                      hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: ConstantColor.greyColor,
+                        fontSize: 10,
+                        fontFamily: 'Montserrat-Regular',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    items: driverTypeList.map((item) => DropdownMenuItem<String>(
+                      value: item,
+                      child: Text(
+                        item,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: ConstantColor.greyColor,
+                          fontSize: 10,
+                          fontFamily: 'Montserrat-Regular',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    )).toList(),
+                    value: selectedCompany,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedCompany = value;
+                      });
+                    },
                   ),
                 ),
                 SizedBox(height: size.height * 0.02),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextFormField(
                     controller: amountController,
                     keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Amount is required!';
-                      }
-                      return null;
-                    },
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
-                      fontSize: 16,
-                      color: Color(0xFF6B7280),
-                    ),
+                    validator: (value) => value == null || value.isEmpty ? 'Amount is required!' : null,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16),
                     decoration: InputDecoration(
-                      filled: false,
-                      errorStyle: const TextStyle(
-                        color: Colors.red,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        wordSpacing: 2,
-                      ),
                       border: OutlineInputBorder(
                         borderRadius: const BorderRadius.all(Radius.circular(16)),
-                        borderSide: BorderSide(
-                          color: const Color(0xFF000000).withOpacity(0.15),
-                          width: 1,
-                        ),
+                        borderSide: BorderSide(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15)),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: const BorderRadius.all(Radius.circular(16)),
-                        borderSide: BorderSide(
-                          color: const Color(0xFF000000).withOpacity(0.15),
-                          width: 1,
-                        ),
+                        borderSide: BorderSide(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15)),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: const BorderRadius.all(Radius.circular(16)),
-                        borderSide: BorderSide(
-                          color: const Color(0xFF000000).withOpacity(0.15),
-                          width: 1,
-                        ),
+                        borderSide: BorderSide(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15)),
                       ),
                       errorBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(16)),
-                        borderSide: BorderSide(
-                          color: Colors.red,
-                          width: 1,
-                        ),
+                        borderSide: BorderSide(color: Colors.red),
                       ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 50, vertical: 10),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
                       hintText: "Amount",
-                      hintStyle: const TextStyle(
-                        color: Color(0xFF929292),
+                      hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: ConstantColor.greyColor,
                         fontSize: 12,
                         fontFamily: 'Montserrat-Regular',
                         fontWeight: FontWeight.w500,
                       ),
-                      // prefixIcon: SvgPicture.asset(
-                      //   'assets/images/name-icon.svg',
-                      //   width: 25,
-                      //   height: 25,
-                      //   fit: BoxFit.scaleDown,
-                      // ),
                     ),
                   ),
                 ),
                 SizedBox(height: size.height * 0.03),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextFormField(
                     controller: descriptionController,
                     keyboardType: TextInputType.text,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Description  is required!';
-                      }
-                      return null;
-                    },
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
-                      fontSize: 16,
-                      color: Color(0xFF6B7280),
-                    ),
+                    validator: (value) => value == null || value.isEmpty ? 'Description is required!' : null,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16),
                     decoration: InputDecoration(
-                      filled: false,
-                      errorStyle: const TextStyle(
-                        color: Colors.red,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        wordSpacing: 2,
-                      ),
                       border: OutlineInputBorder(
                         borderRadius: const BorderRadius.all(Radius.circular(16)),
-                        borderSide: BorderSide(
-                          color: const Color(0xFF000000).withOpacity(0.15),
-                          width: 1,
-                        ),
+                        borderSide: BorderSide(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15)),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: const BorderRadius.all(Radius.circular(16)),
-                        borderSide: BorderSide(
-                          color: const Color(0xFF000000).withOpacity(0.15),
-                          width: 1,
-                        ),
+                        borderSide: BorderSide(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15)),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: const BorderRadius.all(Radius.circular(16)),
-                        borderSide: BorderSide(
-                          color: const Color(0xFF000000).withOpacity(0.15),
-                          width: 1,
-                        ),
+                        borderSide: BorderSide(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15)),
                       ),
                       errorBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(16)),
-                        borderSide: BorderSide(
-                          color: Colors.red,
-                          width: 1,
-                        ),
+                        borderSide: BorderSide(color: Colors.red),
                       ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 50, vertical: 10),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
                       hintText: "Description",
-                      hintStyle: const TextStyle(
-                        color: Color(0xFF929292),
+                      hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: ConstantColor.greyColor,
                         fontSize: 12,
                         fontFamily: 'Montserrat-Regular',
                         fontWeight: FontWeight.w500,
                       ),
-                      // prefixIcon: SvgPicture.asset(
-                      //   'assets/images/business-name-icon.svg',
-                      //   width: 25,
-                      //   height: 25,
-                      //   fit: BoxFit.scaleDown,
-                      // ),
                     ),
                   ),
                 ),
-
                 SizedBox(height: size.height * 0.03),
                 GestureDetector(
-                    onTap: () async {
-                      if(signUpFormKey.currentState!.validate()  && selectedCompany !=null && base64img !=null){
-
-                        var jsonData= {
-                          "users_drivers_id":userId.toString(),
-                          "accounts_heads_id":"1",
-                          "txn_type":selectedCompany,
-                          "amount": amountController.text,
-                          "description":descriptionController.text,
-                          "image": base64img
-                        };
-                        print("data: ${jsonData}");
-                        AddCardModel res= await DioClient().addCard(jsonData, context);
-                        print("response: ${res.message}");
-
-                        if(res !=null){
-                          ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text("${res.message}")));
-
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => NavBar(indexNmbr: 3,walletPage: 2,)),
-                                  (Route<dynamic> route) => false);
-                          setState(() {
-
-                          });
-                        }
-
-
-
-                      }
-                      else if(selectedCompany ==null) {
+                  onTap: () async {
+                    if (signUpFormKey.currentState!.validate() && selectedCompany != null && base64img != null) {
+                      var jsonData = {
+                        "users_drivers_id": userId.toString(),
+                        "accounts_heads_id": "1",
+                        "txn_type": selectedCompany,
+                        "amount": amountController.text,
+                        "description": descriptionController.text,
+                        "image": base64img,
+                      };
+                      AddCardModel res = await DioClient().addCard(jsonData, context);
+                      if (res != null) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text(
-                                "Please Select Payment Type")));
+                          SnackBar(backgroundColor: Theme.of(context).colorScheme.primary,content: Text("${res.message}", style: Theme.of(context).textTheme.bodyMedium)),
+                        );
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => NavBar(indexNmbr: 3, walletPage: 2)),
+                              (Route<dynamic> route) => false,
+                        );
                       }
-                      else{
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please Select Image")));
-
-                      }
-
-
-                    },
-                    child: button('Submit', context)),
+                    } else if (selectedCompany == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(backgroundColor: Theme.of(context).colorScheme.primary,content: Text("Please Select Payment Type", style: Theme.of(context).textTheme.bodyMedium)),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(backgroundColor: Theme.of(context).colorScheme.primary,content: Text("Please Select Image", style: Theme.of(context).textTheme.bodyMedium)),
+                      );
+                    }
+                  },
+                  child: button('Submit', context),
+                ),
                 SizedBox(height: size.height * 0.03),
-
-
               ],
             ),
           ),

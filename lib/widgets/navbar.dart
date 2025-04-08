@@ -27,10 +27,6 @@ class _NavBarState extends State<NavBar> {
     if (widget.indexNmbr != null) {
       index = widget.indexNmbr!;
     }
-    print("index Id; $index");
-    print("bookingPage0; ${widget.bookingNmbr}");
-
-    // TODO: implement initState
     super.initState();
   }
 
@@ -40,19 +36,17 @@ class _NavBarState extends State<NavBar> {
       const HomePage(),
       BookingsPage(indexNmbr: widget.bookingNmbr),
       const ProfilePage(),
-      WalletPage(
-        indexNmbr: widget.walletPage,
-      ),
+      WalletPage(indexNmbr: widget.walletPage),
       const SetttingsPage(),
     ];
 
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.15),
+          color: Theme.of(context).colorScheme.surface,
           border: Border.all(
-            color: const Color(0xFFFFFFFF).withOpacity(0.15),
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
             width: 1,
           ),
           borderRadius: const BorderRadius.only(
@@ -69,7 +63,7 @@ class _NavBarState extends State<NavBar> {
               indicatorColor: Colors.transparent,
               labelTextStyle: MaterialStateProperty.all(
                 TextStyle(
-                  color: primaryColor,
+                  color: Theme.of(context).primaryColor,
                   fontSize: 10,
                   fontWeight: FontWeight.w700,
                   fontFamily: 'Montserrat-Regular',
@@ -77,63 +71,66 @@ class _NavBarState extends State<NavBar> {
               ),
             ),
             child: NavigationBar(
-              backgroundColor: mainColor,
+              backgroundColor: Theme.of(context).colorScheme.surface,
               selectedIndex: index,
               labelBehavior:
-                  NavigationDestinationLabelBehavior.onlyShowSelected,
+              NavigationDestinationLabelBehavior.onlyShowSelected,
               onDestinationSelected: (index) => setState(() {
                 this.index = index;
               }),
               destinations: [
                 NavigationDestination(
-                  icon: SvgPicture.asset('assets/images/home-icon.svg'),
+                  icon: SvgPicture.asset(
+                    'assets/images/home-icon.svg',
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                   selectedIcon: SvgPicture.asset(
                     'assets/images/active-home-icon.svg',
-                    width: 24,
-                    height: 24,
-                    color: buttonColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                   label: 'Home',
                 ),
                 NavigationDestination(
-                  icon: SvgPicture.asset('assets/images/bookings-icon.svg'),
+                  icon: SvgPicture.asset(
+                    'assets/images/bookings-icon.svg',
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                   selectedIcon: SvgPicture.asset(
                     'assets/images/active-bookings-icon.svg',
-                    width: 24,
-                    height: 24,
-                    color: buttonColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                   label: 'Bookings',
                 ),
                 NavigationDestination(
-                  icon: SvgPicture.asset('assets/images/profile-icon.svg'),
+                  icon: SvgPicture.asset(
+                    'assets/images/profile-icon.svg',
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                   selectedIcon: SvgPicture.asset(
                     'assets/images/active-profile-icon.svg',
-                    width: 24,
-                    height: 24,
-                    color: buttonColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                   label: 'Profile',
                 ),
                 NavigationDestination(
                   icon: SvgPicture.asset(
                     'assets/images/wallet-icon.svg',
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                   selectedIcon: SvgPicture.asset(
                     'assets/images/active-wallet-icon.svg',
-                    width: 24,
-                    height: 24,
-                    color: buttonColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                   label: 'Wallet',
                 ),
                 NavigationDestination(
-                  icon: SvgPicture.asset('assets/images/settings-icon.svg'),
+                  icon: SvgPicture.asset(
+                    'assets/images/settings-icon.svg',
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                   selectedIcon: SvgPicture.asset(
                     'assets/images/active-settings-icon.svg',
-                    width: 24,
-                    height: 24,
-                    color: buttonColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                   label: 'Settings',
                 ),

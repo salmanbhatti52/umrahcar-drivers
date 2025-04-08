@@ -12,6 +12,7 @@ class ConstantColor {
   static const Color primaryColor = Color.fromRGBO(27, 173, 223, 100);
   static Color buttonColor = const Color.fromRGBO(27, 173, 223, 100);
   static const Color greenColor = Color(0xFF52b788);
+  static const Color greyColor = Color(0xFFB7B7B7);
   static const Color filledColor = Color(0xFFF2F0EE);
   static const Color secondaryColor = Color(0xFF00CCFF);
   static const Color orangeColor = Color(0xFFFF6600);

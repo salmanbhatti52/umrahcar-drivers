@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:umrahcar_driver/models/driver_status_model.dart';
+import 'package:umrahcar_driver/utils/colors.dart';
 
 import '../../models/pending_transaction_model.dart';
 import '../../service/rest_api_service.dart';
@@ -42,43 +43,46 @@ DriverStatusModel deleteTransaction=DriverStatusModel();
   Future<void> _showAlertDialog(String? id) async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: false, // user must tap button!
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          // <-- SEE HERE
-          title: const Text('Delete Transaction'),
-          content: const SingleChildScrollView(
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          title: Text(
+            'Delete Transaction',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 18),
+          ),
+          content: SingleChildScrollView(
             child: ListBody(
-              children: <Widget>[
-                Text('Are you sure want to Delete Transaction?'),
+              children: [
+                Text(
+                  'Are you sure want to Delete Transaction?',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
               ],
             ),
           ),
-          actions: <Widget>[
+          actions: [
             TextButton(
-              child: const Text('No'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                setState(() {});
-              },
+              child: Text('No', style: Theme.of(context).textTheme.bodyMedium),
+              onPressed: () => Navigator.of(context).pop(),
             ),
             TextButton(
-              child: const Text('Yes'),
+              child: Text('Yes', style: Theme.of(context).textTheme.bodyMedium),
               onPressed: () async {
-
                 var jsonData = {"users_drivers_accounts_id": "$id"};
-                deleteTransaction= await DioClient().deleteTransaction(jsonData, context);
-                if(deleteTransaction.message!=null){
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${deleteTransaction.message}")));
+                deleteTransaction = await DioClient().deleteTransaction(jsonData, context);
+                if (deleteTransaction.message != null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        content: Text("${deleteTransaction.message}", style: Theme.of(context).textTheme.bodyMedium)),
+                  );
                   Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                          builder: (context) => NavBar(indexNmbr: 3,walletPage: 2,)),
-                          (Route<dynamic> route) => false);
-                setState(() {
-
-                });
+                    MaterialPageRoute(builder: (context) => NavBar(indexNmbr: 3, walletPage: 2)),
+                        (Route<dynamic> route) => false,
+                  );
+                  setState(() {});
                 }
-
               },
             ),
           ],
@@ -90,173 +94,159 @@ DriverStatusModel deleteTransaction=DriverStatusModel();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
     return Scaffold(
-        body: summaryAgentModel.data != null
-            ? ListView.builder(
-                itemCount: summaryAgentModel.data!.length,
-                itemBuilder: (BuildContext context, i) {
-                  final flavor = summaryAgentModel.data![i];
-                  return Column(children: [
-                    Slidable(
-                      key: const ValueKey(0),
-                      endActionPane: ActionPane(
-                        motion: ScrollMotion(),
-                        children: [
-                          SlidableAction(
-                            onPressed: (context) async {
-                              _showAlertDialog(summaryAgentModel
-                                  .data![i].usersDriversAccountsId);
-                              setState(() {
-
-                              });
-                            },
-                            backgroundColor: Color(0xFFFE4A49),
-                            foregroundColor: Colors.white,
-                            icon: Icons.delete,
-                            label: 'Delete',
-                          ),
-                        ],
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      body: summaryAgentModel.data != null && summaryAgentModel.data!.isNotEmpty
+          ? ListView.builder(
+        itemCount: summaryAgentModel.data!.length,
+        itemBuilder: (BuildContext context, i) {
+          final flavor = summaryAgentModel.data![i];
+          return Column(
+            children: [
+              Slidable(
+                key: ValueKey(i),
+                endActionPane: ActionPane(
+                  motion: const ScrollMotion(),
+                  children: [
+                    SlidableAction(
+                      onPressed: (context) => _showAlertDialog(flavor.usersDriversAccountsId),
+                      backgroundColor: const Color(0xFFFE4A49),
+                      foregroundColor: Colors.white,
+                      icon: Icons.delete,
+                      label: 'Delete',
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 100,
+                      height: 100,
+                      margin: const EdgeInsets.only(left: 15, right: 5),
+                      decoration: const BoxDecoration(shape: BoxShape.rectangle),
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        child: Image.network("$imageUrl${flavor.image}", fit: BoxFit.cover),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            width: 100,
-                            height: 100,
-                            margin: EdgeInsets.only(left: 15,right: 5),
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.rectangle,
+                          Text(
+                            "Txn Type: ${flavor.txnType!}",
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontSize: 12,
+                              fontFamily: 'Montserrat-Regular',
+                              fontWeight: FontWeight.w500,
                             ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                              child: Image.network(
-                                
-                                  "$imageUrl${summaryAgentModel.data![i].image}",fit: BoxFit.cover,),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(height: size.height * 0.005),
+                          Text(
+                            "Amount: ${flavor.amount!}",
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: ConstantColor.darkgreyColor,
+                              fontSize: 10,
+                              fontFamily: 'Montserrat-Regular',
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: MediaQuery.sizeOf(context).width * 0.40,
-                                child: Text(
-                                  "Txn Type: ${summaryAgentModel.data![i].txnType!}",
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12,
-                                    fontFamily: 'Montserrat-Regular',
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              SizedBox(height: size.height * 0.005),
-                              Text(
-                                "amount: ${summaryAgentModel.data![i].amount!}",
-                                style: const TextStyle(
-                                  color: Color(0xFF565656),
-                                  fontSize: 10,
-                                  fontFamily: 'Montserrat-Regular',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SizedBox(height: size.height * 0.005),
-                              Text(
-                                "description: ${summaryAgentModel.data![i].description!}",
-                                style: const TextStyle(
-                                  color: Color(0xFF565656),
-                                  fontSize: 10,
-                                  fontFamily: 'Montserrat-Regular',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SizedBox(height: size.height * 0.005),
-                              Text(
-                                "date: ${summaryAgentModel.data![i].txnDate!}",
-                                style: const TextStyle(
-                                  color: Color(0xFF565656),
-                                  fontSize: 10,
-                                  fontFamily: 'Montserrat-Regular',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SizedBox(height: size.height * 0.005),
-                              Text(
-                                "Accounts Head Name: ${summaryAgentModel.data![i].accountsHeadsId!.name!}",
-                                style: const TextStyle(
-                                  color: Color(0xFF565656),
-                                  fontSize: 10,
-                                  fontFamily: 'Montserrat-Regular',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SizedBox(height: size.height * 0.005),
-                              Text(
-                                "Driver Name: ${summaryAgentModel.data![i].usersDriversId!.name!}",
-                                style: const TextStyle(
-                                  color: Color(0xFF565656),
-                                  fontSize: 10,
-                                  fontFamily: 'Montserrat-Regular',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SizedBox(height: size.height * 0.005),
-                              Text(
-                                "Company Name: ${summaryAgentModel.data![i].usersDriversId!.companyName!}",
-                                style: const TextStyle(
-                                  color: Color(0xFF565656),
-                                  fontSize: 10,
-                                  fontFamily: 'Montserrat-Regular',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
+                          SizedBox(height: size.height * 0.005),
+                          Text(
+                            "Description: ${flavor.description!}",
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: ConstantColor.darkgreyColor,
+                              fontSize: 10,
+                              fontFamily: 'Montserrat-Regular',
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                          SizedBox(width: 10),
-                          Container(
-                            // width: size.width * 0.2,
-                            // height: size.height * 0.024,
-                            margin: EdgeInsets.only(right: 15),
-                            child: Text(
-                              summaryAgentModel.data![i].status!,
-                              style: const TextStyle(
-                                color: Color(0xFF0066FF),
-                                fontSize: 12,
-                                fontFamily: 'Montserrat-Regular',
-                                fontWeight: FontWeight.w500,
-                              ),
+                          SizedBox(height: size.height * 0.005),
+                          Text(
+                            "Date: ${flavor.txnDate!}",
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: ConstantColor.darkgreyColor,
+                              fontSize: 10,
+                              fontFamily: 'Montserrat-Regular',
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(height: size.height * 0.005),
+                          Text(
+                            "Accounts Head: ${flavor.accountsHeadsId!.name!}",
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: ConstantColor.darkgreyColor,
+                              fontSize: 10,
+                              fontFamily: 'Montserrat-Regular',
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(height: size.height * 0.005),
+                          Text(
+                            "Driver: ${flavor.usersDriversId!.name!}",
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: ConstantColor.darkgreyColor,
+                              fontSize: 10,
+                              fontFamily: 'Montserrat-Regular',
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(height: size.height * 0.005),
+                          Text(
+                            "Company: ${flavor.usersDriversId!.companyName!}",
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: ConstantColor.darkgreyColor,
+                              fontSize: 10,
+                              fontFamily: 'Montserrat-Regular',
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                  ]);
-                })
-            : const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 90),
-                    child: Text(
-                      'No Pending Transaction Found',
-                      style: TextStyle(
-                        color: Color(0xFF565656),
-                        fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
+                    Container(
+                      margin: const EdgeInsets.only(right: 15),
+                      child: Text(
+                        flavor.status!,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: primaryColor,
+                          fontSize: 12,
+                          fontFamily: 'Montserrat-Regular',
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                      textAlign: TextAlign.center,
                     ),
-                  ),
-                ],
-              ));
+                  ],
+                ),
+              ),
+              SizedBox(height: 30),
+            ],
+          );
+        },
+      )
+          : Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 90),
+            child: Text(
+              'No Pending Transaction Found',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: ConstantColor.darkgreyColor,
+                fontSize: 12,
+                fontFamily: 'Montserrat-Regular',
+                fontWeight: FontWeight.w500,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

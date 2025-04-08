@@ -40,125 +40,141 @@ class _WalletPageState extends State<WalletPage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return WillPopScope(
-      onWillPop: () {
-        return Future.value(false);
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (!didPop) {
+          final shouldExit = await showDialog<bool>(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              title: const Text('Active Tracking'),
+              content: const Text(
+                'Closing the app will stop location updates. '
+                    'This may affect your active bookings.',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, false),
+                  child: const Text('Stay'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, true),
+                  child: const Text('Exit'),
+                ),
+              ],
+            ),
+          );
+
+          if (shouldExit == true) {
+            Navigator.of(context).pop(result);
+          }
+        }
       },
       child: Scaffold(
-        backgroundColor: mainColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: getAgentsWidgetData.data != null
             ? Container(
-                decoration: BoxDecoration(
-                  color: primaryColor,
-                  // image: DecorationImage(
-                  //   image: AssetImage('assets/images/background.png'),
-                  //   fit: BoxFit.cover,
-                  // ),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      color: Colors.transparent,
-                      width: size.width,
-                      height: size.height * 0.1128,
-                      child: const Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 40),
-                          child: Text(
-                            'My Wallet',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Montserrat-Regular',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 26,
-                            ),
-                          ),
-                        ),
+          decoration: BoxDecoration(
+            color: primaryColor, // Blue header retained
+          ),
+          child: Column(
+            children: [
+              Container(
+                color: Colors.transparent,
+                width: size.width,
+                height: size.height * 0.1128,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 40),
+                    child: Text(
+                      'My Wallet',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        color: Colors.white,
+                        fontFamily: 'Montserrat-Regular',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 26,
                       ),
                     ),
-                    // SizedBox(height: size.height * 0.04),
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: mainColor,
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: size.height * 0.03),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                bignoimagebox(
-                                    '${getAgentsWidgetData.data!.totalDriversBalance}',
-                                    'Wallet Amount',
-                                    context),
-                                SizedBox(width: size.width * 0.04),
-                                InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const AddCardPage()));
-                                      setState(() {});
-                                    },
-                                    child: bignoimageredbox('Debit/Credit',
-                                        'Transactions', context)),
-                              ],
-                            ),
-                            SizedBox(height: size.height * 0.03),
-                            widget.indexNmbr == null
-                                ? WalletTabBarScreen(indexNmbr: 0)
-                                : WalletTabBarScreen(indexNmbr: 1),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            : SizedBox(
-                height: MediaQuery.of(context).size.height / 1,
-                child: const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.blue,
                   ),
                 ),
               ),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: size.height * 0.03),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          bignoimagebox(
+                              '${getAgentsWidgetData.data!.totalDriversBalance}',
+                              'Wallet Amount',
+                              context),
+                          SizedBox(width: size.width * 0.04),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const AddCardPage(),
+                                ),
+                              );
+                              setState(() {});
+                            },
+                            child: bignoimageredbox('Debit/Credit', 'Transactions', context),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: size.height * 0.03),
+                      widget.indexNmbr == null
+                          ? WalletTabBarScreen(indexNmbr: 0)
+                          : WalletTabBarScreen(indexNmbr: 1),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
+            : SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Center(
+            child: CircularProgressIndicator(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+          ),
+        ),
       ),
     );
   }
 }
 
-Widget bignoimagebox(priceText, titleText, context) {
+Widget bignoimagebox(String priceText, String titleText, BuildContext context) {
   return Center(
     child: Container(
       height: MediaQuery.of(context).size.height * 0.09,
       width: MediaQuery.of(context).size.width * 0.4,
       decoration: BoxDecoration(
-        color: primaryColor,
-        // gradient: LinearGradient(
-        //   begin: Alignment.topCenter,
-        //   end: Alignment.bottomCenter,
-        //   tileMode: TileMode.clamp,
-        //   colors: [
-        //     const Color(0xFF438F02).withOpacity(0.52),
-        //     const Color(0xFF7DD038),
-        //   ],
-        // ),
+        color: primaryColor, // Blue box retained
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: MediaQuery.of(context).size.width * 0.04),
           Text(
             priceText,
             textAlign: TextAlign.center,
@@ -186,7 +202,7 @@ Widget bignoimagebox(priceText, titleText, context) {
   );
 }
 
-Widget bignoimageredbox(priceText, titleText, context) {
+Widget bignoimageredbox(String priceText, String titleText, BuildContext context) {
   return Center(
     child: Container(
       height: MediaQuery.of(context).size.height * 0.09,
@@ -204,7 +220,6 @@ Widget bignoimageredbox(priceText, titleText, context) {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: MediaQuery.of(context).size.width * 0.04),
           Text(
             priceText,
             textAlign: TextAlign.center,

@@ -70,7 +70,7 @@ class _CompletedPageState extends State<CompletedPage> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: mainColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: Column(
           children: [
             SizedBox(height: size.height * 0.03),
@@ -81,24 +81,23 @@ class _CompletedPageState extends State<CompletedPage> {
                 child: SearchField(
                   controller: searchController,
                   inputType: TextInputType.text,
-                  marginColor: mainColor,
+                  marginColor: Theme.of(context).scaffoldBackgroundColor,
                   suggestionsDecoration: SuggestionDecoration(
-                    color: mainColor,
-                    padding: const EdgeInsets.only(
-                        left: 20, right: 20, top: 5, bottom: 5),
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    padding: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       width: 1,
-                      color: const Color(0xFF000000).withOpacity(0.15),
+                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
                     ),
                   ),
                   offset: const Offset(0, 46),
                   suggestionItemDecoration: BoxDecoration(
-                    color: mainColor,
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
                       width: 1,
-                      color: const Color(0xFFFFFFFF),
+                      color: Theme.of(context).scaffoldBackgroundColor,
                     ),
                   ),
                   searchInputDecoration: InputDecoration(
@@ -107,46 +106,40 @@ class _CompletedPageState extends State<CompletedPage> {
                       width: 25,
                       height: 25,
                       fit: BoxFit.scaleDown,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
-                    suffixIcon: isFocused == true
+                    suffixIcon: isFocused
                         ? GestureDetector(
-                            onTap: () {
-                              isFocused = false;
-                              searchController.clear();
-                              setState(() {});
-                            },
-                            child: const Icon(
-                              Icons.close,
-                              size: 20,
-                              color: Color(0xFF565656),
-                            ),
-                            // SvgPicture.asset(
-                            //   'assets/images/close-icon.svg',
-                            //   width: 10,
-                            //   height: 10,
-                            //   fit: BoxFit.scaleDown,
-                            // ),
-                          )
+                      onTap: () {
+                        isFocused = false;
+                        searchController.clear();
+                        setState(() {});
+                      },
+                      child: Icon(
+                        Icons.close,
+                        size: 20,
+                        color: ConstantColor.darkgreyColor,
+                      ),
+                    )
                         : null,
                     hintText: "Search",
-                    hintStyle: const TextStyle(
-                      color: Color(0xFF929292),
+                    hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: ConstantColor.greyColor,
                       fontSize: 12,
-                      fontFamily: 'Montserrat-Regular',
                       fontWeight: FontWeight.w500,
                     ),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 1,
-                        color: const Color(0xFF000000).withOpacity(0.15),
+                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
                       ),
                       borderRadius: BorderRadius.circular(25),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 1,
-                        color: const Color(0xFF000000).withOpacity(0.15),
+                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
                       ),
                       borderRadius: BorderRadius.circular(25),
                     ),
@@ -164,62 +157,46 @@ class _CompletedPageState extends State<CompletedPage> {
                     });
                     return null;
                   },
-                  // validator: (value) {
-                  //   if (value!.isEmpty) {
-                  //     return 'Please enter a search term';
-                  //   }
-                  //   return null;
-                  // },
-                  // scrollbarAlwaysVisible: false,
-                  scrollbarDecoration: ScrollbarDecoration(
-                    thumbVisibility: false,
-                  ),
+                  scrollbarDecoration: ScrollbarDecoration(thumbVisibility: false),
                   suggestionState: Suggestion.hidden,
-                  suggestions: suggestions
-                      .map((e) => SearchFieldListItem<String>(e))
-                      .toList(),
-                  suggestionStyle: const TextStyle(
-                    color: Color(0xFF929292),
+                  suggestions: suggestions.map((e) => SearchFieldListItem<String>(e)).toList(),
+                  suggestionStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: ConstantColor.greyColor,
                     fontSize: 14,
-                    fontFamily: 'Montserrat-Regular',
                     fontWeight: FontWeight.w500,
                   ),
-                  searchStyle: const TextStyle(
-                    color: Color(0xFF929292),
+                  searchStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: ConstantColor.greyColor,
                     fontSize: 16,
-                    fontFamily: 'Montserrat-Regular',
                     fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
             ),
             SizedBox(height: size.height * 0.03),
-            getBookingCompletedResponseForSearch.data == null &&
-                        searchController.text.isEmpty ||
-                    searchController.text == ""
+            getBookingCompletedResponseForSearch.data == null && searchController.text.isEmpty || searchController.text == ""
                 ? Container(
-                    color: Colors.transparent,
-                    height: size.height * 0.6,
-                    child: RefreshIndicator(
-                      onRefresh: () async {
-                        getBookingListUpcoming();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child:
-                            completedList(context, getBookingCompletedResponse),
-                      ),
-                    ),
-                  )
+              color: Colors.transparent,
+              height: size.height * 0.6,
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  getBookingListUpcoming();
+                  if (mounted) setState(() {});
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: completedList(context, getBookingCompletedResponse),
+                ),
+              ),
+            )
                 : Container(
-                    color: Colors.transparent,
-                    height: size.height * 0.6,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: completedList(
-                          context, getBookingCompletedResponseForSearch),
-                    ),
-                  )
+              color: Colors.transparent,
+              height: size.height * 0.6,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: completedList(context, getBookingCompletedResponseForSearch),
+              ),
+            ),
           ],
         ),
       ),

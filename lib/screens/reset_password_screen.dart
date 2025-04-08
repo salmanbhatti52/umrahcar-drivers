@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../service/rest_api_service.dart';
 import '../utils/colors.dart';
 import '../widgets/button.dart';
 import 'login_screen.dart';
-
 
 class ResetPasswordPage extends StatefulWidget {
   final String? uid, verifyOTP;
@@ -20,13 +18,6 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   TextEditingController confirmPasswordController = TextEditingController();
   final GlobalKey<FormState> createNewPasswordFormKey = GlobalKey<FormState>();
 
-  @override
-  void initState() {
-    super.initState();
-    // print("email: ${widget.email}");
-    // print("verifyOTP: ${widget.verifyOTP}");
-  }
-
   bool _obscure = true;
   bool _obscure1 = true;
 
@@ -35,7 +26,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: mainColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         leading: GestureDetector(
           onTap: () {
@@ -46,10 +37,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
             width: 22,
             height: 22,
             fit: BoxFit.scaleDown,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
       ),
-      backgroundColor: mainColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: GestureDetector(
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
@@ -65,27 +57,23 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   'assets/images/new-umrah-car-logo-big.svg',
                   fit: BoxFit.scaleDown,
                 ),
-                // SizedBox(height: size.height * 0.04),
-                const Center(
+                SizedBox(height: size.height * 0.02),
+                Center(
                   child: Text(
                     'Reset Password',
-                    style: TextStyle(
-                      color: Colors.black,
+                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                       fontSize: 24,
-                      fontFamily: 'Montserrat-Regular',
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
                 SizedBox(height: size.height * 0.02),
-                const Center(
+                Center(
                   child: Text(
                     'Please enter a new password below\ndifferent from the last password',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0xFF6B7280),
-                      fontSize: 16,
-                      fontFamily: 'Montserrat-Regular',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: ConstantColor.darkgreyColor, // 0xFF6B7280
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -100,17 +88,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'New Password field is required!';
-                      }
-                      else if(value.length <6){
+                      } else if (value.length < 6) {
                         return "Password must be 6 Digits";
                       }
                       return null;
                     },
-                    style: const TextStyle(
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
-                      fontSize: 16,
-                      color: Color(0xFF6B7280),
+                      color: ConstantColor.darkgreyColor,
                     ),
                     decoration: InputDecoration(
                       filled: false,
@@ -121,26 +106,23 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         wordSpacing: 2,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(16)),
+                        borderRadius: const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
-                          color: const Color(0xFF000000).withOpacity(0.15),
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
                           width: 1,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(16)),
+                        borderRadius: const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
-                          color: const Color(0xFF000000).withOpacity(0.15),
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
                           width: 1,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(16)),
+                        borderRadius: const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
-                          color: const Color(0xFF000000).withOpacity(0.15),
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
                           width: 1,
                         ),
                       ),
@@ -151,20 +133,23 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           width: 1,
                         ),
                       ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       hintText: "Password",
-                      hintStyle: const TextStyle(
-                        color: Color(0xFF929292),
-                        fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .labelMedium
+                          ?.copyWith(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(0.6),
                       ),
                       prefixIcon: SvgPicture.asset(
                         'assets/images/password-icon.svg',
                         width: 25,
                         height: 25,
                         fit: BoxFit.scaleDown,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                       suffixIcon: GestureDetector(
                         onTap: () {
@@ -172,19 +157,15 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                             _obscure = !_obscure;
                           });
                         },
-                        child: _obscure
-                            ? SvgPicture.asset(
-                                'assets/images/hide-password-icon.svg',
-                                width: 25,
-                                height: 25,
-                                fit: BoxFit.scaleDown,
-                              )
-                            : SvgPicture.asset(
-                                'assets/images/show-password-icon.svg',
-                                width: 25,
-                                height: 25,
-                                fit: BoxFit.scaleDown,
-                              ),
+                        child: SvgPicture.asset(
+                          _obscure
+                              ? 'assets/images/hide-password-icon.svg'
+                              : 'assets/images/show-password-icon.svg',
+                          width: 25,
+                          height: 25,
+                          fit: BoxFit.scaleDown,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
                       ),
                     ),
                   ),
@@ -199,20 +180,16 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Confirm Password field is required!';
-                      }
-                      else if(value.length <6){
-                        return " Confirm Password must be 6 Digits";
-                      }
-                      else if(value  != passwordController.text){
-                        return "Confirm Password is not matching with Password ";
+                      } else if (value.length < 6) {
+                        return "Confirm Password must be 6 Digits";
+                      } else if (value != passwordController.text) {
+                        return "Confirm Password is not matching with Password";
                       }
                       return null;
                     },
-                    style: const TextStyle(
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
-                      fontSize: 16,
-                      color: Color(0xFF6B7280),
+                      color: ConstantColor.darkgreyColor,
                     ),
                     decoration: InputDecoration(
                       filled: false,
@@ -223,26 +200,23 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         wordSpacing: 2,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(16)),
+                        borderRadius: const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
-                          color: const Color(0xFF000000).withOpacity(0.15),
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
                           width: 1,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(16)),
+                        borderRadius: const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
-                          color: const Color(0xFF000000).withOpacity(0.15),
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
                           width: 1,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(16)),
+                        borderRadius: const BorderRadius.all(Radius.circular(16)),
                         borderSide: BorderSide(
-                          color: const Color(0xFF000000).withOpacity(0.15),
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
                           width: 1,
                         ),
                       ),
@@ -253,20 +227,23 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           width: 1,
                         ),
                       ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       hintText: "Reconfirm Password",
-                      hintStyle: const TextStyle(
-                        color: Color(0xFF929292),
-                        fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .labelMedium
+                          ?.copyWith(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(0.6),
                       ),
                       prefixIcon: SvgPicture.asset(
                         'assets/images/password-icon.svg',
                         width: 25,
                         height: 25,
                         fit: BoxFit.scaleDown,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                       suffixIcon: GestureDetector(
                         onTap: () {
@@ -274,19 +251,15 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                             _obscure1 = !_obscure1;
                           });
                         },
-                        child: _obscure1
-                            ? SvgPicture.asset(
-                                'assets/images/hide-password-icon.svg',
-                                width: 25,
-                                height: 25,
-                                fit: BoxFit.scaleDown,
-                              )
-                            : SvgPicture.asset(
-                                'assets/images/show-password-icon.svg',
-                                width: 25,
-                                height: 25,
-                                fit: BoxFit.scaleDown,
-                              ),
+                        child: SvgPicture.asset(
+                          _obscure1
+                              ? 'assets/images/hide-password-icon.svg'
+                              : 'assets/images/show-password-icon.svg',
+                          width: 25,
+                          height: 25,
+                          fit: BoxFit.scaleDown,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
                       ),
                     ),
                   ),
@@ -299,32 +272,25 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       print("otp: ${widget.verifyOTP}");
                       print("new_password: ${passwordController.text}");
                       print("confirm_password: ${confirmPasswordController.text}");
-                      print("hiiiiiiiiiiiii: ${confirmPasswordController.text}");
-                      var mapData={
-                        "users_drivers_id":"${widget.uid}",
-                        "otp":"${widget.verifyOTP}",
-                        "new_password":passwordController.text,
-                        "confirm_password":" ${confirmPasswordController.text}"
+                      var mapData = {
+                        "users_drivers_id": "${widget.uid}",
+                        "otp": "${widget.verifyOTP}",
+                        "new_password": passwordController.text,
+                        "confirm_password": confirmPasswordController.text
                       };
-                      var response = await DioClient().resetNewPassword(
-                          mapData,context
-                      );
+                      var response = await DioClient().resetNewPassword(mapData, context);
                       print("response otp: ${response.message}");
                       if (response != null) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${response.message}")));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(backgroundColor: Theme.of(context).colorScheme.primary,content: Text("${response.message}")));
                         Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (context) => const LogInPage()),
-                                (Route<dynamic> route) => false);
+                          MaterialPageRoute(builder: (context) => const LogInPage()),
+                              (Route<dynamic> route) => false,
+                        );
                       }
                     }
-
-
-
-
-
                   },
-                  child: button('Confrim', context),
+                  child: button('Confirm', context),
                 ),
                 SizedBox(height: size.height * 0.02),
               ],

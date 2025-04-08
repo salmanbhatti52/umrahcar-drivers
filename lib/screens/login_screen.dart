@@ -85,11 +85,7 @@ class _LogInPageState extends State<LogInPage> {
           FocusManager.instance.primaryFocus?.unfocus();
         },
         child: Scaffold(
-          // appBar: AppBar(
-          //   backgroundColor: mainColor,
-          //   elevation: 0,
-          // ),
-          backgroundColor: mainColor,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           body: Form(
             key: _formKey,
             child: Center(
@@ -105,86 +101,61 @@ class _LogInPageState extends State<LogInPage> {
                       child: SvgPicture.asset(
                         'assets/app-icon.svg',
                         fit: BoxFit.scaleDown,
+                        // color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     SizedBox(height: size.height * 0.0),
-                    const Text(
+                    Text(
                       'Welcome!\nLogin to your account',
-                      style: TextStyle(
+                      style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                         fontSize: 20,
-                        fontFamily: 'Montserrat-Regular',
                         fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    // SizedBox(height: size.height * 0.02),
-                    // const Text(
-                    //   '(For Drivers)',
-                    //   style: TextStyle(
-                    //     fontSize: 18,
-                    //     fontFamily: 'Montserrat-Regular',
-                    //     fontWeight: FontWeight.w500,
-                    //   ),
-                    // ),
                     SizedBox(height: size.height * 0.04),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: TextFormField(
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
-                        validator: (value) {
-                          bool emailValid = RegExp(
-                                  r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
-                              .hasMatch(value!);
-                          if (value.isEmpty) {
-                            return "Email field is required!";
-                          } else if (!emailValid) {
-                            return "Email field is not valid!";
-                          } else {
-                            return null;
-                          }
-                        },
-                        style: const TextStyle(
+                        validator: (value) => validateEmail(value),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w400,
-                          fontFamily: 'Montserrat-Regular',
                           fontSize: 16,
-                          color: Color(0xFF6B7280),
                         ),
                         decoration: InputDecoration(
-                          filled: false,
+                          filled: true,
+                          fillColor: Theme.of(context).colorScheme.surface,
                           errorStyle: const TextStyle(
                             color: Colors.red,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            wordSpacing: 2,
                           ),
                           border: OutlineInputBorder(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(16)),
-                            borderSide: BorderSide(
-                              color: const Color(0xFF000000).withOpacity(0.15),
-                              width: 1,
-                            ),
+                            borderRadius: BorderRadius.circular(16),
+                            borderSide: BorderSide.none,
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(16)),
+                            borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide(
-                              color: const Color(0xFF000000).withOpacity(0.15),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withOpacity(0.15),
                               width: 1,
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(16)),
+                            borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide(
-                              color: const Color(0xFF000000).withOpacity(0.15),
+                              color: Theme.of(context).primaryColor,
                               width: 1,
                             ),
                           ),
-                          errorBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(16)),
-                            borderSide: BorderSide(
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            borderSide: const BorderSide(
                               color: Colors.red,
                               width: 1,
                             ),
@@ -192,17 +163,21 @@ class _LogInPageState extends State<LogInPage> {
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 10),
                           hintText: "Email",
-                          hintStyle: const TextStyle(
-                            color: Color(0xFF929292),
-                            fontSize: 12,
-                            fontFamily: 'Montserrat-Regular',
-                            fontWeight: FontWeight.w500,
+                          hintStyle: Theme.of(context)
+                              .textTheme
+                              .labelMedium
+                              ?.copyWith(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withOpacity(0.6),
                           ),
                           prefixIcon: SvgPicture.asset(
                             'assets/images/email-icon.svg',
                             width: 25,
                             height: 25,
                             fit: BoxFit.scaleDown,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                       ),
@@ -222,47 +197,42 @@ class _LogInPageState extends State<LogInPage> {
                           }
                           return null;
                         },
-                        style: const TextStyle(
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w400,
-                          fontFamily: 'Montserrat-Regular',
                           fontSize: 16,
-                          color: Color(0xFF6B7280),
                         ),
                         decoration: InputDecoration(
                           filled: false,
+                          fillColor: Theme.of(context).colorScheme.surface,
                           errorStyle: const TextStyle(
                             color: Colors.red,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            wordSpacing: 2,
                           ),
                           border: OutlineInputBorder(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(16)),
-                            borderSide: BorderSide(
-                              color: const Color(0xFF000000).withOpacity(0.15),
-                              width: 1,
-                            ),
+                            borderRadius: BorderRadius.circular(16),
+                            borderSide: BorderSide.none,
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(16)),
+                            borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide(
-                              color: const Color(0xFF000000).withOpacity(0.15),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withOpacity(0.15),
                               width: 1,
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(16)),
+                            borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide(
-                              color: const Color(0xFF000000).withOpacity(0.15),
+                              color: Theme.of(context).primaryColor,
                               width: 1,
                             ),
                           ),
-                          errorBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(16)),
-                            borderSide: BorderSide(
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            borderSide: const BorderSide(
                               color: Colors.red,
                               width: 1,
                             ),
@@ -270,17 +240,21 @@ class _LogInPageState extends State<LogInPage> {
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 10),
                           hintText: "Password",
-                          hintStyle: const TextStyle(
-                            color: Color(0xFF929292),
-                            fontSize: 12,
-                            fontFamily: 'Montserrat-Regular',
-                            fontWeight: FontWeight.w500,
+                          hintStyle: Theme.of(context)
+                              .textTheme
+                              .labelMedium
+                              ?.copyWith(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withOpacity(0.6),
                           ),
                           prefixIcon: SvgPicture.asset(
                             'assets/images/password-icon.svg',
                             width: 25,
                             height: 25,
                             fit: BoxFit.scaleDown,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                           suffixIcon: GestureDetector(
                             onTap: () {
@@ -294,12 +268,14 @@ class _LogInPageState extends State<LogInPage> {
                                     width: 25,
                                     height: 25,
                                     fit: BoxFit.scaleDown,
+                              color: Theme.of(context).colorScheme.onSurface,
                                   )
                                 : SvgPicture.asset(
                                     'assets/images/show-password-icon.svg',
                                     width: 25,
                                     height: 25,
                                     fit: BoxFit.scaleDown,
+                              color: Theme.of(context).colorScheme.onSurface,
                                   ),
                           ),
                         ),
@@ -322,7 +298,7 @@ class _LogInPageState extends State<LogInPage> {
                           child: Text(
                             'Forgot Password?',
                             style: TextStyle(
-                              color: primaryColor,
+                              color: Theme.of(context).primaryColor,
                               fontSize: 12,
                               fontFamily: 'Montserrat-Regular',
                               fontWeight: FontWeight.w500,
@@ -377,23 +353,25 @@ class _LogInPageState extends State<LogInPage> {
                       children: [
                         Expanded(
                           child: Divider(
-                            color: const Color(0xFF929292).withOpacity(0.3),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withOpacity(0.3),
                             thickness: 1,
                             indent: 20,
                             endIndent: 10,
                           ),
                         ),
-                        const Text(
+                        Text(
                           'OR',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'Montserrat-Regular',
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         Expanded(
                           child: Divider(
-                            color: const Color(0xFF929292).withOpacity(0.3),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withOpacity(0.3),
                             thickness: 1,
                             indent: 10,
                             endIndent: 20,
@@ -403,21 +381,13 @@ class _LogInPageState extends State<LogInPage> {
                     ),
                     SizedBox(height: size.height * 0.04),
                     RichText(
-                      overflow: TextOverflow.clip,
-                      textAlign: TextAlign.center,
                       text: TextSpan(
-                        text: "Don’t have an account? ",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontFamily: 'Montserrat-Regular',
-                          fontWeight: FontWeight.w500,
-                        ),
+                        text: "Don't have an account? ",
+                        style: Theme.of(context).textTheme.bodyMedium,
                         children: [
                           TextSpan(
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                // Handle the tap event, e.g., navigate to a new screen
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -427,9 +397,7 @@ class _LogInPageState extends State<LogInPage> {
                               },
                             text: 'Sign Up',
                             style: TextStyle(
-                              color: primaryColor,
-                              fontFamily: 'Montserrat-Regular',
-                              fontSize: 16,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w600,
                             ),
                           ),

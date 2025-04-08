@@ -3,18 +3,24 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
 import '../../../models/get_chat_model.dart';
 import '../../../models/send_message_model.dart';
 import '../../../service/rest_api_service.dart';
 import '../../../utils/colors.dart';
 
 class ChatPage extends StatefulWidget {
-  String? bookingId;
-  String? usersDriverId;
-  String? guestName;
-  String? driverName;
-  ChatPage({super.key,this.bookingId,this.usersDriverId,this.guestName,this.driverName});
+  final String? bookingId;
+  final String? usersDriverId;
+  final String? guestName;
+  final String? driverName;
+
+  const ChatPage({
+    super.key,
+    this.bookingId,
+    this.usersDriverId,
+    this.guestName,
+    this.driverName,
+  });
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -23,46 +29,60 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   TextEditingController messageController = TextEditingController();
   final GlobalKey<FormState> chatFormKey = GlobalKey<FormState>();
+  final ScrollController _scrollController = ScrollController();
 
+  GetChatModel getChatModel = GetChatModel();
+  SendMessageModel sendMessageModel = SendMessageModel();
+  bool isLoading = false;
+  String? errorMessage;
 
-  GetChatModel getChatModel=GetChatModel();
-
-  SendMessageModel sendMessageModel=SendMessageModel();
-
-  getChatData()async{
-    print("bookingId ${widget.bookingId}");
-    var mapData={
-      "bookings_id": widget.bookingId
-    };
-    getChatModel= await DioClient().getChat(mapData, context);
-    print("response id: ${getChatModel.data!.message}");
+  Future<void> getChatData() async {
     setState(() {
-
+      isLoading = true;
+      errorMessage = null;
     });
 
+    try {
+      var mapData = {"bookings_id": widget.bookingId};
+      getChatModel = await DioClient().getChat(mapData, context);
+      setState(() {});
+      // Scroll to the bottom after loading messages
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_scrollController.hasClients) {
+          _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+          );
+        }
+      });
+    } catch (e) {
+      setState(() {
+        errorMessage = "Failed to load chat. Please try again.";
+      });
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
-  GlobalKey<RefreshIndicatorState>? refreshKey;
+
   Timer? timer;
 
   @override
   void initState() {
-    getChatData();
-    timer =
-        Timer.periodic( const Duration(seconds: 8), (timer) => getChatData());
-    setState(() {
-
-    });
-    // TODO: implement initState
     super.initState();
+    getChatData();
+    timer = Timer.periodic(const Duration(seconds: 8), (timer) => getChatData());
   }
 
   @override
   void dispose() {
-    timer!.cancel();
-    // TODO: implement dispose
+    timer?.cancel();
+    _scrollController.dispose();
+    messageController.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -72,267 +92,331 @@ class _ChatPageState extends State<ChatPage> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: mainColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: mainColor,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
           leading: GestureDetector(
             onTap: () {
               Navigator.pop(context);
             },
-            child: SvgPicture.asset(
-              'assets/images/back-icon.svg',
-              width: 22,
-              height: 22,
-              fit: BoxFit.scaleDown,
-            ),
-          ),
-          title: Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    CircleAvatar(
-                      radius: 18,
-                      child: Image.asset(
-                        'assets/images/user-profile.png',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    SizedBox(width: size.width * 0.03),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${widget.driverName}',
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Montserrat-Regular',
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        SizedBox(height: size.height * 0.003),
-                        Text(
-                          'Active Now',
-                          style: TextStyle(
-                            color: primaryColor,
-                            fontSize: 10,
-                            fontFamily: 'Montserrat-Regular',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          centerTitle: true,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 20),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
               child: SvgPicture.asset(
-                'assets/images/contact-icon.svg',
+                'assets/images/back-icon.svg',
                 width: 22,
                 height: 22,
                 fit: BoxFit.scaleDown,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
+          ),
+          title: Row(
+            children: [
+              CircleAvatar(
+                radius: 20,
+                backgroundColor: Theme.of(context).colorScheme.surface,
+                child: Image.asset(
+                  'assets/images/user-profile.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(width: size.width * 0.03),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.driverName ?? "Driver",
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(height: size.height * 0.003),
+                  Text(
+                    'Active Now',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: primaryColor,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          centerTitle: false,
+          actions: [
+            // Padding(
+            //   padding: const EdgeInsets.only(right: 20),
+            //   child: GestureDetector(
+            //     onTap: () {
+            //       // Add action for contact icon (e.g., make a call or open contact details)
+            //     },
+            //     child: SvgPicture.asset(
+            //       'assets/images/contact-icon.svg',
+            //       width: 22,
+            //       height: 22,
+            //       fit: BoxFit.scaleDown,
+            //       color: Theme.of(context).colorScheme.onSurface,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Form(
-            key: chatFormKey,
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  getChatModel.data !=null ?
-                  Container(
-                    height:MediaQuery.of(context).size.height/1.3,
-                    child: RefreshIndicator(
-                      key: refreshKey,
-                      color: primaryColor,
-                      onRefresh: ()async{
-                        await Future.delayed(const Duration(milliseconds: 1500));
-                        getChatData();
-
-                        setState(() {
-
-                        });
-                      },
-                      child: ListView.builder(
-                          itemCount: getChatModel.data!.message!.length,
-                          itemBuilder: (BuildContext context,i){
-                            return Column(
-                              children: [
-                                Align(
-                                  alignment:getChatModel.data!.message![i].receiver=="Drivers" ?  Alignment.centerLeft: Alignment.centerRight,
-                                  child: Container(
-                                    decoration:  BoxDecoration(
-                                      color: getChatModel.data!.message![i].receiver=="Drivers" ? const Color(0xFFF2F2F2) : primaryColor,
-                                      borderRadius: const BorderRadius.only(
-                                        topRight: Radius.circular(5),
-                                        topLeft: Radius.circular(5),
-                                        bottomLeft: Radius.circular(5),
-                                      ),
-                                    ),
-                                    child:  Padding(
-                                      padding: const EdgeInsets.all(15),
-                                      child: Text(
-                                        '${getChatModel.data!.message![i].message}',
-                                        style:  TextStyle(
-                                          color: getChatModel.data!.message![i].receiver=="Drivers" ? Colors.black: Colors.white,
-                                          fontSize: 12,
-                                          fontFamily: 'Montserrat-Regular',
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ),
+        body: Column(
+          children: [
+            Expanded(
+              child: isLoading && getChatModel.data == null
+                  ? const Center(child: CircularProgressIndicator())
+                  : errorMessage != null
+                  ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      errorMessage!,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.red,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: getChatData,
+                      child: const Text("Retry"),
+                    ),
+                  ],
+                ),
+              )
+                  : getChatModel.data != null &&
+                  getChatModel.data!.message != null
+                  ? RefreshIndicator(
+                color: primaryColor,
+                onRefresh: getChatData,
+                child: ListView.builder(
+                  controller: _scrollController,
+                  padding:
+                  const EdgeInsets.symmetric(vertical: 10),
+                  itemCount: getChatModel.data!.message!.length,
+                  itemBuilder: (BuildContext context, int i) {
+                    final message = getChatModel.data!.message![i];
+                    final isSender =
+                        message.receiver != "Drivers";
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 10),
+                      child: Column(
+                        crossAxisAlignment: isSender
+                            ? CrossAxisAlignment.end
+                            : CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            constraints: BoxConstraints(
+                              maxWidth: size.width * 0.75,
+                            ),
+                            decoration: BoxDecoration(
+                              color: isSender
+                                  ? primaryColor
+                                  : Theme.of(context)
+                                  .colorScheme
+                                  .surface
+                                  .withOpacity(0.9),
+                              borderRadius: BorderRadius.only(
+                                topLeft:
+                                const Radius.circular(15),
+                                topRight:
+                                const Radius.circular(15),
+                                bottomLeft: isSender
+                                    ? const Radius.circular(15)
+                                    : const Radius.circular(0),
+                                bottomRight: isSender
+                                    ? const Radius.circular(0)
+                                    : const Radius.circular(15),
+                              ),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            child: Text(
+                              message.message ?? "",
+                              style: TextStyle(
+                                color: isSender
+                                    ? Colors.white
+                                    : Theme.of(context)
+                                    .colorScheme
+                                    .onSurface,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          // const SizedBox(height: 3),
+                          // Text(
+                          //   // Replace with actual timestamp if available
+                          //   "02:09",
+                          //   style: TextStyle(
+                          //     color: isSender
+                          //         ? primaryColor
+                          //         : Colors.grey,
+                          //     fontSize: 10,
+                          //     fontWeight: FontWeight.w400,
+                          //   ),
+                          // ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              )
+                  : Center(
+                child: Text(
+                  "No Chat Found",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Form(
+                key: chatFormKey,
+                child: TextFormField(
+                  controller: messageController,
+                  keyboardType: TextInputType.text,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Message field is required!';
+                    }
+                    return null;
+                  },
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor:
+                    Theme.of(context).colorScheme.surface.withOpacity(0.1),
+                    errorStyle: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      wordSpacing: 2,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(Radius.circular(50)),
+                      borderSide: BorderSide.none,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(Radius.circular(50)),
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(Radius.circular(50)),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor,
+                        width: 1,
+                      ),
+                    ),
+                    errorBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(50)),
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                        width: 1,
+                      ),
+                    ),
+                    hintText: "Write a message",
+                    hintStyle:
+                    Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(0.5),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    suffixIcon: InkWell(
+                      onTap: () async {
+                        if (chatFormKey.currentState!.validate()) {
+                          var mapData = {
+                            "bookings_id": widget.bookingId,
+                            "users_drivers_id": widget.usersDriverId,
+                            "receiver": "Guest",
+                            "guest_name": widget.guestName,
+                            "message": messageController.text,
+                          };
+                          setState(() {
+                            isLoading = true;
+                          });
+                          try {
+                            sendMessageModel = await DioClient()
+                                .sendMessage(mapData, context);
+                            if (sendMessageModel.data != null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor:
+                                  Theme.of(context).colorScheme.primary,
+                                  content: Text(
+                                    sendMessageModel.data!,
+                                    style: Theme.of(context).textTheme.bodyMedium,
                                   ),
                                 ),
-                                SizedBox(height: size.height * 0.005),
-                                // Align(
-                                //   alignment:getChatModel.data!.message![i].receiver=="Drivers" ?  Alignment.centerLeft: Alignment.centerRight,
-                                //   child: const Text(
-                                //     '02:09',
-                                //     style: TextStyle(
-                                //       color: primaryColor,
-                                //       fontSize: 10,
-                                //       fontFamily: 'Montserrat-Regular',
-                                //       fontWeight: FontWeight.w500,
-                                //     ),
-                                //   ),
-                                // ),
-                              ],
-                            );
-                          }),
-                    ),
-                  )
-                      : Container(
-                      height:MediaQuery.of(context).size.height/1.3,
-                      child: const Column(
-
-                        children: [
-                          SizedBox(height: 350,),
-                          Text("No Chat Found"),
-                        ],
-                      )),
-
-
-
-                  TextFormField(
-                    controller: messageController,
-                    keyboardType: TextInputType.text,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Message field is required!';
-                      }
-                      return null;
-                    },
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'Montserrat-Regular',
-                      fontSize: 16,
-                      color: Color(0xFF6B7280),
-                    ),
-                    decoration: InputDecoration(
-                      filled: false,
-                      errorStyle: const TextStyle(
-                        color: Colors.red,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        wordSpacing: 2,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(
-                          color: const Color(0xFF000000).withOpacity(0.15),
-                          width: 1,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(
-                          color: const Color(0xFF000000).withOpacity(0.15),
-                          width: 1,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(
-                          color: const Color(0xFF000000).withOpacity(0.15),
-                          width: 1,
-                        ),
-                      ),
-                      errorBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(
-                          color: Colors.red,
-                          width: 1,
-                        ),
-                      ),
-                      hintText: "Write a message",
-                      hintStyle: const TextStyle(
-                        color: Color(0xFF929292),
-                        fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
-                      ),
-                      suffixIcon: InkWell(
-                        onTap: () async {
-                          if(chatFormKey.currentState!.validate()){
-                            var mapData={
-                              "bookings_id":"${widget.bookingId}",
-                              "users_drivers_id":"${widget.usersDriverId}",
-                              "receiver":"Guest",
-                              "guest_name":"${widget.guestName}",
-                              "message":messageController.text
-                            };
-                            print("mapData: $mapData");
-                            sendMessageModel= await DioClient().sendMessage(mapData, context);
-                            print("Status id: ${sendMessageModel.data!}");
-                            if(sendMessageModel.data !=null){
-                              ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text("${sendMessageModel.data}")));
-                              getChatData();
-                              messageController.text="";
+                              );
+                              await getChatData();
+                              messageController.clear();
                               FocusManager.instance.primaryFocus?.unfocus();
-
-                              setState(() {
-
-                              });
                             }
-
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: Colors.red,
+                                content: Text(
+                                  "Failed to send message. Please try again.",
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                              ),
+                            );
+                          } finally {
+                            setState(() {
+                              isLoading = false;
+                            });
                           }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: CircleAvatar(
-                            backgroundColor: primaryColor,
-                            child: SvgPicture.asset(
-                              'assets/images/send-icon.svg',
-                              width: 25,
-                              height: 25,
-                              fit: BoxFit.scaleDown,
-                            ),
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: CircleAvatar(
+                          backgroundColor: primaryColor,
+                          child: isLoading
+                              ? const CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          )
+                              : SvgPicture.asset(
+                            'assets/images/send-icon.svg',
+                            width: 25,
+                            height: 25,
+                            fit: BoxFit.scaleDown,
+                            color: Colors.white,
                           ),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: size.height * 0.02),
-                ],
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );

@@ -52,193 +52,37 @@ class _SummaryAgentPageState extends State<SummaryAgentPage> {
     var size = MediaQuery.of(context).size;
 
     return  Scaffold(
-      body: summaryAgentModel.data !=null ?
-      Padding(
-        padding: const EdgeInsets.only(top: 50,left: 20,right: 20),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      body: summaryAgentModel.data != null
+          ? Padding(
+        padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Driver Name',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                SizedBox(height: size.height * 0.03),
-
-                 Text(
-                  '${summaryAgentModel.data!.driversName}',
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
-                    fontWeight: FontWeight.w500,
-                  ),
-                )
-
-              ],
-            ),
-            SizedBox(height: 20,),
-            Row(
-              mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Total Completed Trips',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                SizedBox(height: size.height * 0.03),
-
-                Text(
-                  '${summaryAgentModel.data!.totalCompletedTrips}',
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
-                    fontWeight: FontWeight.w500,
-                  ),
-                )
-
-              ],
-            ),
-            SizedBox(height: 20,),
-            Row(
-              mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Total Driver Fare',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                SizedBox(height: size.height * 0.03),
-
-                Text(
-                  '${summaryAgentModel.data!.totalDriversFare}',
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
-                    fontWeight: FontWeight.w500,
-                  ),
-                )
-
-              ],
-            ),
-            SizedBox(height: 20,),
-            Row(
-              mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Total Driver Receiving Debit',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                SizedBox(height: size.height * 0.03),
-
-                Text(
-                  '${summaryAgentModel.data!.totalDriversReceivingsDebit}',
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
-                    fontWeight: FontWeight.w500,
-                  ),
-                )
-
-              ],
-            ),
-            SizedBox(height: 20,),
-            Row(
-              mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Total Driver Receiving Credit',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                SizedBox(height: size.height * 0.03),
-
-                Text(
-                  '${summaryAgentModel.data!.totalDriversReceivingsCredit}',
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
-                    fontWeight: FontWeight.w500,
-                  ),
-                )
-
-              ],
-            ), SizedBox(height: 20,),
-            Row(
-              mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Total Driver Balance',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(height: size.height * 0.03),
-
-                Text(
-                  '${summaryAgentModel.data!.totalDriversBalance}',
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
-                    fontWeight: FontWeight.w500,
-                  ),
-                )
-
-              ],
-            ),
-
+            buildSummaryRow('Driver Name', '${summaryAgentModel.data!.driversName}', context),
+            SizedBox(height: 20),
+            buildSummaryRow('Total Completed Trips', '${summaryAgentModel.data!.totalCompletedTrips}', context),
+            SizedBox(height: 20),
+            buildSummaryRow('Total Driver Fare', '${summaryAgentModel.data!.totalDriversFare}', context),
+            SizedBox(height: 20),
+            buildSummaryRow('Total Driver Receiving Debit', '${summaryAgentModel.data!.totalDriversReceivingsDebit}', context),
+            SizedBox(height: 20),
+            buildSummaryRow('Total Driver Receiving Credit', '${summaryAgentModel.data!.totalDriversReceivingsCredit}', context),
+            SizedBox(height: 20),
+            buildSummaryRow('Total Driver Balance', '${summaryAgentModel.data!.totalDriversBalance}', context, isBold: true),
           ],
         ),
-      ):const Column(
+      )
+          : Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-
           Padding(
-            padding: EdgeInsets.only(left: 130),
+            padding: const EdgeInsets.only(left: 130),
             child: Text(
               'No Summary Found',
-              style: TextStyle(
-                color: Color(0xFF565656),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: ConstantColor.darkgreyColor,
                 fontSize: 12,
-
                 fontFamily: 'Montserrat-Regular',
                 fontWeight: FontWeight.w500,
               ),
@@ -246,7 +90,32 @@ class _SummaryAgentPageState extends State<SummaryAgentPage> {
             ),
           ),
         ],
-      )
+      ),
+    );
+  }
+
+  Widget buildSummaryRow(String label, String value, BuildContext context, {bool isBold = false}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            fontSize: 12,
+            fontFamily: 'Montserrat-Regular',
+            fontWeight: isBold ? FontWeight.w500 : FontWeight.w400,
+          ),
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+        Text(
+          value,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            fontSize: 12,
+            fontFamily: 'Montserrat-Regular',
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
     );
   }
 }
