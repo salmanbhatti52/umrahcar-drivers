@@ -65,7 +65,7 @@ class _LogInPageState extends State<LogInPage> {
   }
 
   void configOneSignal() {
-    OneSignal.shared.setAppId(onesignalAppId);
+    OneSignal.initialize(onesignalAppId);
   }
 
   @override
@@ -311,9 +311,8 @@ class _LogInPageState extends State<LogInPage> {
                     GestureDetector(
                         onTap: () async {
                           if (_formKey.currentState!.validate()) {
-                            final status =
-                                await OneSignal.shared.getDeviceState();
-                            String? onesignalId = status?.userId;
+                            final status = await OneSignal.User.pushSubscription;
+                            String? onesignalId = status.id;
 
                             print("onesignalId: $onesignalId");
 
