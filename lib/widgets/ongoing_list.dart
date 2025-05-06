@@ -10,6 +10,22 @@ import '../utils/const.dart';
 
 Widget onGoingList(BuildContext context, GetBookingListModel getBookingOngoingData) {
   var size = MediaQuery.of(context).size;
+
+  // Sort the data by pickup date and time
+  if (getBookingOngoingData.data != null && getBookingOngoingData.data!.isNotEmpty) {
+    getBookingOngoingData.data!.sort((a, b) {
+      // Parse pickup_date and pickup_time into DateTime objects
+      final DateTime dateTimeA = DateTime.parse(
+        "${a.pickupDate} ${a.pickupTime}",
+      );
+      final DateTime dateTimeB = DateTime.parse(
+        "${b.pickupDate} ${b.pickupTime}",
+      );
+      // Compare DateTime objects (earlier comes first)
+      return dateTimeA.compareTo(dateTimeB);
+    });
+  }
+
   return getBookingOngoingData.data != null
       ? ListView.builder(
     physics: const AlwaysScrollableScrollPhysics(),
@@ -147,11 +163,12 @@ Widget onGoingList(BuildContext context, GetBookingListModel getBookingOngoingDa
                                         if (getData.paymentType == "credit")
                                           Row(
                                             children: [
-                                              Icon(
-                                                Icons.attach_money,
-                                                size: 10,
-                                                color: ConstantColor.darkgreyColor,
+                                              Image.asset(
+                                                'assets/images1/symbol.png',
+                                                width: 10,
+                                                height: 10,
                                               ),
+                                              SizedBox(width: size.width * 0.01),
                                               Text(
                                                 "credit",
                                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -165,11 +182,12 @@ Widget onGoingList(BuildContext context, GetBookingListModel getBookingOngoingDa
                                         if (getData.cashReceiveFromCustomer != "0")
                                           Row(
                                             children: [
-                                              Icon(
-                                                Icons.attach_money,
-                                                size: 10,
-                                                color: ConstantColor.darkgreyColor,
+                                              Image.asset(
+                                                'assets/images1/symbol.png',
+                                                width: 10,
+                                                height: 10,
                                               ),
+                                              SizedBox(width: size.width * 0.01),
                                               Text(
                                                 "${getData.cashReceiveFromCustomer}",
                                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -248,15 +266,10 @@ Widget onGoingList(BuildContext context, GetBookingListModel getBookingOngoingDa
         'assets/images1/noBooking.svg',
         width: 150,
         height: 150,
-        // color: Theme.of(context).colorScheme.onSurface,
       ),
     ),
   );
 }
-
-List myList = [
-  MyList("assets/images/list-image-1.png", "Makkah Hottle Aziziz"),
-];
 
 String _formatDate(String date) {
   final DateTime parsedDate = DateFormat('yyyy-MM-dd').parse(date);
@@ -267,6 +280,11 @@ String _formatTime(String time) {
   final DateTime parsedTime = DateFormat('HH:mm:ss').parse(time);
   return DateFormat('h:mm a').format(parsedTime);
 }
+
+List myList = [
+  MyList("assets/images/list-image-1.png", "Makkah Hottle Aziziz"),
+];
+
 
 class MyList {
   String? image;

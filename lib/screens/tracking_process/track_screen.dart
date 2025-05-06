@@ -139,6 +139,8 @@ class _TrackPageState extends State<TrackPage> {
 
   GetBookingListModel getBookingOngoingResponse = GetBookingListModel();
 
+  bool _hasShownDialog = false;
+
   getBookingListOngoing() async {
     var mapData = {"users_drivers_id": userId.toString()};
     getBookingOngoingResponse = await DioClient().getBookingOngoing(mapData, context);
@@ -148,6 +150,30 @@ class _TrackPageState extends State<TrackPage> {
           lat = double.parse(getBookingOngoingResponse.data![i].guestLattitude!);
           long = double.parse(getBookingOngoingResponse.data![i].guestLongitude!);
           setState(() {});
+        } else if (!_hasShownDialog) {
+          // Show dialog if guest_lattitude and guest_longitude are null
+          _hasShownDialog = true; // Prevent showing dialog again
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Location Not Updated'),
+                content: const Text(
+                  'Guest location is not updated due to some reason. You will see the details once the guest location is updated.',
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context); // Close the dialog
+                      Navigator.pop(context); // Go back to the previous screen
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
         }
       }
     }
@@ -201,6 +227,9 @@ class _TrackPageState extends State<TrackPage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    print("lat: $lat");
+    print("long: $long");
+    print("getBookingOngoingResponse: ${getBookingOngoingResponse.data}");
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: getBookingOngoingResponse.data != null && lat != null && long != null
@@ -586,22 +615,57 @@ class _TrackPageState extends State<TrackPage> {
                               ),
                             ),
                             SizedBox(width: size.width * 0.14),
+                            // InkWell(
+                            //   onTap: () {
+                            //     _launchURL('https://wa.me/${widget.getBookingData!.whatsapp}/?text=hello');
+                            //     setState(() {});
+                            //   },
+                            //   child: Row(
+                            //     children: [
+                            //       SvgPicture.asset(
+                            //         'assets/images/whatsapp-icon.svg',
+                            //         color: Theme.of(context).colorScheme.onSurface,
+                            //       ),
+                            //       SizedBox(width: size.width * 0.032),
+                            //       SizedBox(
+                            //         width: size.width * 0.275,
+                            //         child: Text(
+                            //           '${widget.getBookingData!.whatsapp}',
+                            //           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            //             color: ConstantColor.darkgreyColor,
+                            //             fontSize: 12,
+                            //             fontWeight: FontWeight.w500,
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
                             InkWell(
                               onTap: () {
-                                _launchURL('https://wa.me/${widget.getBookingData!.whatsapp}/?text=hello');
-                                setState(() {});
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ChatPage(
+                                      bookingId: widget.getBookingData!.bookingsId,
+                                      usersDriverId: widget.getBookingData!.vehicles![0].usersDriversId,
+                                      guestName: widget.getBookingData!.name,
+                                      driverName: widget.getBookingData!.vehicles![0].vehiclesDrivers!.name,
+                                    ),
+                                  ),
+                                );
                               },
                               child: Row(
                                 children: [
                                   SvgPicture.asset(
-                                    'assets/images/whatsapp-icon.svg',
+                                    'assets/images/chat-icon.svg',
                                     color: Theme.of(context).colorScheme.onSurface,
                                   ),
                                   SizedBox(width: size.width * 0.032),
                                   SizedBox(
                                     width: size.width * 0.275,
                                     child: Text(
-                                      '${widget.getBookingData!.whatsapp}',
+                                      'Chat',
                                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                         color: ConstantColor.darkgreyColor,
                                         fontSize: 12,
@@ -614,42 +678,42 @@ class _TrackPageState extends State<TrackPage> {
                             ),
                           ],
                         ),
-                        SizedBox(height: size.height * 0.02),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ChatPage(
-                                  bookingId: widget.getBookingData!.bookingsId,
-                                  usersDriverId: widget.getBookingData!.vehicles![0].usersDriversId,
-                                  guestName: widget.getBookingData!.name,
-                                  driverName: widget.getBookingData!.vehicles![0].vehiclesDrivers!.name,
-                                ),
-                              ),
-                            );
-                          },
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                'assets/images/chat-icon.svg',
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                              SizedBox(width: size.width * 0.032),
-                              SizedBox(
-                                width: size.width * 0.275,
-                                child: Text(
-                                  'Chat',
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: ConstantColor.darkgreyColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // SizedBox(height: size.height * 0.02),
+                        // InkWell(
+                        //   onTap: () {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => ChatPage(
+                        //           bookingId: widget.getBookingData!.bookingsId,
+                        //           usersDriverId: widget.getBookingData!.vehicles![0].usersDriversId,
+                        //           guestName: widget.getBookingData!.name,
+                        //           driverName: widget.getBookingData!.vehicles![0].vehiclesDrivers!.name,
+                        //         ),
+                        //       ),
+                        //     );
+                        //   },
+                        //   child: Row(
+                        //     children: [
+                        //       SvgPicture.asset(
+                        //         'assets/images/chat-icon.svg',
+                        //         color: Theme.of(context).colorScheme.onSurface,
+                        //       ),
+                        //       SizedBox(width: size.width * 0.032),
+                        //       SizedBox(
+                        //         width: size.width * 0.275,
+                        //         child: Text(
+                        //           'Chat',
+                        //           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        //             color: ConstantColor.darkgreyColor,
+                        //             fontSize: 12,
+                        //             fontWeight: FontWeight.w500,
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                         SizedBox(height: size.height * 0.02),
                         Divider(
                           color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:umrahcar_driver/screens/wallet_tab/wallet_tabbar.dart';
 
 import '../models/summary_agent_model.dart';
@@ -70,7 +71,7 @@ class _WalletPageState extends State<WalletPage> {
           );
 
           if (shouldExit == true) {
-            Navigator.of(context).pop(result);
+            SystemNavigator.pop(); // Closes the app on Android
           }
         }
       },

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,6 +23,7 @@ import '../widgets/upcoming_list.dart';
 
 var userId;
 var profileName;
+String? currencySymbol;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -39,10 +41,10 @@ class _HomePageState extends State<HomePage> {
     userId = uid;
     print("userId Home121: $userId");
     getProfile();
+    getSystemAllData();
     getBookingListOngoing();
     getBookingListUpcoming();
     getBookingListCompleted();
-    getSystemAllData();
   }
 
   getProfile() async {
@@ -187,14 +189,21 @@ class _HomePageState extends State<HomePage> {
     }
 
     for (int i = 0; i < pickSettingsData.length; i++) {
-      if (pickSettingsData[i].type == "map_refresh_time") {
-        timerCount = int.parse(pickSettingsData[i].description!);
+      final setting = pickSettingsData[i];
+
+      if (setting.type == "map_refresh_time") {
+        timerCount = int.parse(setting.description!);
         print("timer refresh: $timerCount");
         if (mounted) {
           checkGps();
           timer = Timer.periodic(Duration(minutes: timerCount), (timer) => checkGps());
           setState(() {});
         }
+      }
+
+      if (setting.type == "currency_symbol") {
+        currencySymbol = setting.description;
+        print("Currency Symbol: $currencySymbol");
       }
     }
   }
@@ -245,7 +254,7 @@ class _HomePageState extends State<HomePage> {
           );
 
           if (shouldExit == true) {
-            Navigator.of(context).pop(result);
+            SystemNavigator.pop(); // Closes the app on Android
           }
         }
       },

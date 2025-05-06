@@ -176,11 +176,17 @@ Widget upComingList(BuildContext context, GetBookingListModel getBookingUpcoming
                                         if (getData.paymentType == "credit")
                                           Row(
                                             children: [
-                                              Icon(
-                                                Icons.attach_money,
-                                                size: 10,
-                                                color: ConstantColor.darkgreyColor,
+                                              // Icon(
+                                              //   Icons.attach_money,
+                                              //   size: 10,
+                                              //   color: ConstantColor.darkgreyColor,
+                                              // ),
+                                              Image.asset(
+                                                'assets/images1/symbol.png',
+                                                width: 10,
+                                                height: 10,
                                               ),
+                                              SizedBox(width: size.width * 0.01),
                                               Text(
                                                 "credit",
                                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -191,14 +197,21 @@ Widget upComingList(BuildContext context, GetBookingListModel getBookingUpcoming
                                               ),
                                             ],
                                           ),
-                                        if (getData.cashReceiveFromCustomer != "0")
+                                        if (getData.paymentType != "credit")
+                                        // if (getData.cashReceiveFromCustomer != "0")
                                           Row(
                                             children: [
-                                              Icon(
-                                                Icons.attach_money,
-                                                size: 10,
-                                                color: ConstantColor.darkgreyColor,
+                                              // Icon(
+                                              //   Icons.attach_money,
+                                              //   size: 10,
+                                              //   color: ConstantColor.darkgreyColor,
+                                              // ),
+                                              Image.asset(
+                                                'assets/images1/symbol.png',
+                                                width: 10,
+                                                height: 10,
                                               ),
+                                              SizedBox(width: size.width * 0.01),
                                               Text(
                                                 "${getData.cashReceiveFromCustomer}",
                                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(

@@ -1,10 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:umrahcar_driver/screens/homepage_screen.dart';
 import 'package:umrahcar_driver/utils/colors.dart';
-
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 import '../models/get_booking_list_model.dart';
 import '../utils/const.dart';
+
+Future<void> generateSingleBookingPDF(GetBookingData booking) async {
+  final pdf = pw.Document();
+
+  pdf.addPage(
+    pw.Page(
+      build: (pw.Context context) => pw.Container(
+        padding: const pw.EdgeInsets.all(16),
+        child: pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Text('Booking Details', style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
+            pw.SizedBox(height: 12),
+            pw.Text("Name: ${booking.name}", style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+            pw.Text("Booking ID: ${booking.bookingsId}"),
+            pw.Text("Pickup: ${booking.routes?.pickup?.name ?? 'N/A'}"),
+            pw.Text("Date & Time: ${_formatDate(booking.pickupDate!)} ${_formatTime(booking.pickupTime!)}"),
+            if (booking.vehicles != null)
+              pw.Text("Vehicles: ${booking.vehicles!.map((v) => v.vehiclesName?.name ?? '').join(', ')}"),
+            if (booking.paymentType == "credit") pw.Text("Payment: Credit"),
+            if (booking.cashReceiveFromCustomer != "0")
+              pw.Text("Cash Received: ${booking.cashReceiveFromCustomer}"),
+          ],
+        ),
+      ),
+    ),
+  );
+
+  await Printing.layoutPdf(
+    onLayout: (PdfPageFormat format) async => pdf.save(),
+  );
+}
+
 
 Widget completedList(BuildContext context, GetBookingListModel getBookingCompletedResponse) {
   var size = MediaQuery.of(context).size;
@@ -111,90 +147,117 @@ Widget completedList(BuildContext context, GetBookingListModel getBookingComplet
                       SizedBox(height: size.height * 0.005),
                       SizedBox(
                         width: 180,
-                        child: Row(
+                        child: Wrap(
+                          spacing: 4, // Horizontal spacing between items
+                          runSpacing: 4, // Vertical spacing between wrapped lines
                           children: [
+                            // Vehicle list
                             for (int i = 0; i < getData.vehicles!.length; i++)
-                              Padding(
-                                padding: const EdgeInsets.only(right: 2),
-                                child: getData.vehicles!.length < 4
-                                    ? Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
+                              getData.vehicles!.length < 4
+                                  ? Row(
+                                mainAxisSize: MainAxisSize.min, // Minimize Row width
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/images1/small-black-car-icon.svg',
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                    width: 10, // Reduced size for compactness
+                                    height: 10,
+                                  ),
+                                  SizedBox(width: size.width * 0.01),
+                                  Text(
+                                    '${getData.vehicles![i].vehiclesName!.name}',
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      color: ConstantColor.darkgreyColor,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    overflow: TextOverflow.ellipsis, // Truncate long names
+                                    maxLines: 1,
+                                  ),
+                                ],
+                              )
+                                  : Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 4),
+                                    child: SvgPicture.asset(
                                       'assets/images1/small-black-car-icon.svg',
                                       color: Theme.of(context).colorScheme.onSurface,
+                                      width: 10,
+                                      height: 10,
                                     ),
-                                    SizedBox(width: size.width * 0.01),
-                                    Text(
-                                      '${getData.vehicles![i].vehiclesName!.name}',
-                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                        color: ConstantColor.darkgreyColor,
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    SizedBox(width: size.width * 0.01),
-                                    if (getData.paymentType == "credit")
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.attach_money,
-                                            size: 10,
-                                            color: ConstantColor.darkgreyColor,
-                                          ),
-                                          Text(
-                                            "credit",
-                                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                              color: ConstantColor.darkgreyColor,
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    if (getData.cashReceiveFromCustomer != "0")
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.attach_money,
-                                            size: 10,
-                                            color: ConstantColor.darkgreyColor,
-                                          ),
-                                          Text(
-                                            "${getData.cashReceiveFromCustomer}",
-                                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                              color: ConstantColor.darkgreyColor,
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                  ],
-                                )
-                                    : Padding(
-                                  padding: const EdgeInsets.only(right: 5),
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(bottom: 4),
-                                        child: SvgPicture.asset(
-                                          'assets/images1/small-black-car-icon.svg',
-                                          color: Theme.of(context).colorScheme.onSurface,
-                                        ),
-                                      ),
-                                      Text(
-                                        '${getData.vehicles![i].vehiclesName!.name}',
-                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                          color: ConstantColor.darkgreyColor,
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
                                   ),
-                                ),
+                                  Text(
+                                    '${getData.vehicles![i].vehiclesName!.name}',
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      color: ConstantColor.darkgreyColor,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                ],
+                              ),
+                            // Payment details (displayed once, outside vehicle loop)
+                            if (getData.paymentType == "credit")
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  // const Icon(
+                                  //   Icons.attach_money,
+                                  //   size: 10,
+                                  //   color: ConstantColor.darkgreyColor,
+                                  // ),
+                                  Image.asset(
+                                    'assets/images1/symbol.png',
+                                    width: 10,
+                                    height: 10,
+                                  ),
+                                  SizedBox(width: size.width * 0.01),
+                                  // Text(
+                                  //   currencySymbol.toString(),
+                                  //   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  //     color: ConstantColor.navBarTextColor,
+                                  //     fontSize: 10,
+                                  //     fontWeight: FontWeight.w500,
+                                  //   ),
+                                  // ),
+                                  Text(
+                                    "credit",
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      color: ConstantColor.darkgreyColor,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            if (getData.cashReceiveFromCustomer != "0")
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  // Icon(
+                                  //   Icons.attach_money,
+                                  //   size: 10,
+                                  //   color: ConstantColor.darkgreyColor,
+                                  // ),
+                                  Image.asset(
+                                    'assets/images1/symbol.png',
+                                    width: 10,
+                                    height: 10,
+                                  ),
+                                  SizedBox(width: size.width * 0.01),
+                                  Text(
+                                    "${getData.cashReceiveFromCustomer}",
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      color: ConstantColor.darkgreyColor,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
                               ),
                           ],
                         ),
@@ -220,18 +283,35 @@ Widget completedList(BuildContext context, GetBookingListModel getBookingComplet
                         ],
                       ),
                       SizedBox(height: size.height * 0.003),
-                      GestureDetector(
-                        onTap: () {},
-                        child: Text(
-                          'Completed',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: ConstantColor.secondaryColor,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {},
+                            child: Text(
+                              'Completed',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: ConstantColor.secondaryColor,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
+                          SizedBox(width: size.width * 0.02),
+                          GestureDetector(
+                            onTap: () => generateSingleBookingPDF(getData),
+                            child: Text(
+                              'Download PDF',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: ConstantColor.secondaryColor.withOpacity(0.7),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ],

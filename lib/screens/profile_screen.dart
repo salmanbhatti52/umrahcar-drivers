@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:umrahcar_driver/screens/edit_profile_screen.dart';
@@ -235,7 +236,7 @@ class _ProfilePageState extends State<ProfilePage> {
           );
 
           if (shouldExit == true) {
-            Navigator.of(context).pop(result);
+            SystemNavigator.pop(); // Closes the app on Android
           }
         }
       },

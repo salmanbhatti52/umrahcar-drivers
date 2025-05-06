@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../service/rest_api_service.dart';
 import 'package:http/http.dart' as http;
@@ -18,7 +19,9 @@ class DaySummaryPage extends StatefulWidget {
 
 class _DaySummaryPageState extends State<DaySummaryPage> {
   DateTime? selectedDate;
+  DateTime? endDate;
   String formattedDate = '';
+  String formattedEndDate = '';
   Map summaryData = {};
   String summaryErrorMessage = '';
   double totalFare = 0.0;
@@ -28,20 +31,42 @@ class _DaySummaryPageState extends State<DaySummaryPage> {
 
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.utc(2024),
-      lastDate: DateTime(2100),
-    );
+    DateRangePickerController _controller = DateRangePickerController();
 
-    if (pickedDate != null) {
-      setState(() {
-        selectedDate = pickedDate;
-        formattedDate = selectedDate.toString().substring(0, 10);
-        getSummaryDrivers();
-      });
-    }
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Select Date Range'),
+          content: SizedBox(
+            height: 350,
+            width: 300,
+            child: SfDateRangePicker(
+              controller: _controller,
+              selectionMode: DateRangePickerSelectionMode.range,
+              showActionButtons: true,
+              onCancel: () => Navigator.pop(context),
+              onSubmit: (value) {
+                if (value is PickerDateRange) {
+                  setState(() {
+                    selectedDate = value.startDate;
+                    endDate = value.endDate;
+                    formattedDate = selectedDate.toString().substring(0, 10);
+                    formattedEndDate = endDate.toString().substring(0, 10);
+                  });
+                  Navigator.pop(context);
+                  getSummaryDrivers();
+                }
+              },
+              selectionColor: Colors.green,
+              rangeSelectionColor: Colors.green.shade100,
+              startRangeSelectionColor: Colors.green,
+              endRangeSelectionColor: Colors.green,
+            ),
+          ),
+        );
+      },
+    );
   }
 
   getSummaryDrivers() async {
@@ -49,7 +74,8 @@ class _DaySummaryPageState extends State<DaySummaryPage> {
     summaryErrorMessage = '';
     http.Response response = await sendPostRequest(action: '/get_summary_drivers', data: {
       'users_drivers_id': userId.toString(),
-      'summary_date': formattedDate,
+      'summary_date_start': formattedDate,
+      'summary_date_end': formattedEndDate,
     });
     var decodedData = jsonDecode(response.body);
     String status = decodedData['status'];
@@ -90,7 +116,7 @@ class _DaySummaryPageState extends State<DaySummaryPage> {
                 child: Row(
                   children: [
                     Text(
-                      'Select Date: ',
+                      'Select Date Range:',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: 14,
                         fontFamily: 'Montserrat-Regular',
@@ -108,20 +134,41 @@ class _DaySummaryPageState extends State<DaySummaryPage> {
                   ],
                 ),
               ),
-              if (formattedDate.isNotEmpty)
-                Row(
+              if (formattedDate.isNotEmpty && formattedEndDate.isNotEmpty)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Selected Date: ',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: 14,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w400,
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          'Start Date: ',
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontSize: 14,
+                            fontFamily: 'Montserrat-Regular',
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        Text(
+                          formattedDate,
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 14),
+                        ),
+                      ],
                     ),
-                    Text(
-                      formattedDate,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 14),
+                    Row(
+                      children: [
+                        Text(
+                          'End Date: ',
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontSize: 14,
+                            fontFamily: 'Montserrat-Regular',
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        Text(
+                          formattedEndDate,
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 14),
+                        ),
+                      ],
                     ),
                   ],
                 ),

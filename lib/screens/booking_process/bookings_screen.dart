@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:umrahcar_driver/utils/colors.dart';
 import 'package:umrahcar_driver/widgets/tabbar_bookings.dart';
@@ -217,7 +218,7 @@ class _BookingsPageState extends State<BookingsPage> {
           );
 
           if (shouldExit == true) {
-            Navigator.of(context).pop(result);
+            SystemNavigator.pop(); // Closes the app on Android
           }
         }
       },

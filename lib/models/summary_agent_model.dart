@@ -35,6 +35,7 @@ class Data {
   int? totalCompletedTrips;
   int? totalDriversFare;
   int? totalDriversReceivingsDebit;
+  int? totalDriversCashReceiveFromCustomer;
   int? totalDriversReceivingsCredit;
   int? totalDriversBalance;
 
@@ -44,6 +45,7 @@ class Data {
     this.status,
     this.totalCompletedTrips,
     this.totalDriversFare,
+    this.totalDriversCashReceiveFromCustomer,
     this.totalDriversReceivingsDebit,
     this.totalDriversReceivingsCredit,
     this.totalDriversBalance,
@@ -52,6 +54,7 @@ class Data {
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     usersDriversId: json["users_drivers_id"],
     driversName: json["drivers_name"],
+    totalDriversCashReceiveFromCustomer: json["total_drivers_cash_receive_from_customer"],
     status: json["status"],
     totalCompletedTrips: json["total_completed_trips"],
     totalDriversFare: json["total_drivers_fare"],
@@ -64,6 +67,7 @@ class Data {
     "users_drivers_id": usersDriversId,
     "drivers_name": driversName,
     "status": status,
+    "total_drivers_cash_receive_from_customer": totalDriversCashReceiveFromCustomer,
     "total_completed_trips": totalCompletedTrips,
     "total_drivers_fare": totalDriversFare,
     "total_drivers_receivings_debit": totalDriversReceivingsDebit,

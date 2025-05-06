@@ -64,6 +64,8 @@ class _SummaryAgentPageState extends State<SummaryAgentPage> {
             SizedBox(height: 20),
             buildSummaryRow('Total Driver Fare', '${summaryAgentModel.data!.totalDriversFare}', context),
             SizedBox(height: 20),
+            buildSummaryRow('Total Drivers Cash Receive from Customer', '${summaryAgentModel.data!.totalDriversCashReceiveFromCustomer}', context),
+            SizedBox(height: 20),
             buildSummaryRow('Total Driver Receiving Debit', '${summaryAgentModel.data!.totalDriversReceivingsDebit}', context),
             SizedBox(height: 20),
             buildSummaryRow('Total Driver Receiving Credit', '${summaryAgentModel.data!.totalDriversReceivingsCredit}', context),
